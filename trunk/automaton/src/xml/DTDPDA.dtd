@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE PDA[
+	<!ELEMENT PDA(PDAName,PDAStates,PDAInputSymbols,PDAStackSymbols,PDATransitions)>
+	<!ELEMENT PDAName(#PCDATA)>
+	<!ELEMENT PDAStates(State+)>
+		<!ELEMENT State(StateId,StateType)>
+		<!ELEMENT StateId(#PCDATA)>
+		<!ELEMENT StateType(#PCDATA)>
+	<!ELEMENT PDAInputSymbols(InputSymbol+)>
+	<!ELEMENT PDAStackSymbols(PDAStackSymbol+)>
+	<!ELEMENT InputSymbol(#PCDATA)>
+	<!ELEMENT PDAStackSymbol(#PCDATA)>
+	<!ELEMENT PDATransitions(PDATransition)>
+	<!ELEMENT PDATransition(FromState,PDAConditions,ToState)>
+	<!ELEMENT FromState(State)>
+	<!ELEMENT PDAConditions(PDACondition)>
+		<!ELEMENT PDACondition(PDAConditionSymbol,PDAFromStackSymbol,PDAToStackSymbol)>
+		<!ELEMENT PDAConditionSymbol(InputSymbol)>
+		<!ELEMENT PDAFromStackSymbol(PDAStackSymbol)>
+		<!ELEMENT PDAToStackSymbol(PDAStackSymbol+)>
+	<!ELEMENT ToState(State)>
+	
+]>

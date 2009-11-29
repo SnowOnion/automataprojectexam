@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DFA>
+	<DFAName></DFAName>
+	<DFAStates>
+		<State>
+			<StateId></StateId>
+			<StateType>initial,common,accepted</StateType>
+		</State>
+		<State>
+			<StateId></StateId>
+			<StateType></StateType>
+		</State>
+	</DFAStates>
+	<DFAInputSymbols>
+		<InputSymbol></InputSymbol>
+		<InputSymbol></InputSymbol>
+	</DFAInputSymbols>
+	<DFATransitions>
+		<DFATransition>
+			<DFATransitionFromState>
+				<State>
+					<StateId></StateId>
+					<StateType></StateType>
+				</State>
+			</DFATransitionFromState>
+			<DFAConditions>
+				<DFACondition></DFACondition>
+				<DFACondition></DFACondition>
+			</DFAConditions>
+			<DFATransitionToState>
+				<State>
+					<StateId></StateId>
+					<StateType></StateType>
+				</State>
+			</DFATransitionToState>
+		</DFATransition>
+	</DFATransitions>
+</DFA>
