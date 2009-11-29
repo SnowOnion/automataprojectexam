@@ -1,13 +1,19 @@
 #summary One-sentence summary of this page.
+= 题目概览 =
+ # 自动机的建模工具
+ # DFA/NFA转换工具
+ # DFA算法1
+ # DFA算法2
+ # 正则表达式工具
+ # 正则文法-自动机的转换工具
 
-= 作业提交说明 =
 
-Add your content here.
+= 分组说明 =
 
+||组号||研究题目||组员姓名||
+||11||1，自动机的建模工具||马晟、郭鑫、王玥||
+|| || || ||
 
-= Details =
+ * 组号说明:组号由2位数字组成，第一个为题目号，第二个为区分做同一个题目的序号（按顺序填写）。
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+= 其他 =
