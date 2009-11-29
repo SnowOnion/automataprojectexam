@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NFA>
+	<NFAName></NFAName>
+	<NFAStates>
+		<State>
+			<StateId></StateId>
+			<StateType>initial,common,accepted</StateType>
+		</State>
+		<State>
+			<StateId></StateId>
+			<StateType></StateType>
+		</State>
+	</NFAStates>
+	<NFAInputSymbols>
+		<InputSymbol></InputSymbol>
+		<InputSymbol></InputSymbol>
+	</NFAInputSymbols>
+	<NFATransitions>
+		<NFATransitionFromState>
+			<State>
+				<StateId></StateId>
+				<StateType></StateType>
+			</State>
+		</NFATransitionFromState>
+		<NFAConditions>
+			<NFACondition></NFACondition>
+			<NFACondition></NFACondition>
+		</NFAConditions>
+		<NFATransitionToState>
+			<State>
+				<StateId></StateId>
+				<StateType></StateType>
+			</State>
+		</NFATransitionToState>
+	</NFATransitions>
+</NFA>

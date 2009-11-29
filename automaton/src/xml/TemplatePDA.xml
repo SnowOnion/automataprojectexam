@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PDA>
+	<PDAName></PDAName>
+	<PDAStates>
+		<State>
+			<StateId></StateId>
+			<StateType></StateType>
+		</State>
+	</PDAStates>
+	<PDAInputSymbols>
+		<InputSymbol></InputSymbol>
+		<InputSymbol></InputSymbol>
+		<InputSymbol></InputSymbol>
+	</PDAInputSymbols>
+	<PDAStackSymbols>
+		<PDAStackSymbol></PDAStackSymbol>
+		<PDAStackSymbol></PDAStackSymbol>
+		<PDAStackSymbol></PDAStackSymbol>
+	</PDAStackSymbols>
+	<PDATransitions>
+		<FromState>
+			<State>
+				<StateId></StateId>
+				<StateType></StateType>
+			</State>
+		</FromState>
+		<PDAConditions>
+			<PDACondition>
+				<PDAConditionSymbol>
+					<InputSymbol></InputSymbol>
+				</PDAConditionSymbol>
+				<PDAFromStackSymbol>
+					<PDAStackSymbol></PDAStackSymbol>
+				</PDAFromStackSymbol>
+				<PDAToStackSymbol>
+					<PDAStackSymbol></PDAStackSymbol>
+					<PDAStackSymbol></PDAStackSymbol>
+				</PDAToStackSymbol>
+			</PDACondition>
+		</PDAConditions>
+		<ToState>
+			<State></State>
+		</ToState>
+	</PDATransitions>
+</PDA>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE DFA[
+	<!ELEMENT DFA(DFAName,DFAStates,DFAInputSymbols,DFATransitions)>
+	<!ELEMENT DFAName(#PCDATA)>
+	<!ELEMENT DFAStates(State+)>
+	<!ELEMENT State(StateId,StateType)>
+	<!ELEMENT StateId(#PCDATA)>
+	<!ELEMENT StateType(#PCDATA)>
+	<!ELEMENT DFAInputSymbols(InputSymbol*)>
+	<!ELEMENT InputSymbol(#PCDATA)>
+	<!ELEMENT DFATransitions(DFATransition*)>
+	<!ELEMENT DFATransition(FromState,DFAConditions,ToState)>
+	<!ELEMENT FromState(State)>
+	<!ELEMENT DFAConditions(DFACondition+)>
+	<!ELEMENT ToState(State)>
+	
+]>
