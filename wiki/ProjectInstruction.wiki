@@ -20,5 +20,6 @@
 = 提交说明 =
  
  * 项目名称由“组号+项目名”构成，请提交前现在分组说明中确认自己组的组号。
+ * 项目都请放在https://automataprojectexam.googlecode.com/svn/trunk下面，branches可以留作完成自己项目之后想要对其他组的改进时候添加。谢谢合作。
 
 = 其他 =
