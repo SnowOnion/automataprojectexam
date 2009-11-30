@@ -1,4 +1,4 @@
-#大作业项目说明.
+#The Instruction of the final Project.
 = 题目概览 =
  # 自动机的建模工具
  # DFA/NFA转换工具
