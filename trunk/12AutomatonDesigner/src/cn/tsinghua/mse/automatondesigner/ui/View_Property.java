@@ -1,5 +1,4 @@
 /**  
- * $Id: Test.java 121 2009-11-12 07:56:15Z jwh $  
  * $log-new:$  
  * $log-history: 
  *  
