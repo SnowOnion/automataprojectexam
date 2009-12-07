@@ -1,7 +1,11 @@
-/*
-$Author$
-$Revision$
- */
+/**  
+ * $Id: Test.java 121 2009-11-12 07:56:15Z jwh $  
+ * $log-new:$  
+ * $log-history: 
+ *  
+ * $  
+ */  
+
 package cn.tsinghua.mse.automatondesigner.ui;
 
 import org.eclipse.jface.action.IMenuManager;
