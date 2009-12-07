@@ -11,7 +11,7 @@
 = 分组说明 =
 
 ||组号||研究题目||组员姓名（学号）||邮件列表||
-||11||1, 自动机的建模工具||马晟(XXX)、郭鑫(XXX)、王玥(XXX)||williamma.wm@gmail.com, gheart123@gmail.com, pipituliuliu@gmail.com||
+||11||1, 自动机的建模工具||马晟(2009212623)、郭鑫(XXX)、王玥(XXX)||williamma.wm@gmail.com, gheart123@gmail.com, pipituliuliu@gmail.com||
 ||51||5, 正则表达式工具  || 马占雷(XXX)、金纯(XXX)||mazhanlei2009@gmail.com||
 || || || || ||
 
