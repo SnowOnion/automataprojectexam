@@ -1,3 +1,7 @@
+/*
+$Author$
+$Revision$
+ */
 package cn.tsinghua.mse.automatondesigner.ui;
 
 import org.eclipse.jface.action.IMenuManager;
@@ -10,7 +14,7 @@ import org.eclipse.ui.part.ViewPart;
 
 /**
  * 属性框视图的类
- * @author David
+ * @author jwh
  *
  */
 public class View_Property extends ViewPart {
