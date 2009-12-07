@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="cn.tsinghua.mse.automatondesigner.main.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="RCP Perspective"
+            class="cn.tsinghua.mse.automatondesigner.main.Perspective"
+            id="AutomatonDesigner.perspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="cn.tsinghua.mse.automatondesigner.ui.View_ToolBox"
+            id="cn.tsinghua.mse.automatondesigner.ui.View_ToolBox"
+            name="工具箱"
+            allowMultiple="false"
+            icon="icons/ToolBox.ico"
+            >
+      </view>
+      <view
+            class="cn.tsinghua.mse.automatondesigner.ui.View_Property"
+            id="cn.tsinghua.mse.automatondesigner.ui.View_Property"
+            allowMultiple="false"
+            icon="icons/property16.png"
+            name="属性栏">
+      </view>
+      <view
+            class="cn.tsinghua.mse.automatondesigner.ui.View_Main"
+            id="cn.tsinghua.mse.automatondesigner.ui.View_Main"
+            allowMultiple="true"
+            icon="icons/file16.png"
+            name="未命名1">
+      </view>
+   </extension>
+</plugin>
