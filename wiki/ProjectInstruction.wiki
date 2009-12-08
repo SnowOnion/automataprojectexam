@@ -14,7 +14,7 @@
 ||11||1, 自动机的建模工具||马晟(2009212623)、郭鑫(XXX)、王玥(XXX)||williamma.wm@gmail.com, gheart123@gmail.com, pipituliuliu@gmail.com||
 ||51||5, 正则表达式工具  || 马占雷(XXX)、金纯(XXX)||mazhanlei2009@gmail.com||
 ||21||2, NFA/DFA的转换工具||黄崇迪(2009210940)||huangcd.thu@gmail.com||
-|| || || || ||
+||22||2, NFA/DFA的转换工具||李大鹏(2009220652)||lidapeng365@gmail.com||
 
  * 组号说明:组号由2位数字组成，第一个为题目号，第二个为区分做同一个题目的序号（按顺序填写）。
 
