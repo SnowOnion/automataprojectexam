@@ -16,6 +16,7 @@
 		<InputSymbol></InputSymbol>
 	</NFAInputSymbols>
 	<NFATransitions>
+	<NFATransition>
 		<NFATransitionFromState>
 			<State>
 				<StateId></StateId>
@@ -32,5 +33,6 @@
 				<StateType></StateType>
 			</State>
 		</NFATransitionToState>
+		</NFATransition>
 	</NFATransitions>
 </NFA>

@@ -18,6 +18,7 @@
 		<PDAStackSymbol></PDAStackSymbol>
 	</PDAStackSymbols>
 	<PDATransitions>
+	<PDACondition>
 		<FromState>
 			<State>
 				<StateId></StateId>
@@ -41,5 +42,6 @@
 		<ToState>
 			<State></State>
 		</ToState>
+		</PDACondition>
 	</PDATransitions>
 </PDA>
