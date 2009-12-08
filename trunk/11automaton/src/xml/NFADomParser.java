@@ -2,6 +2,10 @@ package xml;
 
 import java.util.ArrayList;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -15,6 +19,16 @@ import automaton.TransitionNFA;
 
 public class NFADomParser implements AutomatonXmlInterface {
 
+	public NFADomParser(){
+		try{
+			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			doc = builder.newDocument();
+			
+		}catch(ParserConfigurationException pce){
+			pce.printStackTrace();
+		}
+	}
+	
 	@Override
 	public Automaton getAutomatonFromNode(Document doc) {
 		// TODO Auto-generated method stub
@@ -92,4 +106,36 @@ public class NFADomParser implements AutomatonXmlInterface {
 		return  new TransitionNFA(fromState,conditions,toState);
 	}
 
+	
+	@Override
+	public Element getElementFromAutomaton(Automaton automaton) {
+		Element root = doc.createElement("NFA");
+		Element automatonName = doc.createElement("NFAName");
+		
+		Element statesElement = doc.createElement("NFAStates");
+		
+		Element inputSymbolsElement = doc.createElement("NFAInputSymbols"); 
+		ArrayList <String> inputSymbols = automaton.getInputSymbolSet();
+		for(int i = 0;i<inputSymbols.size();i++){
+			Element inputSymbolElement = doc.createElement("InputSymbol");
+			inputSymbolElement.setTextContent(inputSymbols.get(i));
+			inputSymbolsElement.appendChild(inputSymbolElement);
+		}
+		
+		Element transitionsElement = doc.createElement("NFATransitions");
+		return root;
+	}
+
+	@Override
+	public Element getElementFromState(State state) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Element getElementFromTransition(Transition transition) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	private Document doc;
 }

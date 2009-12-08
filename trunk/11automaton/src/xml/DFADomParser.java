@@ -1,6 +1,11 @@
 package xml;
 
 import java.util.ArrayList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -21,7 +26,19 @@ import automaton.TransitionDFA;
  *
  */
 public class DFADomParser implements AutomatonXmlInterface {
-	
+	public DFADomParser(){
+		try{
+			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			doc = builder.newDocument();
+			
+		}catch(ParserConfigurationException pce){
+			pce.printStackTrace();
+		}
+	}
+	/***************************************************
+	 * Read the Automaton from a document, which is a defined XML 
+	 * file.
+	 */
 	@Override
 	public Automaton getAutomatonFromNode(Document doc) {
 		// TODO Auto-generated method stub
@@ -104,10 +121,84 @@ public class DFADomParser implements AutomatonXmlInterface {
 		Node toStateNode = ((Element)newTransition.getElementsByTagName("DFATransitionToState").item(0)).getElementsByTagName("State").item(0);
 		State toState = getStateFromNode(toStateNode);
 		return new TransitionDFA(fromState,conditions,toState);
+	}
+
+	/******************************************************
+	 * Get a document from a automaton, and the document is used
+	 * to transformed into a file saved on the disk.
+	 */
+	
+	@Override
+	public Element getElementFromAutomaton(Automaton automaton) {
+		Element root = doc.createElement("DFA");
+			
+		Element automatonName = doc.createElement("DFAName");
+		automatonName.setTextContent(automaton.getAutomatonName());
+		
+		Element statesElement = doc.createElement("DFAStates");
+		ArrayList <State> states = automaton.getStates(); 
+		for(int i = 0;i<states.size();i++){
+			Element stateElement = getElementFromState(states.get(i));
+			statesElement.appendChild(stateElement);
+		}
+		Element inputSymbolsElement = doc.createElement("DFAInputSymbols");
+		ArrayList <String> inputSymbols = automaton.getInputSymbolSet();
+		for(int i = 0;i<inputSymbols.size();i++){
+			Element inputSymbolElement = doc.createElement("InputSymbol");
+			inputSymbolElement.setTextContent(inputSymbols.get(i));
+			inputSymbolsElement.appendChild(inputSymbolElement);
+		}
+			
+		Element transitionsElement = doc.createElement("DFATransitions");
+		ArrayList <Transition> transitions = automaton.getTransitions();
+		for(int i = 0;i<transitions.size();i++){
+			Element transitionElement = getElementFromTransition(transitions.get(i));
+			transitionsElement.appendChild(transitionElement);
+		}
+			
+		root.appendChild(automatonName);
+		root.appendChild(statesElement);
+		root.appendChild(inputSymbolsElement);
+		root.appendChild(transitionsElement);
+			
+			return root;
+	}
+	@Override
+	public Element getElementFromState(State state) {
+		Element stateElement = doc.createElement("State");
+			
+		Element stateId = doc.createElement("StateId");
+		stateId.setTextContent(state.getStateId());
+		Element stateType = doc.createElement("StateType");
+		stateType.setTextContent(state.getStateType());
+		
+		stateElement.appendChild(stateId);
+		stateElement.appendChild(stateType);
+		return stateElement;
+	}
+	@Override
+	public Element getElementFromTransition(Transition transition) {
+		Element transitionElement = doc.createElement("DFATransition");
+		Element fromState = doc.createElement("DFATransitionFromState");
+		fromState.appendChild(getElementFromState(transition.getFromState()));
+		Element conditions = doc.createElement("DFAConditions");
+		ArrayList <String> tempConditions = ((TransitionDFA) transition).getTransitionConditions();
+		for(int i = 0;i<tempConditions.size();i++){
+			Element newCondition = doc.createElement("DFACondition");
+			newCondition.setTextContent(tempConditions.get(i));
+			conditions.appendChild(newCondition);
+		}
+		Element toState = doc.createElement("DFATransitionToState");
+		toState.appendChild(getElementFromState(transition.getToState()));
+		
+		transitionElement.appendChild(fromState);
+		transitionElement.appendChild(conditions);
+		transitionElement.appendChild(toState);
+		return transitionElement;
 	}	
 
 
-
+	private Document doc;
 
 
 }

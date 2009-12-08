@@ -1,11 +1,15 @@
 package xml;
 
 import java.io.File;
+import java.io.Writer;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
 import automaton.Automaton;
 /**************************************************************\
  * This class used Factory Design pattern to implements the creation
@@ -44,6 +48,7 @@ public class AutomatonFactory {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		Document doc = builder.parse(file);
+		
 		Element root = doc.getDocumentElement();
 		System.out.println(root.getNodeName()+"\t"+root.getNodeValue());
 		String rootName = root.getNodeName();
@@ -70,7 +75,7 @@ public class AutomatonFactory {
 	 * it is said in method getAutomatonFromXml(File file). We 
 	 * suppose the user knows the tree structure of the Document.
 	 * @return
-	 */
+	 ***********************************************************/
 	public static Automaton getAutomatonFromDocument(Document doc){
 		String automatonType = doc.getDocumentElement().getNodeName();
 		if(automatonType.equals("DFA")){
@@ -85,14 +90,35 @@ public class AutomatonFactory {
 		return null;
 	}
 	
+	public Element getDocumentFromAutomaton(Automaton automaton){
+		String automatonType = automaton.getAutomatonType();
+		if(automatonType.equals("DFA")){
+			return ddp.getElementFromAutomaton(automaton);
+		}
+		if(automatonType.equals("NFA")){
+			return ndp.getElementFromAutomaton(automaton);
+		}
+		if(automatonType.equals("PDA")){
+			return pdp.getElementFromAutomaton(automaton);
+		}
+		return null;
+	}
+	
 	/*****************************************************************
 	 * Write the Automaton to a XML file.
 	 * @param automaton
 	 * @param file
 	 * @return
 	 */
-	public boolean writeAutomatonToXml(Automaton automaton, File file) {
+	public boolean writeAutomatonToXml(Document automaton,Writer writer,String encoding) {
 		// TODO Auto-generated method stub
+		/*
+		try{
+			Source source = new DOMSource(doc);
+		}
+		*/
+		File f = new File("test.txt");
+		automaton.toString();
 		return false;
 	}
 	

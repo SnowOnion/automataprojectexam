@@ -1,5 +1,7 @@
 package automaton;
 
+import java.util.ArrayList;
+
 /**
  * This class defines the transition condition of one PDA
  * this condition consists of three parts: 
@@ -14,16 +16,16 @@ package automaton;
 public class TransitionPDACondition {
 	String conditions;
 	String fromStackSymbol;
-	String toSymbols;
+	ArrayList<String> toSymbols;
 	
 	public TransitionPDACondition(){
 		conditions = new String();
 		fromStackSymbol = "fromStackSymbol";
-		toSymbols = new String();
+		toSymbols = new ArrayList<String>();
 	}
 	
 	public TransitionPDACondition(String conditions,
-			String fromStackSymbol,String toSymbols){
+			String fromStackSymbol,ArrayList<String> toSymbols){
 		this.conditions = conditions;
 		this.fromStackSymbol = fromStackSymbol;
 		this.toSymbols = toSymbols;
@@ -36,7 +38,7 @@ public class TransitionPDACondition {
 		this.fromStackSymbol = fromStackSymbol;
 	}
 	
-	public void setToStackSymbol(String toStackSymbol){
+	public void setToStackSymbol(ArrayList<String> toStackSymbol){
 		this.toSymbols = toStackSymbol;
 	}
 	
@@ -48,7 +50,7 @@ public class TransitionPDACondition {
 		return this.fromStackSymbol;
 	}
 	
-	public String getToSymbols(){
+	public ArrayList<String> getToSymbols(){
 		return this.toSymbols;
 	}
 }
