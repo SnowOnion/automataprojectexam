@@ -1,0 +1,11 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+第一题，第二组。自动机的建模工具。
+
+= Details =
+组员：
+    贾伟昊
+    赵小卓
+    娄  剑
