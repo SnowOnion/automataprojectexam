@@ -3,40 +3,85 @@ package cn.tsinghua.mse.automatondesigner.ui;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.internal.decorators.FullTextDecoratorRunnable;
 import org.eclipse.ui.part.ViewPart;
 
+import cn.tsinghua.mse.automatondesigner.dataobject.Automaton;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.ui.forms.widgets.ScrolledForm;
+
 /**
- * 图形化显示的主界面
+ * 图形化显示自动机的主界面
+ * 
  * @author David
- *
+ * 
  */
 public class View_Main extends ViewPart {
 
 	public static final String ID = "cn.tsinghua.mse.automatondesigner.ui.View_Main"; //$NON-NLS-1$
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
-	
-	public static int INSTANCENUM  = 0;
-	
+
+	public static int INSTANCENUM = 0;
+
+	private Automaton m_Automaton = null;
+	private boolean isDirty = false;
+	private Canvas canvas;
+
+	/**
+	 * 新建文件时使用的构造函数
+	 * 
+	 * @wbp.parser.constructor
+	 */
 	public View_Main() {
 		INSTANCENUM++;
+		isDirty = false;
+	}
+
+	/**
+	 * 打开已有文件时使用的构造函数
+	 * 
+	 * @param automaton
+	 */
+	public View_Main(Automaton automaton) {
+		isDirty = false;
+		m_Automaton = automaton;
 	}
 
 	/**
 	 * Create contents of the view part.
+	 * 
 	 * @param parent
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
 		Composite container = toolkit.createComposite(parent, SWT.NONE);
 		toolkit.paintBordersFor(container);
+		container.setLayout(new FillLayout(SWT.HORIZONTAL));
 
+		ScrolledForm scrolledForm = toolkit.createScrolledForm(container);
+		toolkit.paintBordersFor(scrolledForm);
+
+		canvas = new Canvas(scrolledForm.getBody(), SWT.BORDER);
+		canvas.setSize(1000, 1000);
+		toolkit.adapt(canvas);
+		toolkit.paintBordersFor(canvas);
+		canvas.addPaintListener(new PaintListener() {
+			public void paintControl(PaintEvent e) {
+				// 画椭圆
+				e.gc.drawOval(80, 50, 20, 20);
+			}
+		});
 		createActions();
 		initializeToolBar();
 		initializeMenu();
-		this.setPartName("*未命名" + INSTANCENUM);
+		this.setPartName("未命名" + INSTANCENUM);
 	}
 
 	/**
@@ -65,4 +110,19 @@ public class View_Main extends ViewPart {
 		// Set the focus
 	}
 
+	public Automaton getM_Automaton() {
+		return m_Automaton;
+	}
+
+	public void setM_Automaton(Automaton mAutomaton) {
+		m_Automaton = mAutomaton;
+	}
+
+	public boolean isDirty() {
+		return isDirty;
+	}
+
+	public void setDirty(boolean isDirty) {
+		this.isDirty = isDirty;
+	}
 }

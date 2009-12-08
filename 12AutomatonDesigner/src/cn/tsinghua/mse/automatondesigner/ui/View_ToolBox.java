@@ -28,8 +28,9 @@ import com.swtdesigner.SWTResourceManager;
 
 /**
  * 工具箱视图的类
+ * 
  * @author David
- *
+ * 
  */
 public class View_ToolBox extends ViewPart {
 
@@ -37,11 +38,12 @@ public class View_ToolBox extends ViewPart {
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 
 	public View_ToolBox() {
-		
+
 	}
 
 	/**
 	 * Create contents of the view part.
+	 * 
 	 * @param parent
 	 */
 	@Override
@@ -49,35 +51,39 @@ public class View_ToolBox extends ViewPart {
 		Composite container = toolkit.createComposite(parent, SWT.NONE);
 		toolkit.paintBordersFor(container);
 		container.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
-		ScrolledComposite scrolledComposite = new ScrolledComposite(container, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+
+		ScrolledComposite scrolledComposite = new ScrolledComposite(container,
+				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		toolkit.adapt(scrolledComposite);
 		toolkit.paintBordersFor(scrolledComposite);
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
-		
-		ToolBar toolBar = new ToolBar(scrolledComposite, SWT.BORDER | SWT.FLAT | SWT.RIGHT | SWT.VERTICAL);
+
+		ToolBar toolBar = new ToolBar(scrolledComposite, SWT.BORDER | SWT.FLAT
+				| SWT.RIGHT | SWT.VERTICAL);
 		toolBar.setFont(SWTResourceManager.getFont("宋体", 12, SWT.NORMAL));
 		toolkit.adapt(toolBar);
 		toolkit.paintBordersFor(toolBar);
-		
-		
-		
+
 		ToolItem ti_Selection = new ToolItem(toolBar, SWT.RADIO);
-		ti_Selection.setImage(ResourceManager.getPluginImage("AutomatonDesigner", "icons/selected.gif"));
+		ti_Selection.setImage(ResourceManager.getPluginImage(
+				"AutomatonDesigner", "icons/selected.gif"));
 		ti_Selection.setSelection(true);
 		ti_Selection.setText("  选择    ");
-		
+
 		ToolItem ti_State = new ToolItem(toolBar, SWT.RADIO);
-		ti_State.setImage(ResourceManager.getPluginImage("AutomatonDesigner", "icons/state2.gif"));
+		ti_State.setImage(ResourceManager.getPluginImage("AutomatonDesigner",
+				"icons/state2.gif"));
 		ti_State.setText("  状态    ");
-		
+
 		ToolItem ti_Transform = new ToolItem(toolBar, SWT.RADIO);
-		ti_Transform.setImage(ResourceManager.getPluginImage("AutomatonDesigner", "icons/transform.gif"));
+		ti_Transform.setImage(ResourceManager.getPluginImage(
+				"AutomatonDesigner", "icons/transform.gif"));
 		ti_Transform.setText("  转移    ");
-		
+
 		scrolledComposite.setContent(toolBar);
-		scrolledComposite.setMinSize(toolBar.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		scrolledComposite.setMinSize(toolBar.computeSize(SWT.DEFAULT,
+				SWT.DEFAULT));
 
 		createActions();
 		initializeToolBar();
@@ -95,14 +101,16 @@ public class View_ToolBox extends ViewPart {
 	 * Initialize the toolbar.
 	 */
 	private void initializeToolBar() {
-		//IToolBarManager tbm = getViewSite().getActionBars().getToolBarManager();
+		// IToolBarManager tbm =
+		// getViewSite().getActionBars().getToolBarManager();
 	}
 
 	/**
 	 * Initialize the menu.
 	 */
 	private void initializeMenu() {
-		//IMenuManager manager = getViewSite().getActionBars().getMenuManager();
+		// IMenuManager manager =
+		// getViewSite().getActionBars().getMenuManager();
 	}
 
 	@Override
