@@ -1,0 +1,44 @@
+#summary 第一组第1题自动机建模-马晟，王玥，郭鑫
+
+= 项目概览 =
+== 需求 ==
+ # 用java编写，保证可扩展性
+ # 有完整的友好的图形界面，支持鼠标操作，鼠标支持经过自动机元素时高亮，便捷的选择操作。有针对“状态”和“变迁”的属性修改页面。
+ # 将自动机保存至XML，并且对应好对应的DTD。
+ # 能够读取定义好的XML文件。
+ # 定义好自动机的数据结构，并能够从某个接口将自动机结构从XML中读出。
+ # 支持定义一些自动机的属性，比如是DNF还是CNF还是PDA。
+ # （Optional）支持对自动机进行自动的布局。
+
+== 项目介绍 ==
+  本项目完成自动机建模工具，是自动机课程的项目。
+整体项目开发分为四个主要部分：
+ # 项目基础数据机构设计
+ # XML的存储和读取
+ # 适宜的图形用户界面
+ # 优化项目
+
+== 小组成员 ==
+||姓名||学号||邮箱||
+||马晟||2009212623||williamma.wm@gmail.com||
+||王玥||2009 ||pipituliuliu@gmail.com||
+||郭鑫||2009 ||gheart123@gmail.com||
+
+= 项目设计及开发 =
+== 开发环境 ==
+
+ # Eclipse 3.2+
+ # SVN Google Code Team Work
+ # Java （JDK 1.6）基本Swing编程
+ # (Optional) Flex，Eclipse RCP 平台框架的使用（后期可能会使用，在基础类实现了以后）
+
+
+
+
+= 特殊说明 =
+
+
+
+= 其他 =
+[http://code.google.com/p/automatonmodeling/wiki/ProjectDesign 更多内容请点击链接]
+[http://code.google.com/p/automatonmodeling 项目主页]
