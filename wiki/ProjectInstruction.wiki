@@ -1,4 +1,5 @@
 #summary 大作业说明
+#labels Phase-QA,Featured,Phase-Requirements,Phase-Design,Phase-Implementation,Phase-Deploy,Phase-Support,Deprecated
 = 题目概览 =
  # 自动机的建模工具
  # DFA/NFA转换工具
