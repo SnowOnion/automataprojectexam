@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary 自动机的建模工具。
 
 = Introduction =
 
@@ -9,3 +9,5 @@
     贾伟昊
     赵小卓
     娄  剑
+项目名称：AutomatonDesigner
+所属文件夹：12AutomatonDesigner
