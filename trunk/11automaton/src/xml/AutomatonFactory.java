@@ -1,14 +1,15 @@
 package xml;
 
 import java.io.File;
-import java.io.Writer;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 import automaton.Automaton;
 /**************************************************************\
@@ -48,20 +49,7 @@ public class AutomatonFactory {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		Document doc = builder.parse(file);
-		
-		Element root = doc.getDocumentElement();
-		System.out.println(root.getNodeName()+"\t"+root.getNodeValue());
-		String rootName = root.getNodeName();
-		if(rootName.equals("DFA")){
-			return ddp.getAutomatonFromNode(doc);
-		}
-		if(rootName.equals("NFA")){
-			return ndp.getAutomatonFromNode(doc);
-		}
-		if(rootName.equals("PDA")){
-			return pdp.getAutomatonFromNode(doc);
-		}
-		return null;
+		return getAutomatonFromDocument(doc);
 	}
 
 	/*****************************************************************
@@ -90,16 +78,16 @@ public class AutomatonFactory {
 		return null;
 	}
 	
-	public Element getDocumentFromAutomaton(Automaton automaton){
+	public static Document getDocumentFromAutomaton(Automaton automaton){
 		String automatonType = automaton.getAutomatonType();
 		if(automatonType.equals("DFA")){
-			return ddp.getElementFromAutomaton(automaton);
+			return ddp.getDocumentFromAutomaton(automaton);
 		}
 		if(automatonType.equals("NFA")){
-			return ndp.getElementFromAutomaton(automaton);
+			return ndp.getDocumentFromAutomaton(automaton);
 		}
 		if(automatonType.equals("PDA")){
-			return pdp.getElementFromAutomaton(automaton);
+			return pdp.getDocumentFromAutomaton(automaton);
 		}
 		return null;
 	}
@@ -110,16 +98,19 @@ public class AutomatonFactory {
 	 * @param file
 	 * @return
 	 */
-	public boolean writeAutomatonToXml(Document automaton,Writer writer,String encoding) {
-		// TODO Auto-generated method stub
-		/*
+	public static void writeAutomatonToXml(Document document,File file) {
 		try{
-			Source source = new DOMSource(doc);
+			TransformerFactory transfactory = TransformerFactory.newInstance();
+			Transformer transformer = transfactory.newTransformer();
+			DOMSource source = new DOMSource(document);
+			transformer.setOutputProperty("encoding","UTF-8");
+			StreamResult result = new StreamResult(file);
+			transformer.transform(source,result);
+		}catch(TransformerConfigurationException tce){
+			tce.printStackTrace();
+		}catch(TransformerException te){
+			te.printStackTrace();
 		}
-		*/
-		File f = new File("test.txt");
-		automaton.toString();
-		return false;
 	}
 	
 	private static AutomatonFactory af;

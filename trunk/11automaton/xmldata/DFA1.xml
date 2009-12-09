@@ -1,114 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DFA>
-		<DFAName>test DFA</DFAName>
-		<DFAStates>
+		<AutomatonName>test DFA</AutomatonName>
+		<AutomatonStates>
 			<State>
 				<StateId>P1</StateId>
 				<StateType>initial</StateType>
 			</State>
 			<State>
 				<StateId>P2</StateId>
-				<StateType>common</StateType>
+				<StateType>normal</StateType>
 			</State>
 			<State>
 				<StateId>P3</StateId>
-				<StateType>common</StateType>
+				<StateType>normal</StateType>
 			</State>
 			<State>
 				<StateId>p4</StateId>
 				<StateType>accepted</StateType>
 			</State>
-		</DFAStates>
-		<DFAInputSymbols>
+		</AutomatonStates>
+		<AutomatonInputSymbols>
 			<InputSymbol>0</InputSymbol>
 			<InputSymbol>1</InputSymbol>
-		</DFAInputSymbols>
+		</AutomatonInputSymbols>
 		<DFATransitions>
 			<DFATransition>
-				<DFATransitionFromState>
+				<FromState>
 					<State>
 						<StateId>P1</StateId>
 						<StateType>initial</StateType>
 					</State>
-				</DFATransitionFromState>
+				</FromState>
 				<DFAConditions>
 					<DFACondition>0</DFACondition>
 				</DFAConditions>
-				<DFATransitionToState>
+				<ToState>
 					<State>
 						<StateId>P2</StateId>
-						<StateType>common</StateType>
+						<StateType>normal</StateType>
 					</State>
-				</DFATransitionToState>
+				</ToState>
 			</DFATransition>
 			<DFATransition>
-				<DFATransitionFromState>
+				<FromState>
 					<State>
 						<StateId>P1</StateId>
 						<StateType>initial</StateType>
 					</State>
-				</DFATransitionFromState>
+				</FromState>
 				<DFAConditions>
 					<DFACondition>1</DFACondition>
 				</DFAConditions>
-				<DFATransitionToState>
+				<ToState>
 					<State>
 						<StateId>P3</StateId>
-						<StateType>common</StateType>
+						<StateType>normal</StateType>
 					</State>
-				</DFATransitionToState>
+				</ToState>
 			</DFATransition>
 			<DFATransition>
-				<DFATransitionFromState>
+				<FromState>
 					<State>
 						<StateId>P1</StateId>
 						<StateType>initial</StateType>
 					</State>
-				</DFATransitionFromState>
+				</FromState>
 				<DFAConditions>
 					<DFACondition>1</DFACondition>
 				</DFAConditions>
-				<DFATransitionToState>
+				<ToState>
 					<State>
 						<StateId>P3</StateId>
-						<StateType>common</StateType>
+						<StateType>normal</StateType>
 					</State>
-				</DFATransitionToState>
+				</ToState>
 			</DFATransition>
 			<DFATransition>
-				<DFATransitionFromState>
+				<FromState>
 					<State>
 						<StateId>P1</StateId>
 						<StateType>initial</StateType>
 					</State>
-				</DFATransitionFromState>
+				</FromState>
 				<DFAConditions>
 					<DFACondition>1</DFACondition>
 				</DFAConditions>
-				<DFATransitionToState>
+				<ToState>
 					<State>
 						<StateId>P3</StateId>
-						<StateType>common</StateType>
+						<StateType>normal</StateType>
 					</State>
-				</DFATransitionToState>
+				</ToState>
 			</DFATransition>
 			<DFATransition>
-				<DFATransitionFromState>
+				<FromState>
 					<State>
 						<StateId>P2</StateId>
-						<StateType>common</StateType>
+						<StateType>normal</StateType>
 					</State>
-				</DFATransitionFromState>
+				</FromState>
 				<DFAConditions>
 					<DFACondition>0</DFACondition>
 					<DFACondition>1</DFACondition>
 				</DFAConditions>
-				<DFATransitionToState>
+				<ToState>
 					<State>
 						<StateId>P4</StateId>
-						<StateType>final</StateType>
+						<StateType>accepted</StateType>
 					</State>
-				</DFATransitionToState>
+				</ToState>
 			</DFATransition>
 		</DFATransitions>
 	</DFA>

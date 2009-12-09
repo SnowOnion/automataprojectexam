@@ -6,16 +6,23 @@ public class State {
 	// state name should be unique in one Automaton
 	protected String stateId;
 	protected String stateType;
+	
+	/**********************************************
+	 * transitions and toStates are used to create a tree structure
+	 * for the automaton modeling.
+	 * If you get a Initial State, you may build a tree whose root is
+	 * such state, and the relative states and transitions could be stored
+	 * in the two attributes in State
+	 * 
+	 * In default situation, these two attributes are empty list.
+	 */
 	protected ArrayList<Transition> transitions;
 	protected ArrayList<State> toStates;
-
-	public State() {
-		stateId = "tempStateName";
-		stateType = AutomatonConstant.STATETYPES[1];
-		transitions = new ArrayList<Transition>();
-		toStates = new ArrayList<State>();
-	}
-
+	
+	/***************************************************
+	 * Default State Type is normal
+	 * @param stateId
+	 */
 	public State(String stateId) {
 		this.stateId = stateId;
 		stateType = AutomatonConstant.STATETYPES[1];
@@ -38,13 +45,30 @@ public class State {
 		return true;
 	}
 
-	public void setStateToAcceptedState() {
-		stateType = AutomatonConstant.STATETYPES[2];
+	public void setStateId(String id) {
+		this.stateId = id;
 	}
 
-	public void setStateToInitialState() {
-		stateType = AutomatonConstant.STATETYPES[0];
+	public String getStateId() {
+		return stateId;
 	}
+
+	public String getStateType() {
+		return stateType;
+	}
+
+	public void setStateType(String stateType) {
+		this.stateType = stateType;
+	}
+
+	public String toString(){
+		StringBuilder builder = new StringBuilder();
+		builder.append("(State Id:"+stateId+"\t");
+		builder.append("State Type:"+stateType+")\n");
+		return builder.toString();
+	}
+	
+	
 
 	public ArrayList<State> getToStates() {
 		toStates.clear();
@@ -102,20 +126,5 @@ public class State {
 		return false;
 	}
 
-	public void setStateId(String id) {
-		this.stateId = id;
-	}
-
-	public String getStateId() {
-		return stateId;
-	}
-
-	public String getStateType() {
-		return stateType;
-	}
-
-	public void setStateType(String stateType) {
-		this.stateType = stateType;
-	}
-
+	
 }
