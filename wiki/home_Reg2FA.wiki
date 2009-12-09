@@ -1,6 +1,5 @@
-#summary One-sentence summary of this page.
+#正则表达式和自动机转换模块简介及实现思路描述.
 
-模块简介及实现思路描述
 
 = Introduction =
 
