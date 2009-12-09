@@ -1,36 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <NFA>
-	<NFAName>NFA DATA 1</NFAName>
-	<NFAStates>
+	<AutomatonName>NFA DATA 1</AutomatonName>
+	<AutomatonStates>
 		<State>
 			<StateId>P1</StateId>
 			<StateType>initial</StateType>
 		</State>
 		<State>
 			<StateId>P2</StateId>
-			<StateType>common</StateType>
+			<StateType>normal</StateType>
 		</State>
-	</NFAStates>
-	<NFAInputSymbols></NFAInputSymbols>
+		<State>
+			<StateId>P3</StateId>
+			<StateType>accepted</StateType></State>
+	</AutomatonStates>
+	<AutomatonInputSymbols>
+		<InputSymbol>0</InputSymbol>
+		<InputSymbol>1</InputSymbol>
+		<InputSymbol>2</InputSymbol>
+	</AutomatonInputSymbols>
 	<NFATransitions>
 		<NFATransition>
-		<NFATransitionFromState>
+		<FromState>
 			<State>
-				<StateId></StateId>
-				<StateType></StateType>
+				<StateId>P1</StateId>
+				<StateType>initial</StateType>
 			</State>
-		</NFATransitionFromState>
+		</FromState>
 		<NFAConditions>
-			<NFACondition></NFACondition>
-			<NFACondition></NFACondition>
+			<NFACondition>0</NFACondition>
+			<NFACondition>1</NFACondition>
 		</NFAConditions>
-		<NFATransitionToState>
+		<ToState>
 			<State>
-				<StateId></StateId>
-				<StateType></StateType>
+				<StateId>P2</StateId>
+				<StateType>normal</StateType>
 			</State>
-		</NFATransitionToState>
+		</ToState>
 		</NFATransition>
+		<NFATransition>
+			<FromState>
+				<State>
+					<StateId>P2</StateId>
+					<StateType>normal</StateType></State></FromState>
+			<NFAConditions>
+				<NFACondition>2</NFACondition></NFAConditions>
+			<ToState>
+				<State>
+					<StateId>P3</StateId>
+					<StateType>accepted</StateType></State></ToState></NFATransition>
 	</NFATransitions>
 </NFA>
 	

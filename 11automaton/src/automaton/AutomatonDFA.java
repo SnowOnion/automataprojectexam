@@ -20,15 +20,5 @@ public class AutomatonDFA extends AutomatonNFA{
 		super(state);
 		// TODO Auto-generated constructor stub
 	}
-	
-	/*******************************************************
-	 * return true if the NFA is a DFA.
-	 * @return
-	 */
-	public boolean isDFA(){
-		//to do
-		return false;
-	}
-
-	
+ 
 }

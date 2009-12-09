@@ -33,34 +33,7 @@ public class AutomatonNFA extends Automaton {
 		}
 	}
 
-	/**
-	 * 
-	 * @param state
-	 * @return
-	 */
-	public boolean hasState(State state) {
-		if (states.contains(state)) {
-			return true;
-		}
-		return false;
-	}
 
-	public boolean addState(State state) {
-		if (hasState(state)) {
-			return false;
-		}
-		states.add(state);
-		return true;
-	}
-
-	public boolean removeState(State state) {
-		if (hasState(state)) {
-			states.remove(state);
-			return true;
-		}
-		return false;
-	}
-	
 	
 
 }

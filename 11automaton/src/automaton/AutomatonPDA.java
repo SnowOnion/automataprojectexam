@@ -1,7 +1,6 @@
 package automaton;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**********************************************************
  * PDA = (Q,E,S,T,q,Z,F) Q: a finite set of states E: a finite set of input
@@ -13,7 +12,7 @@ import java.util.List;
  * 
  */
 public class AutomatonPDA extends Automaton {
-	private List<String> stackSymbols;
+	private ArrayList<String> stackSymbols;
 	private String initialStackSymbol;
 
 	public AutomatonPDA() {
@@ -32,12 +31,18 @@ public class AutomatonPDA extends Automaton {
 	public String getInitialStackSymbol() {
 		return initialStackSymbol;
 	}
-
+	
 	public void setInitialStackSymbol(String initialStackSymbol) {
 		this.initialStackSymbol = initialStackSymbol;
 	}
 
-	public List<String> getStackSymbols() {
+	public ArrayList<String> getStackSymbols() {
 		return stackSymbols;
 	}
+
+	public void setStackSymbols(ArrayList<String> stackSymbols) {
+		this.stackSymbols = stackSymbols;
+	}
+
+	
 }

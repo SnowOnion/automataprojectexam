@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE NFA[
-	<!ELEMENT NFA(NFAName,NFAStates,NFAInputSymbols,NFATransitions)>
-	<!ELEMENT NFAName(#PCDATA)>
-	<!ELEMENT NFAStates(State+)>
+	<!ELEMENT NFA(AutomatonName,AutomatonStates,AutomatonInputSymbols,NFATransitions)>
+	<!ELEMENT AutomatonName(#PCDATA)>
+	<!ELEMENT AutomatonStates(State+)>
 		<!ELEMENT State(StateId,StateType)>
 		<!ELEMENT StateId(#PCDATA)>
 		<!ELEMENT StateType(#PCDATA)>
-	<!ELEMENT NFAInputSymbols(InputSymbol*)>
+	<!ELEMENT AutomatonInputSymbols(InputSymbol*)>
 	<!ELEMENT InputSymbol(#PCDATA)>
 	<!ELEMENT NFATransitions(NFATransitions*)>
 	<!ELEMENT NFATransition(FromState,NFAConditions,ToState)>

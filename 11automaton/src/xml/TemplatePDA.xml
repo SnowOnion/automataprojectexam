@@ -1,47 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PDA>
-	<PDAName></PDAName>
-	<PDAStates>
+	<AutomatonName>PDA Test</AutomatonName>
+	<AutomatonStates>
 		<State>
-			<StateId></StateId>
-			<StateType></StateType>
+			<StateId>P1</StateId>
+			<StateType>initial</StateType>
 		</State>
-	</PDAStates>
-	<PDAInputSymbols>
-		<InputSymbol></InputSymbol>
-		<InputSymbol></InputSymbol>
-		<InputSymbol></InputSymbol>
-	</PDAInputSymbols>
+		<State>
+			<StateId>P2</StateId>
+			<StateType>normal</StateType>
+		</State>
+		<State>
+			<StateId>P3</StateId>
+			<StateType>accepted</StateType>
+		</State>
+	</AutomatonStates>
+	<AutomatonInputSymbols>
+		<InputSymbol>0</InputSymbol>
+		<InputSymbol>1</InputSymbol>
+		<InputSymbol>2</InputSymbol>
+	</AutomatonInputSymbols>
 	<PDAStackSymbols>
-		<PDAStackSymbol></PDAStackSymbol>
-		<PDAStackSymbol></PDAStackSymbol>
-		<PDAStackSymbol></PDAStackSymbol>
+		<PDAStackSymbol>Z</PDAStackSymbol>
+		<PDAStackSymbol>X</PDAStackSymbol>
+		<PDAStackSymbol>Y</PDAStackSymbol>
 	</PDAStackSymbols>
+	<PDAInitialStackSymbol>Z</PDAInitialStackSymbol>
 	<PDATransitions>
-	<PDACondition>
-		<FromState>
-			<State>
-				<StateId></StateId>
-				<StateType></StateType>
-			</State>
-		</FromState>
-		<PDAConditions>
-			<PDACondition>
-				<PDAConditionSymbol>
-					<InputSymbol></InputSymbol>
-				</PDAConditionSymbol>
-				<PDAFromStackSymbol>
-					<PDAStackSymbol></PDAStackSymbol>
-				</PDAFromStackSymbol>
-				<PDAToStackSymbol>
-					<PDAStackSymbol></PDAStackSymbol>
-					<PDAStackSymbol></PDAStackSymbol>
-				</PDAToStackSymbol>
-			</PDACondition>
-		</PDAConditions>
-		<ToState>
-			<State></State>
-		</ToState>
-		</PDACondition>
+		<PDATransition>
+			<FromState>
+				<State>
+					<StateId>P1</StateId>
+					<StateType>initial</StateType>
+				</State>
+			</FromState>
+			<PDAConditions>
+				<PDACondition>
+					<PDAConditionSymbol>0</PDAConditionSymbol>
+					<PDAFromStackSymbol>Z</PDAFromStackSymbol>
+					<PDAToStackSymbol>
+						<PDAStackSymbol>X</PDAStackSymbol>
+						<PDAStackSymbol>Z</PDAStackSymbol>
+					</PDAToStackSymbol>
+				</PDACondition>
+			</PDAConditions>
+			<ToState>
+				<State>
+					<StateId>P2</StateId>
+					<StateType>normal</StateType>
+				</State>
+			</ToState>
+		</PDATransition>
+		<PDATransition>
+			<FromState>
+				<State>
+					<StateId>P2</StateId>
+					<StateType>normal</StateType>
+				</State>
+			</FromState>
+			<PDAConditions>
+				<PDACondition>
+					<PDAConditionSymbol>0</PDAConditionSymbol>
+					<PDAFromStackSymbol>X</PDAFromStackSymbol>
+					<PDAToStackSymbol>
+					</PDAToStackSymbol>
+				</PDACondition>
+			</PDAConditions>
+			<ToState>
+				<State>
+					<StateId>P3</StateId>
+					<StateType>accepted</StateType>
+				</State>
+			</ToState>
+		</PDATransition>
 	</PDATransitions>
 </PDA>
