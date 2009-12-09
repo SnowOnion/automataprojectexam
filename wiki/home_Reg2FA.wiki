@@ -1,0 +1,15 @@
+#summary One-sentence summary of this page.
+
+模块简介及实现思路描述
+
+= Introduction =
+
+本模块主要实现两个功能：
+  * 正则表达式到非确定自动机的转换
+  * 确定自动机到正则表达式的转换
+因为 NFA 到 DFA 的转换由其他小组完成，所以在本模块中并不进行这一功能的实现，只对其他小组的实现进行相应的调用。
+
+= Details =
+
+
+  <h3>Loading......</h3>
