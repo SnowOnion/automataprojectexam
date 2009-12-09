@@ -9,6 +9,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.internal.decorators.FullTextDecoratorRunnable;
 import org.eclipse.ui.part.ViewPart;
@@ -32,7 +33,16 @@ public class View_Main extends ViewPart {
 
 	private Automaton m_Automaton = null;
 	private boolean isDirty = false;
-	private Canvas canvas;
+	private Canvas_Automaton canvas;
+	private IWorkbenchWindow mainWindow = null;
+
+	public IWorkbenchWindow getMainWindow() {
+		return mainWindow;
+	}
+
+	public void setMainWindow(IWorkbenchWindow mainWindow) {
+		this.mainWindow = mainWindow;
+	}
 
 	/**
 	 * 新建文件时使用的构造函数
@@ -40,6 +50,7 @@ public class View_Main extends ViewPart {
 	 * @wbp.parser.constructor
 	 */
 	public View_Main() {
+		super();
 		INSTANCENUM++;
 		isDirty = false;
 	}
@@ -68,14 +79,13 @@ public class View_Main extends ViewPart {
 		ScrolledForm scrolledForm = toolkit.createScrolledForm(container);
 		toolkit.paintBordersFor(scrolledForm);
 
-		canvas = new Canvas(scrolledForm.getBody(), SWT.BORDER);
+		canvas = new Canvas_Automaton(scrolledForm.getBody(), SWT.BORDER, this);
 		canvas.setSize(1000, 1000);
 		toolkit.adapt(canvas);
 		toolkit.paintBordersFor(canvas);
 		canvas.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {
-				// 画椭圆
-				e.gc.drawOval(80, 50, 20, 20);
+				canvas.paint(e.gc);
 			}
 		});
 		createActions();
@@ -124,5 +134,9 @@ public class View_Main extends ViewPart {
 
 	public void setDirty(boolean isDirty) {
 		this.isDirty = isDirty;
+	}
+
+	public void doDelete() {
+		canvas.doDelete();
 	}
 }

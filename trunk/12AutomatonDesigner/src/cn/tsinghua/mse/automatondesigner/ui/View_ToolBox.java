@@ -12,6 +12,8 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.MouseMoveListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.List;
@@ -35,10 +37,20 @@ import com.swtdesigner.SWTResourceManager;
 public class View_ToolBox extends ViewPart {
 
 	public static final String ID = "cn.tsinghua.mse.automatondesigner.ui.View_ToolBox"; //$NON-NLS-1$
+	public static final byte TOOLTYPE_SELECT = 1;
+	public static final byte TOOLTYPE_STATE = 2;
+	public static final byte TOOLTYPE_TRANSFORM = 3;
+
 	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
+	private ToolBar toolBar;
+	private byte toolTypeSelected = TOOLTYPE_SELECT;
+
+	public byte getToolTypeSelected() {
+		return toolTypeSelected;
+	}
 
 	public View_ToolBox() {
-
+		super();
 	}
 
 	/**
@@ -59,7 +71,7 @@ public class View_ToolBox extends ViewPart {
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
 
-		ToolBar toolBar = new ToolBar(scrolledComposite, SWT.BORDER | SWT.FLAT
+		toolBar = new ToolBar(scrolledComposite, SWT.BORDER | SWT.FLAT
 				| SWT.RIGHT | SWT.VERTICAL);
 		toolBar.setFont(SWTResourceManager.getFont("ËÎÌå", 12, SWT.NORMAL));
 		toolkit.adapt(toolBar);
@@ -70,24 +82,72 @@ public class View_ToolBox extends ViewPart {
 				"AutomatonDesigner", "icons/selected.gif"));
 		ti_Selection.setSelection(true);
 		ti_Selection.setText("  Ñ¡Ôñ    ");
+		ti_Selection.setToolTipText("Ñ¡Ôñ");
 
 		ToolItem ti_State = new ToolItem(toolBar, SWT.RADIO);
 		ti_State.setImage(ResourceManager.getPluginImage("AutomatonDesigner",
 				"icons/state2.gif"));
 		ti_State.setText("  ×´Ì¬    ");
+		ti_State.setToolTipText("×´Ì¬");
 
 		ToolItem ti_Transform = new ToolItem(toolBar, SWT.RADIO);
 		ti_Transform.setImage(ResourceManager.getPluginImage(
 				"AutomatonDesigner", "icons/transform.gif"));
 		ti_Transform.setText("  ×ªÒÆ    ");
+		ti_Transform.setToolTipText("×ªÒÆ");
 
 		scrolledComposite.setContent(toolBar);
 		scrolledComposite.setMinSize(toolBar.computeSize(SWT.DEFAULT,
 				SWT.DEFAULT));
 
+		ti_Selection.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				toolTypeSelected = TOOLTYPE_SELECT;
+			}
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
+		});
+		
+		ti_State.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				toolTypeSelected = TOOLTYPE_STATE;
+			}
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
+		});
+		
+		ti_Transform.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				toolTypeSelected = TOOLTYPE_TRANSFORM;
+			}
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
+		});
+
 		createActions();
 		initializeToolBar();
 		initializeMenu();
+	}
+
+	public int getToolItemType() {
+		ToolItem[] items = toolBar.getItems();
+		for (ToolItem item : items) {
+			if (item.getSelection()) {
+				if (item.getToolTipText().equals("Ñ¡Ôñ"))
+					return TOOLTYPE_SELECT;
+				else if (item.getToolTipText().equals("×´Ì¬"))
+					return TOOLTYPE_STATE;
+				else
+					return TOOLTYPE_TRANSFORM;
+			}
+		}
+		return TOOLTYPE_SELECT;
 	}
 
 	/**
