@@ -7,6 +7,7 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.ToolBarContributionItem;
 import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.application.ActionBarAdvisor;
@@ -14,6 +15,7 @@ import org.eclipse.ui.application.IActionBarConfigurer;
 
 import automatondesigner.Activator;
 import cn.tsinghua.mse.automatondesigner.main.action.ActNewFile;
+import cn.tsinghua.mse.automatondesigner.ui.View_Main;
 import cn.tsinghua.mse.automatondesigner.ui.View_Property;
 import cn.tsinghua.mse.automatondesigner.ui.View_ToolBox;
 
@@ -28,7 +30,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
 	private ActNewFile newFileACT;
 	private Action exitAction;
-	IWorkbenchWindow mainWindow = null;
+	public static IWorkbenchWindow mainWindow = null;
 	private IAction saveAction;
 	private IAction cutAction;
 	private IAction copyAction;
@@ -38,6 +40,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	private IAction closeAllAction;
 	private Action openToolBoxAction;
 	private Action openPropertyAction;
+	private Action deleteAction;
 
 	public ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
 		super(configurer);
@@ -100,6 +103,25 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		openPropertyAction
 				.setId("cn.tsinghua.mse.automatondesigner.openPropertyAction");
 		register(openPropertyAction);
+
+		
+		deleteAction = new Action("É¾³ý") {
+			public void run() {
+				doDelete();
+			}
+		};
+		deleteAction.setId("cn.tsinghua.mse.automatondesigner.deleteAction");
+		deleteAction.setImageDescriptor(Activator
+				.getImageDescriptor("icons/delete16.gif"));
+		register(deleteAction);
+
+	}
+
+	protected void doDelete() {
+		 IWorkbenchPart currentView = mainWindow.getActivePage().getActivePart();
+		 if (currentView instanceof View_Main){
+			 ((View_Main)currentView).doDelete();
+		 }
 	}
 
 	private void openView(String id) {
@@ -135,6 +157,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 				"cn.tsinghua.mse.automatondesigner.editmenu");
 		editMenuManager.setVisible(true);
 		menuBar.add(editMenuManager);
+		editMenuManager.add(deleteAction);
 		editMenuManager.add(cutAction);
 		editMenuManager.add(copyAction);
 
@@ -154,7 +177,6 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		menuBar.add(helpMenuManager);
 		helpMenuManager.add(helpContentsAction);
 		helpMenuManager.add(aboutAction);
-
 	}
 
 	protected void fillCoolBar(ICoolBarManager coolBar) {
@@ -162,5 +184,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		coolBar.add(new ToolBarContributionItem(toolbar,
 				"cn.tsinghua.mse.automatondesigner.toolbar"));
 		toolbar.add(newFileACT);
+		toolbar.add(new Separator());
+		toolbar.add(deleteAction);
 	}
 }

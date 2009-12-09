@@ -14,7 +14,7 @@ public class Perspective implements IPerspectiveFactory {
 		layout.addView("cn.tsinghua.mse.automatondesigner.ui.View_ToolBox", IPageLayout.LEFT, 0.2f, editorArea);
 		layout.addView("cn.tsinghua.mse.automatondesigner.ui.View_Property", IPageLayout.RIGHT, 0.75f, editorArea);
 		//layout.addView("cn.tsinghua.mse.automatondesigner.ui.View_Main", IPageLayout.TOP, IPageLayout.RATIO_MAX, editorArea);
-		IFolderLayout folder = layout.createFolder("messages", IPageLayout.TOP, 0.7f, editorArea);
+		IFolderLayout folder = layout.createFolder("automaton", IPageLayout.TOP, 0.7f, editorArea);
 		folder.addPlaceholder(View_Main.ID + ":*");
 		//folder.addView(View_Main.ID);
 	}
