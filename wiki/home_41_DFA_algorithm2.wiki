@@ -1,4 +1,4 @@
-DFA等价与包含的判断算法
+#summary DFA等价与包含的判断算法
 
 = Introduction =
 
