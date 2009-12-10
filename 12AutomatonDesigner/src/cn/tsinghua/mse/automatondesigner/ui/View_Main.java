@@ -53,6 +53,7 @@ public class View_Main extends ViewPart {
 		super();
 		INSTANCENUM++;
 		isDirty = false;
+		m_Automaton = new Automaton();
 	}
 
 	/**

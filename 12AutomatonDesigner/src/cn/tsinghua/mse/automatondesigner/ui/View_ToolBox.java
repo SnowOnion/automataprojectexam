@@ -134,21 +134,32 @@ public class View_ToolBox extends ViewPart {
 		initializeToolBar();
 		initializeMenu();
 	}
-
-	public int getToolItemType() {
+	
+	public void setToolSelected(){
 		ToolItem[] items = toolBar.getItems();
-		for (ToolItem item : items) {
-			if (item.getSelection()) {
-				if (item.getToolTipText().equals("Ñ¡Ôñ"))
-					return TOOLTYPE_SELECT;
-				else if (item.getToolTipText().equals("×´Ì¬"))
-					return TOOLTYPE_STATE;
-				else
-					return TOOLTYPE_TRANSFORM;
-			}
+		for(ToolItem item : items){
+			if (item.getToolTipText().equals("Ñ¡Ôñ"))
+				item.setSelection(true);
+			else 
+				item.setSelection(false);
 		}
-		return TOOLTYPE_SELECT;
+		toolTypeSelected = TOOLTYPE_SELECT;
 	}
+
+//	public int getToolItemType() {
+//		ToolItem[] items = toolBar.getItems();
+//		for (ToolItem item : items) {
+//			if (item.getSelection()) {
+//				if (item.getToolTipText().equals("Ñ¡Ôñ"))
+//					return TOOLTYPE_SELECT;
+//				else if (item.getToolTipText().equals("×´Ì¬"))
+//					return TOOLTYPE_STATE;
+//				else
+//					return TOOLTYPE_TRANSFORM;
+//			}
+//		}
+//		return TOOLTYPE_SELECT;
+//	}
 
 	/**
 	 * Create the actions.

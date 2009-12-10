@@ -102,19 +102,52 @@ public class Circle_State implements IPaint {
 			if (type == IMAGE_TYPE_SELECTED)
 				gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_RED));
 			else if (type == IMAGE_TYPE_COMMON)
-				gc
-						.setBackground(gc.getDevice().getSystemColor(
+				gc.setBackground(gc.getDevice().getSystemColor(
 								SWT.COLOR_BLACK));
 			gc.fillRoundRectangle(centre.x - radius / 2, centre.y - radius / 2,
 					radius, radius, radius - 4, radius - 4);
 			gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_WHITE));
 			gc.fillRoundRectangle(centre.x - radius / 2 + 2, centre.y - radius
 					/ 2 + 2, radius - 4, radius - 4, radius - 8, radius - 8);
+			
 		}
 		else if (type == IMAGE_TYPE_MOVING){
 			gc.drawRoundRectangle(centre.x - radius / 2, centre.y - radius / 2,
 					radius, radius, radius - 4, radius - 4);
 		}
+	}
+	
+	/**
+	 * 绘制最终状态的额外中心圈
+	 * @param gc
+	 */
+	public void paintFSAddition(GC gc, boolean selected){
+		if (selected)
+			gc.setForeground(gc.getDevice().getSystemColor(SWT.COLOR_RED));
+		else
+			gc.setForeground(gc.getDevice().getSystemColor(
+							SWT.COLOR_BLACK));
+		gc.drawRoundRectangle(centre.x - radius / 4, centre.y - radius / 4,
+				radius/2, radius/2, radius/2 - 2, radius/2 - 2);
+	}
+	
+	/**
+	 * 绘制开始状态的额外箭头
+	 * @param gc
+	 */
+	public void paintISArrow(GC gc, boolean selected){
+		if (selected)
+			gc.setForeground(gc.getDevice().getSystemColor(SWT.COLOR_RED));
+		else
+			gc.setForeground(gc.getDevice().getSystemColor(
+							SWT.COLOR_BLACK));
+		for (int i = 0; i < 2; i++){
+			gc.drawLine(centre.x - 2*radius, centre.y+i, centre.x - radius/2, centre.y+i);
+		}
+		gc.drawLine(centre.x - radius/2 - 10, centre.y+7, centre.x - radius/2, centre.y+2);
+		gc.drawLine(centre.x - radius/2 - 10, centre.y+6, centre.x - radius/2, centre.y+1);
+		gc.drawLine(centre.x - radius/2 - 10, centre.y-5, centre.x - radius/2, centre.y);
+		gc.drawLine(centre.x - radius/2 - 10, centre.y-4, centre.x - radius/2, centre.y+1);
 	}
 
 }
