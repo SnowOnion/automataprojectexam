@@ -1,5 +1,14 @@
 [mailto:huangcd.thu@gmail.com 黄崇迪] 2009210940
 
+= 开发环境 =
+  * Windows Vista^TM^ Home Premuim
+  * IntelliJ IDEA 8.1.4
+  * JDK1.6.0_13
+
+= 项目依赖库 =
+  * dom4j （目前官网被黑……，依赖于[http://jaxen.org/ jaxen]）
+  * [http://jung.sourceforge.net/ jung]（依赖于[http://larvalabs.com/collections/ Collections-Generic]、[http://dsd.lbl.gov/~hoschek/colt/ Cern Colt Scientific Library 1.2.0]）
+
 = 项目简要介绍 =
 
 所选题目为*NFA/DFA的转换工具*
@@ -16,10 +25,12 @@
   # 对下推自动机上实现类似功能。
 
 =项目进度预期安排=
+
 确定各种格式需求以后开始项目（本周末到下周初）。
 基本功能预计花一周时间完成。之后如果时间允许，实现附加部分功能， 每部分预计需要一周时间。
 
-=研究路线的简要介绍=
+= 研究路线的简要介绍 =
+
  一些实现思路如下：
   # XML文件<=>自动机：考虑使用dom4j+XPath实现。为了保证可扩展性（能在使用不同DTD的XML文件上使用）， 可能会把XPath语句以配置文件的形式保存，或者使用接口的形式实现。
   # 自动机的表示：将自动机以有向图的形式在内存中表示，其中节点表示状态，边表示转移。
