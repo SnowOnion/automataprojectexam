@@ -1,0 +1,84 @@
+\documentclass[12pt,a4paper]{article}
+\renewcommand \baselinestretch{1.5}
+\usepackage{booktabs}
+\usepackage{textcomp}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{mflogo}
+\usepackage[T1]{fontenc}
+\usepackage{CJKutf8}
+\usepackage[unicode=true,
+      CJKbookmarks=false,
+      bookmarksnumbered=true,
+      bookmarksopen=true,
+      bookmarksopenlevel=2,
+      breaklinks=true,
+      linkcolor=blue,
+      plainpages=true,
+      pdfpagelabels,
+      pdfborder=0 0 0]{hyperref}
+%首行缩进
+\usepackage{indentfirst}
+\usepackage{tabularx}
+%图形
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{tikz}
+\usetikzlibrary{automata}
+\renewcommand\contentsname{\textbf{目录}}
+
+\author{计研091~黄崇迪~2009210940}
+\title{自动机与形式逻辑~大作业项目设计文档}
+\begin{document}
+\begin{CJK}{UTF8}{hei}
+    \maketitle
+\end{CJK}
+\begin{CJK}{UTF8}{song}
+    \tableofcontents
+    \newpage
+    
+    \section{项目简要介绍}
+    所选题目为\begin{CJK}{UTF8}{hei}\textbf{NFA/DFA的转换工具}\end{CJK}
+    
+    具体要求如下：
+    \begin{enumerate}
+    \item 用Java编写，保证可扩展性。
+    \item 检查某个字符串是否被指定的自动机接受。
+    \item 判断语言是否为空，是否为无穷。
+    \item 实现NFA到DFA的相互转换。
+    \end{enumerate}
+    
+    考虑到可用性和扩展性需要，如果时间允许，增加下面一些内容：
+    \begin{enumerate}
+    \item 实现有限状态自动机的导出（初步考虑dot、tikz、png等格式）。
+    \item 实现有限状态自动机的显示，如果可能的话，
+        在此基础上动态显示字符串接受过程和自动机的转换过程。
+    \item 对下推自动机上实现类似功能。
+    \end{enumerate}
+    
+    \section{项目进度预期安排}
+    确定各种格式需求以后开始项目（本周末到下周初）。
+    
+    基本功能预计花一周时间完成。之后如果时间允许，实现附加部分功能，
+    每部分预计需要一周时间。
+    
+    \section{研究路线的简要介绍}
+    一些实现思路如下：
+    \begin{enumerate}
+    \item XML文件 $\Leftrightarrow$ 自动机：考虑使用dom4j+XPath实现。
+        为了保证可扩展性（能在使用不同DTD的XML文件上使用），
+        可能会把XPath语句以配置文件的形式保存，或者使用接口的形式实现。
+    \item 自动机的表示：将自动机以有向图的形式在内存中表示，其中节点表示状态，边表示转移。
+    \item 检查串是否被接受：初步考虑两种实现，一是使用状态迁移的方式计算；
+        二是通过某种方式把自动机转换成Java的正则表达式，然后检查串是否匹配。
+    \item 判断语言是否为空：初步考虑检查从开始状态是否有路径可达某个终止状态。
+    \item 判断语言是否为无穷：初步考虑检查从开始状态到终止状态的路径是否存在环。
+    \item 自动机的导出：dot、tikz根据相应格式输出，png可能需要使用到显示部分功能。
+    \item 自动机的显示：初步考虑使用开源工具JUNG2.0。如果实现有难度，
+        可能改用JUNG1.7.6。
+    \end{enumerate}
+
+%这个newpage不能去掉
+\newpage
+\end{CJK}
+\end{document}
