@@ -85,6 +85,21 @@ public class Menu_StateRightClick extends Composite {
 		});
 		menuItem_3.setText(AutomatonConst.STATE_TYPE_FINAL);
 		
+		MenuItem menuItem_4 = new MenuItem(menu_1, SWT.RADIO);
+		if (stateType.equals(AutomatonConst.STATE_TYPE_INI_FINAL)){
+			menuItem_4.setSelection(true);
+		}
+		else {
+			menuItem_4.setSelection(false);
+		}
+		menuItem_4.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				parent.setSelectedStateType(AutomatonConst.STATE_TYPE_INI_FINAL);
+			}
+		});
+		menuItem_4.setText(AutomatonConst.STATE_TYPE_INI_FINAL);
+		
 		
 	}
 	
