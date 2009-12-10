@@ -40,11 +40,12 @@
 == 类图 ==
 === automaton ===
 这里是基础数据结构的相关类，这些类在包automaton中 <br>
-[http://automatonmodeling.googlecode.com/files/basicClassDiagram1209.bmp]
+[http://automataprojectexam.googlecode.com/files/basicClassDiagram1209.JPG]
+
+
 === xml ===
 这里是XML的存储和读取的相关类的类图，这些类在包xml中。 <br>
-[http://automatonmodeling.googlecode.com/files/xmlClassDiagram1209.bmp]
-
+[http://automataprojectexam.googlecode.com/files/xmlClassDiagram1209.JPG]
 
 == DTD 定义和XML文件==
 XML的样例文件放在xml包中，在xmldata中是一些测试用的XML文件，可以参考TemplateXML来进行创建自己的自动机类，然后可以通过调用AutomatonFactory构造得到一个Automaton。不要写错XML，项目目前的挑错能力很差，如果有不匹配的标签很容易出错。
