@@ -27,6 +27,7 @@ public class Automaton {
 		m_FinalStates = finals;
 		m_Type = type;
 	}
+	
 	public void removeState(State state){
 		if (m_FinalStates != null && m_FinalStates.size() != 0)
 			m_FinalStates.remove(state);
@@ -37,14 +38,16 @@ public class Automaton {
 	}
 	
 	public String getStateType(State s){
+		String type = AutomatonConst.STATE_TYPE_COMMON;
 		if (m_StartState != null && m_StartState.equals(s))
-			return AutomatonConst.STATE_TYPE_INITIAL;
-		else if (m_FinalStates != null && m_FinalStates.contains(s))
-			return AutomatonConst.STATE_TYPE_FINAL;
-		else if (m_States!= null && m_States.contains(s))
-			return AutomatonConst.STATE_TYPE_COMMON;
-		else
-			return "";
+			type = AutomatonConst.STATE_TYPE_INITIAL;
+		if (m_FinalStates != null && m_FinalStates.contains(s)){
+			if (!type.equals(AutomatonConst.STATE_TYPE_INITIAL))
+				type = AutomatonConst.STATE_TYPE_FINAL;
+			else
+				type = AutomatonConst.STATE_TYPE_INI_FINAL;
+		}
+		return type;
 	}
 	
 	public void addInputSymbol(String s){

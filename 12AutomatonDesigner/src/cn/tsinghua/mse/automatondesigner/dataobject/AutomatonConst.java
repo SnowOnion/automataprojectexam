@@ -10,5 +10,6 @@ public class AutomatonConst {
 	public static final String STATE_TYPE_INITIAL = "³õÊ¼×´Ì¬";
 	public static final String STATE_TYPE_COMMON = "ÆÕÍ¨×´Ì¬";
 	public static final String STATE_TYPE_FINAL = "½áÊø×´Ì¬";
-	public static final String [] STATETYPES={STATE_TYPE_INITIAL, STATE_TYPE_COMMON, STATE_TYPE_FINAL};
+	public static final String STATE_TYPE_INI_FINAL = "¿ªÊ¼½áÊø×´Ì¬";
+	public static final String [] STATETYPES={STATE_TYPE_INITIAL, STATE_TYPE_COMMON, STATE_TYPE_FINAL, STATE_TYPE_INI_FINAL};
 }

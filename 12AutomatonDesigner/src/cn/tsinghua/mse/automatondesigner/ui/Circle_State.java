@@ -26,6 +26,7 @@ public class Circle_State implements IPaint {
 	private State m_State;
 	private Point centre;
 	private Point originalCentre;
+
 	public Point getOriginalCentre() {
 		return originalCentre;
 	}
@@ -93,61 +94,72 @@ public class Circle_State implements IPaint {
 
 	public boolean checkPointIn(int x, int y) {
 		double dist = Math.pow((x - centre.x), 2) + Math.pow((y - centre.y), 2);
-		return dist <= Math.pow(radius/2, 2);
+		return dist <= Math.pow(radius / 2, 2);
 	}
 
 	@Override
 	public void paint(GC gc, byte type) {
-		if (type == IMAGE_TYPE_SELECTED || type == IMAGE_TYPE_COMMON) {
-			if (type == IMAGE_TYPE_SELECTED)
-				gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_RED));
-			else if (type == IMAGE_TYPE_COMMON)
-				gc.setBackground(gc.getDevice().getSystemColor(
-								SWT.COLOR_BLACK));
-			gc.fillRoundRectangle(centre.x - radius / 2, centre.y - radius / 2,
-					radius, radius, radius - 4, radius - 4);
-			gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_WHITE));
-			gc.fillRoundRectangle(centre.x - radius / 2 + 2, centre.y - radius
-					/ 2 + 2, radius - 4, radius - 4, radius - 8, radius - 8);
-			
-		}
-		else if (type == IMAGE_TYPE_MOVING){
-			gc.drawRoundRectangle(centre.x - radius / 2, centre.y - radius / 2,
-					radius, radius, radius - 4, radius - 4);
-		}
+		// if (type == IMAGE_TYPE_SELECTED || type == IMAGE_TYPE_COMMON ) {
+		if (type == IMAGE_TYPE_SELECTED)
+			gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_RED));
+		else if (type == IMAGE_TYPE_COMMON)
+			gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_BLUE));
+		gc.fillRoundRectangle(centre.x - radius / 2, centre.y - radius / 2,
+				radius, radius, radius - 4, radius - 4);
+		gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_WHITE));
+		gc.fillRoundRectangle(centre.x - radius / 2 + 2, centre.y - radius / 2
+				+ 2, radius - 4, radius - 4, radius - 8, radius - 8);
+		// if (type == IMAGE_TYPE_SELECTED)
+		// gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_RED));
+		// else if (type == IMAGE_TYPE_COMMON)
+		// gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_CYAN));
+		// gc.fillOval(centre.x - radius / 2, centre.y - radius / 2,
+		// radius, radius);
+		// gc.drawOval(centre.x - radius / 2, centre.y - radius / 2,
+		// radius, radius);
+		// }
+		// else if (type == IMAGE_TYPE_MOVING){
+		// gc.drawRoundRectangle(centre.x - radius / 2, centre.y - radius / 2,
+		// radius, radius, radius - 4, radius - 4);
+		// }
 	}
-	
+
 	/**
 	 * 绘制最终状态的额外中心圈
+	 * 
 	 * @param gc
 	 */
-	public void paintFSAddition(GC gc, boolean selected){
+	public void paintFSAddition(GC gc, boolean selected) {
 		if (selected)
 			gc.setForeground(gc.getDevice().getSystemColor(SWT.COLOR_RED));
 		else
-			gc.setForeground(gc.getDevice().getSystemColor(
-							SWT.COLOR_BLACK));
+			gc.setForeground(gc.getDevice().getSystemColor(SWT.COLOR_BLUE));
 		gc.drawRoundRectangle(centre.x - radius / 4, centre.y - radius / 4,
-				radius/2, radius/2, radius/2 - 2, radius/2 - 2);
+				radius / 2, radius / 2, radius / 2 - 2, radius / 2 - 2);
 	}
-	
+
 	/**
 	 * 绘制开始状态的额外箭头
+	 * 
 	 * @param gc
 	 */
-	public void paintISArrow(GC gc, boolean selected){
+	public void paintISArrow(GC gc, boolean selected) {
 		if (selected)
 			gc.setForeground(gc.getDevice().getSystemColor(SWT.COLOR_RED));
 		else
-			gc.setForeground(gc.getDevice().getSystemColor(
-							SWT.COLOR_BLACK));
-		for (int i = 0; i < 2; i++){
-			gc.drawLine(centre.x - 2*radius, centre.y+i, centre.x - radius/2, centre.y+i);
+			gc.setForeground(gc.getDevice().getSystemColor(SWT.COLOR_BLUE));
+		for (int i = 0; i < 2; i++) {
+			gc.drawLine(centre.x - 2 * radius, centre.y + i, centre.x - radius
+					/ 2, centre.y + i);
 		}
-		gc.drawLine(centre.x - radius/2 - 10, centre.y+7, centre.x - radius/2, centre.y+2);
-		gc.drawLine(centre.x - radius/2 - 10, centre.y+6, centre.x - radius/2, centre.y+1);
-		gc.drawLine(centre.x - radius/2 - 10, centre.y-5, centre.x - radius/2, centre.y);
-		gc.drawLine(centre.x - radius/2 - 10, centre.y-4, centre.x - radius/2, centre.y+1);
+		gc.drawLine(centre.x - radius / 2 - 10, centre.y + 7, centre.x - radius
+				/ 2, centre.y + 2);
+		gc.drawLine(centre.x - radius / 2 - 10, centre.y + 6, centre.x - radius
+				/ 2, centre.y + 1);
+		gc.drawLine(centre.x - radius / 2 - 10, centre.y - 5, centre.x - radius
+				/ 2, centre.y);
+		gc.drawLine(centre.x - radius / 2 - 10, centre.y - 4, centre.x - radius
+				/ 2, centre.y + 1);
 	}
 
 }

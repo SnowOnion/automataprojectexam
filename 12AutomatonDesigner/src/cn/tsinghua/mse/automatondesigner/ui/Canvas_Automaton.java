@@ -19,6 +19,7 @@ import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -40,6 +41,8 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 	private ArrayList<Circle_State> m_Circles;
 	private ArrayList<Circle_State> m_SelectedCircles;
 	private View_Main m_mainView = null;
+	
+	private Rectangle selectRectangle = null;
 
 	private Point startMovingPoint = null;
 	private boolean isMoving = false;
@@ -64,48 +67,54 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 		}
 
 		for (Circle_State circle : m_SelectedCircles) {
-			circle.paint(gc, isMoving ? Circle_State.IMAGE_TYPE_MOVING
-					: Circle_State.IMAGE_TYPE_SELECTED);
+			circle.paint(gc, Circle_State.IMAGE_TYPE_SELECTED);
 		}
-		
+
 		paintAddition(gc);
+		
+		if (selectRectangle != null && selectRectangle.width != 0){
+			gc.setForeground(gc.getDevice().getSystemColor(SWT.COLOR_BLACK));
+			gc.drawRectangle(selectRectangle.x, selectRectangle.y, selectRectangle.width, selectRectangle.height);
+		}
 	}
 
 	/**
 	 * 用于绘制自动机的其他额外组件，包括开始状态的箭头和结束状态的多余中心圈。
+	 * 
 	 * @param gc
 	 */
 	private void paintAddition(GC gc) {
-		ArrayList<State> finalStates = m_mainView.getM_Automaton().getM_FinalStates();
-		for (State state : finalStates){
+		ArrayList<State> finalStates = m_mainView.getM_Automaton()
+				.getM_FinalStates();
+		for (State state : finalStates) {
 			Circle_State circle = findCircle(state);
-			if (circle != null){
-				circle.paintFSAddition(gc, m_SelectedCircles.contains(circle)&&(!isMoving));
+			if (circle != null) {
+				circle.paintFSAddition(gc, m_SelectedCircles.contains(circle));
 			}
 		}
 		State s = m_mainView.getM_Automaton().getM_StartState();
-		if (s != null){
+		if (s != null) {
 			Circle_State circle = findCircle(s);
-			if (circle != null){
-				circle.paintISArrow(gc, m_SelectedCircles.contains(circle)&&(!isMoving));
+			if (circle != null) {
+				circle.paintISArrow(gc, m_SelectedCircles.contains(circle));
 			}
 		}
 	}
-	
-	private boolean isSelected(State s){
-		for (Circle_State circle : m_SelectedCircles){
+
+	private boolean isSelected(State s) {
+		for (Circle_State circle : m_SelectedCircles) {
 			if (circle.getM_State().equals(s))
 				return true;
 		}
 		return false;
 	}
-	
-	private Circle_State findCircle(State s){
-		for (Circle_State circle : m_Circles){
+
+	private Circle_State findCircle(State s) {
+		for (Circle_State circle : m_Circles) {
 			if (circle.getM_State().equals(s))
 				return circle;
 		}
-		for (Circle_State circle : m_SelectedCircles){
+		for (Circle_State circle : m_SelectedCircles) {
 			if (circle.getM_State().equals(s))
 				return circle;
 		}
@@ -138,8 +147,10 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 				if (circle != null) {
 					// 没有按住Ctrl键的单选情况处理
 					if (e.stateMask != SWT.CTRL) {
-						m_SelectedCircles.clear();
-						m_SelectedCircles.add(circle);
+						if (!m_SelectedCircles.contains(circle)) {
+							m_SelectedCircles.clear();
+							m_SelectedCircles.add(circle);
+						}
 					} else {
 						if (!m_SelectedCircles.contains(circle)) {
 							m_SelectedCircles.add(circle);
@@ -151,6 +162,7 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 					startMovingPoint = new Point(e.x, e.y);
 				} else {
 					m_SelectedCircles.clear();
+					selectRectangle = new Rectangle(e.x, e.y, 0, 0);
 				}
 			}
 			redraw();
@@ -213,6 +225,7 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 						circle.getOriginalCentre().y = circle.getCentre().y;
 					}
 				}
+				selectRectangle = null;
 			} else if (e.button == 3) { // 鼠标右键菜单弹出
 				Circle_State circle = getCurrSelected(e.x, e.y);
 				if (circle != null) {
@@ -221,7 +234,7 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 					Menu_StateRightClick rightmenu = new Menu_StateRightClick(
 							this, SWT.POP_UP);
 					Point p = getScreemLocation();
-					rightmenu.showMenu(p.x + e.x + 6,  p.y + e.y + 52);
+					rightmenu.showMenu(p.x + e.x + 6, p.y + e.y + 52);
 				}
 
 			}
@@ -264,21 +277,46 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 		return new Point(width, height);
 	}
 
+	public void setCircleInRect(){
+		
+		m_SelectedCircles.clear();
+		if (selectRectangle == null)
+			return;
+		Rectangle temp = new Rectangle(selectRectangle.x, selectRectangle.y, Math.abs(selectRectangle.width), Math.abs(selectRectangle.height));
+		if (selectRectangle.width < 0){
+			temp.x = selectRectangle.x + selectRectangle.width;
+		}
+		if (selectRectangle.height < 0){
+			temp.y = selectRectangle.y + selectRectangle.height;
+		}
+		for (Circle_State c : m_Circles){
+			if(temp.contains(c.getCentre()))
+				m_SelectedCircles.add(c);
+		}
+	}
+	
 	@Override
 	public void mouseMove(MouseEvent e) {
 		byte toolType = getToolType();
 		switch (toolType) {
 		case View_ToolBox.TOOLTYPE_SELECT:
 			// 如果不是左键或者选中的状态为空则不进行移动操作。
-			if ((e.stateMask & SWT.BUTTON1) == 0 || m_SelectedCircles == null
-					|| m_SelectedCircles.size() == 0)
+			if ((e.stateMask & SWT.BUTTON1) == 0)
 				break;
-			isMoving = true;
-			int differX = e.x - startMovingPoint.x;
-			int differY = e.y - startMovingPoint.y;
-			for (Circle_State circle : m_SelectedCircles) {
-				circle.getCentre().x = circle.getOriginalCentre().x + differX;
-				circle.getCentre().y = circle.getOriginalCentre().y + differY;
+			if (selectRectangle != null){
+				selectRectangle.width = e.x - selectRectangle.x;
+				selectRectangle.height = e.y - selectRectangle.y;
+				setCircleInRect();
+			}else if (!(m_SelectedCircles == null || m_SelectedCircles.size() == 0)) {
+				isMoving = true;
+				int differX = e.x - startMovingPoint.x;
+				int differY = e.y - startMovingPoint.y;
+				for (Circle_State circle : m_SelectedCircles) {
+					circle.getCentre().x = circle.getOriginalCentre().x
+							+ differX;
+					circle.getCentre().y = circle.getOriginalCentre().y
+							+ differY;
+				}
 			}
 			redraw();
 			break;
@@ -334,26 +372,29 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 		redraw();
 	}
 
-	public String getSelectedStateType(){
-		return m_mainView.getM_Automaton().getStateType(m_SelectedCircles.get(0).getM_State());
+	public String getSelectedStateType() {
+		return m_mainView.getM_Automaton().getStateType(
+				m_SelectedCircles.get(0).getM_State());
 	}
-	
-	public void setSelectedStateType(String type){
+
+	public void setSelectedStateType(String type) {
 		String oldType = getSelectedStateType();
 		State s = m_SelectedCircles.get(0).getM_State();
-		if (!oldType.equals(type)){
+		if (!oldType.equals(type)) {
 			m_mainView.getM_Automaton().removeState(s);
-			if (type.equals(AutomatonConst.STATE_TYPE_FINAL)){
+			if (type.equals(AutomatonConst.STATE_TYPE_FINAL)) {
 				m_mainView.getM_Automaton().getM_FinalStates().add(s);
-			}
-			else if (type.equals(AutomatonConst.STATE_TYPE_INITIAL)){
+			} else if (type.equals(AutomatonConst.STATE_TYPE_INITIAL)) {
+				m_mainView.getM_Automaton().setM_StartState(s);
+			} else if (type.equals(AutomatonConst.STATE_TYPE_INI_FINAL)) {
+				m_mainView.getM_Automaton().getM_FinalStates().add(s);
 				m_mainView.getM_Automaton().setM_StartState(s);
 			}
 			m_mainView.getM_Automaton().getM_States().add(s);
 		}
 		redraw();
 	}
-	
+
 	public static void main(String[] args) {
 		ArrayList<State> a = new ArrayList<State>();
 		a.add(new State(""));
