@@ -1,0 +1,14 @@
+#summary 第5题:正则表达式工具-卓安，任修坤
+#labels Phase-Requirements,Phase-QA,Phase-Design
+
+= 项目需求 =
+ # 用java编写，保证可扩展性
+ # 定义好正则表示的数据结构，并实现好构造函数
+ # 实现字符串到正则表达式的解析
+ # 判断一个串是否属于正则表达式所代表的语言 
+
+
+= 小组成员 =
+||姓名||学号||邮箱||
+||卓安||2009212587 ||sparkdream.an@gmail.com||
+||任修坤||2009212534||hualaier1314@gmail.com||
