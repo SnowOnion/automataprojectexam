@@ -2,14 +2,41 @@ package cn.tsinghua.mse.automatondesigner.dataobject;
 
 import java.util.ArrayList;
 
+/**
+ * 自动机类。
+ * 可表示NFA和DFA，并可用作为自动机超类被继承。
+ * @author David
+ *
+ */
 public class Automaton {
+	/**
+	 * 自动机的状态集合，所有的状态都会在此集合中，包括开始状态、普通状态和接受状态
+	 */
 	protected ArrayList<State> m_States;
+	/**
+	 * 输入字母表
+	 */
 	protected ArrayList<String> m_InputSymbols;
+	/**
+	 * 转移函数
+	 */
 	protected ArrayList<TransFunction> m_transFunctions;
+	/**
+	 * 开始状态
+	 */
 	protected State m_StartState;
+	/**
+	 * 终结状态
+	 */
 	protected ArrayList<State> m_FinalStates;
+	/**
+	 * 自动机类型，使用字符串表示
+	 */
 	protected String m_Type; 
 	
+	/**
+	 * 默认构造函数
+	 */
 	public Automaton(){
 		m_States = new ArrayList<State>();
 		m_InputSymbols = new ArrayList<String>();
@@ -28,6 +55,10 @@ public class Automaton {
 		m_Type = type;
 	}
 	
+	/**
+	 * 移除状态，会将状态从终结状态集合、状态集合和开始状态中移除（如果存在的话）。
+	 * @param state 要移除的状态
+	 */
 	public void removeState(State state){
 		if (m_FinalStates != null && m_FinalStates.size() != 0)
 			m_FinalStates.remove(state);
@@ -37,6 +68,36 @@ public class Automaton {
 			m_StartState = null;
 	}
 	
+	/**
+	 * 新加状态，由参数stateType标记类型
+	 * @param state	要添加的状态
+	 * @param stateType	新加状态类型
+	 * @return 如果已经存在添加失败，返回false；否则返回true。
+	 */
+	public boolean addState(State state, String stateType){
+		if (m_States.contains(state)){
+			return false;
+		}
+		m_States.add(state);
+		if (stateType.equals(AutomatonConst.STATE_TYPE_INI_FINAL)){
+			m_FinalStates.add(state);
+			m_StartState = state;
+		}
+		else if (stateType.equals(AutomatonConst.STATE_TYPE_INITIAL)){
+			m_StartState = state;
+		}
+		else if (stateType.equals(AutomatonConst.STATE_TYPE_FINAL)){
+			m_FinalStates.add(state);
+		}
+		return true;
+	}
+	
+	/**
+	 * 获取传入参数状态s的类型。
+	 * 由于界面部分要对开始状态也是结束状态的情况作特殊的处理，因此此处分了四类。
+	 * @param s 要获取状态的类型。
+	 * @return	依据AutomatonConst中定义的字符串返回的类型
+	 */
 	public String getStateType(State s){
 		String type = AutomatonConst.STATE_TYPE_COMMON;
 		if (m_StartState != null && m_StartState.equals(s))
@@ -50,12 +111,21 @@ public class Automaton {
 		return type;
 	}
 	
+	/**
+	 * 新增输入符号
+	 * @param s 要添加的输入符号
+	 */
 	public void addInputSymbol(String s){
 		if (!m_InputSymbols.contains(s)){
 			m_InputSymbols.add(s);
 		}
 	}
 	
+	/**
+	 * 移除输入符号
+	 * @param s 要移除的输入符号
+	 * @return 是否成功移除，成功返回true，失败返回false。
+	 */
 	public boolean removeInputSymbol(String s){
 		return m_InputSymbols.remove(s);
 	}
