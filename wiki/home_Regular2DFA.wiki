@@ -1,11 +1,13 @@
-#summary 62正则表达式-自动机的转换工具
-#labels 正则表达式,自动机
+#summary One-sentence summary of this page.
 
 = Introduction =
 
-正则表达式-自动机的转换工具
+63组正则表达式-自动机的转换工具
 
 
 = Details =
 
-韩伟明(2009220704)、胡亚军(2009220649)
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
