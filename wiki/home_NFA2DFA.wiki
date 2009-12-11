@@ -20,8 +20,8 @@
 
  * 程序输入与输出： 
 
-=========输入=================
-Start Status:q0
+    * =========输入=================
+    * Start Status:q0
 Final Status:q5,
 All Status:q0,q1,q2,q3,q4,q5,
 Symbols:+,-;0,1,...,9;.;
