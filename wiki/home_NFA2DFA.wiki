@@ -11,9 +11,9 @@
 		已经实现了NFA到DFA的转换。不过暂时还没实现识别字符串，正在做。
 		用书上（中文版）50页的e-NFA做为输入，53页的DFA作为输出，做为测试用例，可以转换成功。
  * 目录结构：
-		NFA2DFA		----源代码
-		DesignSpec.docx	----详细设计文档
-		javadoc		----类说明文档
+      * 		NFA2DFA		----源代码
+      *		DesignSpec.docx	----详细设计文档
+      *		javadoc		----类说明文档
 
 
 = Details =
