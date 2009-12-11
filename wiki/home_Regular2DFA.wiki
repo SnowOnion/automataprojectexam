@@ -1,4 +1,4 @@
-#summary 63组：Regular2DFA的转换工具 刘培尊 欧阳明
+#summary 63组：Reg2DFA的转换工具 刘培尊 欧阳明
 
 = Introduction =
 
