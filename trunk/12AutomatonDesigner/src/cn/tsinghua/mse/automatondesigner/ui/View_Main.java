@@ -46,8 +46,6 @@ public class View_Main extends ViewPart {
 
 	/**
 	 * 新建文件时使用的构造函数
-	 * 
-	 * @wbp.parser.constructor
 	 */
 	public View_Main() {
 		super();

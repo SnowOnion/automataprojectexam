@@ -2,9 +2,20 @@ package cn.tsinghua.mse.automatondesigner.dataobject;
 
 import java.util.ArrayList;
 
+/**
+ * 下推自动机类，继承自Automaton类
+ * @author David
+ *
+ */
 public class PushdownAutomaton extends Automaton {
 
+	/**
+	 * 堆栈符号
+	 */
 	private ArrayList<String> m_StackSymbols;
+	/**
+	 * 堆栈初始符号
+	 */
 	private String m_InitStackSymbol;
 
 	public PushdownAutomaton() {

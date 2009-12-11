@@ -1,5 +1,10 @@
 package cn.tsinghua.mse.automatondesigner.dataobject;
 
+/**
+ * 自动机中使用的一些静态变量。
+ * @author David
+ *
+ */
 public class AutomatonConst {
 	public static final String AUTOMATON_TYPE_DFA = "DFA";
 	public static final String AUTOMATON_TYPE_NFA = "NFA";

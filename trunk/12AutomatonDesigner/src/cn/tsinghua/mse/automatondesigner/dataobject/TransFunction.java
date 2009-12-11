@@ -2,9 +2,23 @@ package cn.tsinghua.mse.automatondesigner.dataobject;
 
 import java.util.ArrayList;
 
+/**
+ * 转移函数
+ * @author David
+ *
+ */
 public class TransFunction {
+	/**
+	 * 开始状态
+	 */
 	private State m_BeginState;
+	/**
+	 * 结束状态
+	 */
 	private State m_EndState;
+	/**
+	 * 转移状态
+	 */
 	private ArrayList<TransCondition> m_TransCondition;
 
 	public TransFunction(State bState, State eState, ArrayList<TransCondition> inputs){
@@ -44,5 +58,25 @@ public class TransFunction {
 
 	public void setM_TransCondition(ArrayList<TransCondition> mTransCondition) {
 		m_TransCondition = mTransCondition;
+	}
+	
+	/**
+	 * 获取字符串形式的转换条件表达。
+	 * @return 字符换表达
+	 */
+	public String getStrCondition(){
+		String result = "";
+		if(m_TransCondition != null && m_TransCondition.size() != 0){
+			String division = ",";
+			if (m_TransCondition.get(0) instanceof PDATransCondition){
+				division = "\n";
+			}
+			int idx = 0;
+			for(idx = 0; idx < m_TransCondition.size()-1; idx++){
+				result += m_TransCondition.get(idx).toString() + division;
+			}
+			result += m_TransCondition.get(idx).toString();
+		}
+		return result;
 	}
 }
