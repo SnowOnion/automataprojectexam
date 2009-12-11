@@ -1,8 +1,11 @@
-#summary One-sentence summary of this page.
+63组大作业主页
 
 = Introduction =
 
-63组正则表达式-自动机的转换工具
+||题目||正则表达式-自动机的转换工具||
+||组号||63||
+||组员|| 刘培尊 2009212542 欧阳明 2009212622||
+||邮箱||liupeizun@gmail.com||
 
 
 = Details =
