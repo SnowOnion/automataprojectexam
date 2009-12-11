@@ -1,4 +1,4 @@
-#summary 63组大作业说明
+#summary 63组：正则表达式-自动机的转换工具 刘培尊 欧阳明
 
 = Introduction =
 
