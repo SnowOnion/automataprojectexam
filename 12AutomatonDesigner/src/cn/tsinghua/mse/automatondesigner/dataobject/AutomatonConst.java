@@ -12,7 +12,7 @@ public class AutomatonConst {
 	
 	public static final String [] AUTOMATONTYPES = {AUTOMATON_TYPE_DFA, AUTOMATON_TYPE_NFA, AUTOMATON_TYPE_PDA};
 	
-	public static final String STATE_TYPE_INITIAL = "初始状态";
+	public static final String STATE_TYPE_INITIAL = "开始状态";
 	public static final String STATE_TYPE_COMMON = "普通状态";
 	public static final String STATE_TYPE_FINAL = "结束状态";
 	public static final String STATE_TYPE_INI_FINAL = "开始结束状态";

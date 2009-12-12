@@ -4,10 +4,14 @@
 package cn.tsinghua.mse.automatondesigner.ui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Hashtable;
 
 import javax.swing.event.MouseInputListener;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
@@ -23,13 +27,20 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.internal.handlers.WizardHandler.New;
+
+import automatondesigner.SystemConstant;
 
 import com.swtdesigner.ResourceManager;
 
 import cn.tsinghua.mse.automatondesigner.dataobject.AutomatonConst;
 import cn.tsinghua.mse.automatondesigner.dataobject.State;
+import cn.tsinghua.mse.automatondesigner.dataobject.TransCondition;
+import cn.tsinghua.mse.automatondesigner.dataobject.TransFunction;
+import cn.tsinghua.mse.automatondesigner.tools.CommonTool;
 
 /**
  * @author David
@@ -41,11 +52,16 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 	private ArrayList<Circle_State> m_Circles;
 	private ArrayList<Circle_State> m_SelectedCircles;
 	private View_Main m_mainView = null;
-	
+
 	private Rectangle selectRectangle = null;
 
 	private Point startMovingPoint = null;
 	private boolean isMoving = false;
+
+	private Circle_State drawingPLStart = null;
+	private ArrayList<Point> currectPolyline = null;
+	private ArrayList<Polyline_Trans> m_Poylines;
+	private Point currectPnt = null;
 
 	/**
 	 * @param parent
@@ -59,22 +75,48 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 		this.addMouseMoveListener(this);
 		this.addMouseTrackListener(this);
 		m_mainView = mainView;
+		drawingPLStart = null;
+		currectPolyline = new ArrayList<Point>();
+		m_Poylines = new ArrayList<Polyline_Trans>();
+		currectPnt = new Point(-100, -100);
 	}
 
 	public void paint(GC gc) {
+		for (Polyline_Trans trans : m_Poylines) {
+			trans.paint(gc, Circle_State.IMAGE_TYPE_COMMON, "");
+		}
+		if (currectPolyline != null && drawingPLStart != null) {
+			if (currectPolyline.size() == 0){
+				if (currectPnt.x != -100)
+					gc.drawLine(currectPnt.x, currectPnt.y, drawingPLStart.getCentre().x, drawingPLStart.getCentre().y);
+			}
+			else{
+				gc.drawLine(currectPolyline.get(0).x, currectPolyline.get(0).y, drawingPLStart.getCentre().x, drawingPLStart.getCentre().y);
+				gc.drawPolyline(CommonTool.pointArrayToIntArray(currectPolyline));
+				Point p = currectPolyline.get(currectPolyline.size() - 1);
+				if (currectPnt.x != -100)
+					gc.drawLine(currectPnt.x, currectPnt.y, p.x, p.y);
+			}
+			
+			
+		}
+
 		for (Circle_State circle : m_Circles) {
-			circle.paint(gc, Circle_State.IMAGE_TYPE_COMMON);
+			circle.paint(gc, Circle_State.IMAGE_TYPE_COMMON, m_mainView
+					.getM_Automaton().getStateType(circle.getM_State()));
 		}
 
 		for (Circle_State circle : m_SelectedCircles) {
-			circle.paint(gc, Circle_State.IMAGE_TYPE_SELECTED);
+			circle.paint(gc, Circle_State.IMAGE_TYPE_SELECTED, m_mainView
+					.getM_Automaton().getStateType(circle.getM_State()));
 		}
 
-		paintAddition(gc);
-		
-		if (selectRectangle != null && selectRectangle.width != 0){
+		// paintAddition(gc);
+
+		if (selectRectangle != null && selectRectangle.width != 0) {
 			gc.setForeground(gc.getDevice().getSystemColor(SWT.COLOR_BLACK));
-			gc.drawRectangle(selectRectangle.x, selectRectangle.y, selectRectangle.width, selectRectangle.height);
+			gc.drawRectangle(selectRectangle.x, selectRectangle.y,
+					selectRectangle.width, selectRectangle.height);
 		}
 	}
 
@@ -123,8 +165,38 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 
 	@Override
 	public void mouseDoubleClick(MouseEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("click");
+		byte toolType = getToolType();
+		switch (toolType) {
+		case View_ToolBox.TOOLTYPE_SELECT:
+			break;
+		case View_ToolBox.TOOLTYPE_STATE:
+			break;
+		case View_ToolBox.TOOLTYPE_TRANSFORM:
+			if (drawingPLStart == null)
+				break;
+			Circle_State circle = getCurrSelected(e.x, e.y);
+			if (circle != null) {
+				if (currectPolyline.size() == 0 && circle.equals(drawingPLStart)){
+//					boolean re = MessageDialog.openQuestion(m_mainView.getMainWindow().getShell(), "询问", "您是要创建自环吗？");
+//					if(!re)
+						return;
+				}
+				TransFunction func = new TransFunction(drawingPLStart
+						.getM_State(), circle.getM_State(),
+						new ArrayList<TransCondition>());
+				m_mainView.getM_Automaton().addTransFunction(func);
+				m_Poylines.add(new Polyline_Trans(func, CommonTool
+						.PointsClone(currectPolyline), drawingPLStart, circle));
+				drawingPLStart = null;
+				currectPolyline.clear();
+				currectPnt.x = -100;
+			}else{
+				MessageDialog.openWarning(m_mainView.getMainWindow().getShell(), "提示", "终结点必须为结束状态！");
+			}
+			break;
+		default:
+			break;
+		}
 	}
 
 	private Circle_State getCurrSelected(int x, int y) {
@@ -138,6 +210,8 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 
 	@Override
 	public void mouseDown(MouseEvent e) {
+		if (e.count == 2)
+			return;
 		byte toolType = getToolType();
 		switch (toolType) {
 		case View_ToolBox.TOOLTYPE_SELECT:
@@ -213,6 +287,8 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 
 	@Override
 	public void mouseUp(MouseEvent e) {
+		if (e.count == 2)
+			return;
 		byte toolType = getToolType();
 		switch (toolType) {
 		case View_ToolBox.TOOLTYPE_SELECT:
@@ -259,6 +335,44 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 			}
 			break;
 		case View_ToolBox.TOOLTYPE_TRANSFORM:
+			//如果是鼠标左键
+			if (e.button == 1) {
+				Circle_State circle = getCurrSelected(e.x, e.y);
+				if (drawingPLStart == null) {	//如果是刚刚开始绘制的话
+					if (circle == null)
+						break;
+					drawingPLStart = circle;
+				} else {
+					if (circle == null)	//绘制拐点
+						currectPolyline.add(new Point(e.x, e.y));
+					else {
+						if (currectPolyline.size() == 0 && circle.equals(drawingPLStart)){
+							boolean re = MessageDialog.openQuestion(m_mainView.getMainWindow().getShell(), "询问", "您是要创建自环吗？");
+							if(!re)
+								return;
+						}
+						TransFunction func = new TransFunction(drawingPLStart
+								.getM_State(), circle.getM_State(),
+								new ArrayList<TransCondition>());
+						m_mainView.getM_Automaton().addTransFunction(func);
+						m_Poylines.add(new Polyline_Trans(func, CommonTool
+								.PointsClone(currectPolyline), drawingPLStart, circle));
+						currectPolyline.clear();
+						drawingPLStart = circle;
+					}
+				}
+			} else if (e.button == 3) {
+				if (drawingPLStart == null) {
+					setToolBoxSelected();
+					setCursor(new Cursor(null, SWT.CURSOR_ARROW));
+				} else if (currectPolyline.size() == 0) {
+					drawingPLStart = null;
+					currectPnt.x = -100;
+				} else {
+					currectPolyline.remove(currectPolyline.size() - 1);
+				}
+			}
+			redraw();
 			break;
 		default:
 			break;
@@ -277,24 +391,25 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 		return new Point(width, height);
 	}
 
-	public void setCircleInRect(){
-		
+	public void setCircleInRect() {
 		m_SelectedCircles.clear();
 		if (selectRectangle == null)
 			return;
-		Rectangle temp = new Rectangle(selectRectangle.x, selectRectangle.y, Math.abs(selectRectangle.width), Math.abs(selectRectangle.height));
-		if (selectRectangle.width < 0){
+		Rectangle temp = new Rectangle(selectRectangle.x, selectRectangle.y,
+				Math.abs(selectRectangle.width), Math
+						.abs(selectRectangle.height));
+		if (selectRectangle.width < 0) {
 			temp.x = selectRectangle.x + selectRectangle.width;
 		}
-		if (selectRectangle.height < 0){
+		if (selectRectangle.height < 0) {
 			temp.y = selectRectangle.y + selectRectangle.height;
 		}
-		for (Circle_State c : m_Circles){
-			if(temp.contains(c.getCentre()))
+		for (Circle_State c : m_Circles) {
+			if (temp.contains(c.getCentre()))
 				m_SelectedCircles.add(c);
 		}
 	}
-	
+
 	@Override
 	public void mouseMove(MouseEvent e) {
 		byte toolType = getToolType();
@@ -303,11 +418,11 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 			// 如果不是左键或者选中的状态为空则不进行移动操作。
 			if ((e.stateMask & SWT.BUTTON1) == 0)
 				break;
-			if (selectRectangle != null){
+			if (selectRectangle != null) {
 				selectRectangle.width = e.x - selectRectangle.x;
 				selectRectangle.height = e.y - selectRectangle.y;
 				setCircleInRect();
-			}else if (!(m_SelectedCircles == null || m_SelectedCircles.size() == 0)) {
+			} else if (!(m_SelectedCircles == null || m_SelectedCircles.size() == 0)) {
 				isMoving = true;
 				int differX = e.x - startMovingPoint.x;
 				int differY = e.y - startMovingPoint.y;
@@ -324,6 +439,11 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 			// System.out.print("Wrong!");
 			break;
 		case View_ToolBox.TOOLTYPE_TRANSFORM:
+			if (drawingPLStart != null) {
+				currectPnt.x = e.x;
+				currectPnt.y = e.y;
+				redraw();
+			}
 			break;
 		default:
 			break;
@@ -344,7 +464,7 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 			setCursor(imgcursor);
 			break;
 		case View_ToolBox.TOOLTYPE_TRANSFORM:
-			setCursor(new Cursor(null, SWT.CURSOR_ARROW));
+			setCursor(new Cursor(null, SWT.CURSOR_CROSS));
 			break;
 		default:
 			break;
@@ -361,15 +481,22 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 
 	}
 
-	public void doDelete() {
+	/**
+	 * 执行删除选中元素的操作，返回值表示是否成功删除。
+	 * 
+	 * @return
+	 */
+	public boolean doDelete() {
+		if (m_SelectedCircles == null || m_SelectedCircles.size() == 0)
+			return false;
 		m_Circles.removeAll(m_SelectedCircles);
 		for (Circle_State circle : m_SelectedCircles) {
 			m_mainView.getM_Automaton().getM_States().remove(
 					circle.getM_State());
-
 		}
 		m_SelectedCircles.clear();
 		redraw();
+		return true;
 	}
 
 	public String getSelectedStateType() {
@@ -403,4 +530,54 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 		System.out.println(a.size());
 	}
 
+	public boolean doAlign(byte direction) {
+		if (m_SelectedCircles == null || m_SelectedCircles.size() < 2)
+			return false;
+		//m_Circles.removeAll(m_SelectedCircles);
+		if (direction == SystemConstant.ALIGN_LEFT
+				|| direction == SystemConstant.ALIGN_RIGHT) {
+			Collections.sort(m_SelectedCircles, new CircleXComparator());
+			int xIdx = direction == SystemConstant.ALIGN_LEFT ? 0 : m_SelectedCircles.size()-1;
+			int x = m_SelectedCircles.get(xIdx).getCentre().x;
+			for (Circle_State s : m_SelectedCircles){
+				s.getCentre().x = x;
+				s.getOriginalCentre().x = x;
+			}
+		} 
+		else if (direction == SystemConstant.ALIGN_TOP
+				|| direction == SystemConstant.ALIGN_BOTTOM){
+			Collections.sort(m_SelectedCircles, new CircleYComparator());
+			int yIdx = direction == SystemConstant.ALIGN_TOP ? 0 : m_SelectedCircles.size()-1;
+			int y = m_SelectedCircles.get(yIdx).getCentre().y;
+			for (Circle_State s : m_SelectedCircles){
+				s.getCentre().y = y;
+				s.getOriginalCentre().y = y;
+			}
+		}
+		//m_Circles.addAll(m_SelectedCircles);
+		redraw();
+		return true;
+	}
+}
+
+class CircleXComparator implements Comparator<Circle_State> {
+	public int compare(Circle_State o1, Circle_State o2) {
+		if (o1.getCentre().x > o2.getCentre().x)
+			return 1;
+		else if (o1.getCentre().x < o2.getCentre().x)
+			return -1;
+		else
+			return 0;
+	}
+}
+
+class CircleYComparator implements Comparator<Circle_State> {
+	public int compare(Circle_State o1, Circle_State o2) {
+		if (o1.getCentre().y > o2.getCentre().y)
+			return 1;
+		else if (o1.getCentre().y < o2.getCentre().y)
+			return -1;
+		else
+			return 0;
+	}
 }

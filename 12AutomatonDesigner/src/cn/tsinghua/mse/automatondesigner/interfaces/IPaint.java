@@ -11,5 +11,5 @@ import org.eclipse.swt.graphics.GC;
  *
  */
 public interface IPaint {
-	public void paint(GC gc, byte type);
+	public void paint(GC gc, byte statue, String type);
 }

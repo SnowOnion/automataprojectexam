@@ -46,6 +46,7 @@ public class View_Main extends ViewPart {
 
 	/**
 	 * 新建文件时使用的构造函数
+	 * @wbp.parser.constructor
 	 */
 	public View_Main() {
 		super();
@@ -58,6 +59,7 @@ public class View_Main extends ViewPart {
 	 * 打开已有文件时使用的构造函数
 	 * 
 	 * @param automaton
+	 * @wbp.parser.constructor
 	 */
 	public View_Main(Automaton automaton) {
 		isDirty = false;
@@ -135,7 +137,19 @@ public class View_Main extends ViewPart {
 		this.isDirty = isDirty;
 	}
 
-	public void doDelete() {
-		canvas.doDelete();
+	public boolean doDelete() {
+		boolean result = canvas.doDelete();
+		if (result){
+			setDirty(true);
+		}
+		return result;
+	}
+
+	public boolean doAlign(byte direction) {
+		boolean result = canvas.doAlign(direction);
+		if (result){
+			setDirty(true);
+		}
+		return result;
 	}
 }
