@@ -98,17 +98,27 @@ public class Circle_State implements IPaint {
 	}
 
 	@Override
-	public void paint(GC gc, byte type) {
+	public void paint(GC gc, byte statue, String type) {
 		// if (type == IMAGE_TYPE_SELECTED || type == IMAGE_TYPE_COMMON ) {
-		if (type == IMAGE_TYPE_SELECTED)
+		if (statue == IMAGE_TYPE_SELECTED)
 			gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_RED));
-		else if (type == IMAGE_TYPE_COMMON)
+		else if (statue == IMAGE_TYPE_COMMON)
 			gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_BLUE));
 		gc.fillRoundRectangle(centre.x - radius / 2, centre.y - radius / 2,
 				radius, radius, radius - 4, radius - 4);
 		gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_WHITE));
 		gc.fillRoundRectangle(centre.x - radius / 2 + 2, centre.y - radius / 2
 				+ 2, radius - 4, radius - 4, radius - 8, radius - 8);
+		if (type.equals(AutomatonConst.STATE_TYPE_INI_FINAL)){
+			paintFSAddition(gc, statue==IMAGE_TYPE_SELECTED);
+			paintISArrow(gc, statue==IMAGE_TYPE_SELECTED);
+		}
+		else if (type.equals(AutomatonConst.STATE_TYPE_INITIAL)){
+			paintISArrow(gc, statue==IMAGE_TYPE_SELECTED);
+		}
+		else if (type.equals(AutomatonConst.STATE_TYPE_FINAL)){
+			paintFSAddition(gc, statue==IMAGE_TYPE_SELECTED);
+		}
 		// if (type == IMAGE_TYPE_SELECTED)
 		// gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_RED));
 		// else if (type == IMAGE_TYPE_COMMON)

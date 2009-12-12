@@ -130,6 +130,24 @@ public class Automaton {
 		return m_InputSymbols.remove(s);
 	}
 	
+	/**
+	 * 增加转移函数
+	 * @param transFunction 要增加的转移函数对象
+	 */
+	public void addTransFunction(TransFunction transFunction){
+		if(!m_transFunctions.contains(transFunction))
+			m_transFunctions.add(transFunction);
+	}
+	
+	/**
+	 * 删除某个转移函数
+	 * @param transFunction 要删除的转移函数对象
+	 * @return
+	 */
+	public boolean removeTransFunction(TransFunction transFunction){
+		return m_transFunctions.remove(transFunction);
+	}
+	
 	public ArrayList<State> getM_States() {
 		return m_States;
 	}

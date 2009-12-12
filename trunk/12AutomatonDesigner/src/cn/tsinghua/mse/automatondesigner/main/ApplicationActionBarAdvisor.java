@@ -14,6 +14,7 @@ import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 
 import automatondesigner.Activator;
+import automatondesigner.SystemConstant;
 import cn.tsinghua.mse.automatondesigner.main.action.ActNewFile;
 import cn.tsinghua.mse.automatondesigner.ui.View_Main;
 import cn.tsinghua.mse.automatondesigner.ui.View_Property;
@@ -41,6 +42,10 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	private Action openToolBoxAction;
 	private Action openPropertyAction;
 	private Action deleteAction;
+	private Action leftAlignAction;
+	private Action rightAlignAction;
+	private Action topAlignAction;
+	private Action bottomAlignAction;
 
 	public ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
 		super(configurer);
@@ -104,7 +109,6 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 				.setId("cn.tsinghua.mse.automatondesigner.openPropertyAction");
 		register(openPropertyAction);
 
-		
 		deleteAction = new Action("删除") {
 			public void run() {
 				doDelete();
@@ -115,13 +119,65 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 				.getImageDescriptor("icons/delete16.gif"));
 		register(deleteAction);
 
+		leftAlignAction = new Action("向左对齐") {
+			public void run(){
+				doAlign(SystemConstant.ALIGN_LEFT);
+			}
+		};
+		leftAlignAction
+				.setId("cn.tsinghua.mse.automatondesigner.leftAlignAction");
+		leftAlignAction.setImageDescriptor(ResourceManager
+				.getPluginImageDescriptor("AutomatonDesigner",
+						"icons/left_align.png"));
+		register(leftAlignAction);
+
+		rightAlignAction = new Action("向右对齐") {
+			public void run(){
+				doAlign(SystemConstant.ALIGN_RIGHT);
+			}
+		};
+		rightAlignAction
+				.setId("cn.tsinghua.mse.automatondesigner.rightAlignAction");
+		rightAlignAction.setImageDescriptor(ResourceManager
+				.getPluginImageDescriptor("AutomatonDesigner",
+						"icons/right_align.png"));
+		register(rightAlignAction);
+		topAlignAction = new Action("向上对齐") {
+			public void run(){
+				doAlign(SystemConstant.ALIGN_TOP);
+			}
+		};
+		topAlignAction
+				.setId("cn.tsinghua.mse.automatondesigner.topAlignAction");
+		topAlignAction.setImageDescriptor(ResourceManager
+				.getPluginImageDescriptor("AutomatonDesigner",
+						"icons/top_align.png"));
+		register(topAlignAction);
+		
+		bottomAlignAction = new Action("向下对齐") {
+			public void run(){
+				doAlign(SystemConstant.ALIGN_BOTTOM);
+			}
+		};
+		bottomAlignAction
+				.setId("cn.tsinghua.mse.automatondesigner.bottomAlignAction");
+		bottomAlignAction.setImageDescriptor(ResourceManager
+				.getPluginImageDescriptor("AutomatonDesigner",
+						"icons/bottom_align.png"));
+		register(bottomAlignAction);
 	}
 
 	protected void doDelete() {
-		 IWorkbenchPart currentView = mainWindow.getActivePage().getActivePart();
-		 if (currentView instanceof View_Main){
-			 ((View_Main)currentView).doDelete();
-		 }
+		IWorkbenchPart currentView = mainWindow.getActivePage().getActivePart();
+		if (currentView != null && currentView instanceof View_Main) {
+			if (!((View_Main) currentView).doDelete()) {
+				MessageDialog.openError(mainWindow.getShell(), "删除失败！",
+						"没有可供删除的组件被选中！");
+			}
+		} else {
+			MessageDialog.openWarning(mainWindow.getShell(), "删除失败！",
+					"请先选择某个自动机的编辑视图再执行此操作！");
+		}
 	}
 
 	private void openView(String id) {
@@ -129,6 +185,19 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 			mainWindow.getActivePage().showView(id);
 		} catch (PartInitException e) {
 			MessageDialog.openError(mainWindow.getShell(), "错误", "打开视图失败！");
+		}
+	}
+	
+	private void doAlign(byte direction){
+		IWorkbenchPart currentView = mainWindow.getActivePage().getActivePart();
+		if (currentView != null && currentView instanceof View_Main) {
+			if (!((View_Main) currentView).doAlign(direction)) {
+				MessageDialog.openError(mainWindow.getShell(), "操作失败！",
+						"至少要有两个状态被选中才能执行此操作！");
+			}
+		} else {
+			MessageDialog.openWarning(mainWindow.getShell(), "操作失败！",
+					"请先选择某个自动机的编辑视图再执行此操作！");
 		}
 	}
 
@@ -160,6 +229,11 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		editMenuManager.add(deleteAction);
 		editMenuManager.add(cutAction);
 		editMenuManager.add(copyAction);
+		editMenuManager.add(leftAlignAction);
+		editMenuManager.add(rightAlignAction);
+		editMenuManager.add(topAlignAction);
+		editMenuManager.add(bottomAlignAction);
+		
 
 		MenuManager viewMenuManager = new MenuManager("视图",
 				"cn.tsinghua.mse.automatondesigner.viewmenu");
@@ -186,5 +260,10 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		toolbar.add(newFileACT);
 		toolbar.add(new Separator());
 		toolbar.add(deleteAction);
+		toolbar.add(new Separator());
+		toolbar.add(leftAlignAction);
+		toolbar.add(rightAlignAction);
+		toolbar.add(topAlignAction);
+		toolbar.add(bottomAlignAction);
 	}
 }
