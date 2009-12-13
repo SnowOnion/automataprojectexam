@@ -4,14 +4,14 @@
 	<!ELEMENT AutomatonName(#PCDATA)>
 	<!ELEMENT AutomatonStates(State+)>
 		<!ELEMENT State(StateId,StateType)>
-		<!ELEMENT StateId(#PCDATA)>
-		<!ELEMENT StateType(#PCDATA)>
+			<!ELEMENT StateId(#PCDATA)>
+			<!ELEMENT StateType(#PCDATA)>
+	<!ELEMENT InitialState(#PCDATA)>
 	<!ELEMENT AutomatonInputSymbols(InputSymbol*)>
-	<!ELEMENT InputSymbol(#PCDATA)>
+		<!ELEMENT InputSymbol(#PCDATA)>
 	<!ELEMENT NFATransitions(NFATransitions*)>
-	<!ELEMENT NFATransition(FromState,NFAConditions,ToState)>
-	<!ELEMENT FromState(State)>
-	<!ELEMENT NFAConditions(NFACondition+)>
-	<!ELEMENT ToState(State)>
-	
+		<!ELEMENT NFATransition(FromState,NFAConditions,ToState)>
+			<!ELEMENT FromState(#PCDATA)>
+			<!ELEMENT NFAConditions(NFACondition+)>
+			<!ELEMENT ToState(#PCDATA)>
 ]>

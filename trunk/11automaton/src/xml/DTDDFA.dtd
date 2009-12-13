@@ -4,15 +4,15 @@
 	<!ELEMENT DFA(AutomatonName,AutomatonStates,AutomatonInputSymbols,DFATransitions)>
 	<!ELEMENT AutomatonName(#PCDATA)>
 	<!ELEMENT AutomatonStates(State+)>
-	<!ELEMENT State(StateId,StateType)>
-	<!ELEMENT StateId(#PCDATA)>
-	<!ELEMENT StateType(#PCDATA)>
+		<!ELEMENT State(StateId,StateType)>
+			<!ELEMENT StateId(#PCDATA)>
+			<!ELEMENT StateType(#PCDATA)>
+	<!ELEMENT InitialState(#PCDATA)>
 	<!ELEMENT AutomatonInputSymbols(InputSymbol*)>
-	<!ELEMENT InputSymbol(#PCDATA)>
+		<!ELEMENT InputSymbol(#PCDATA)>
 	<!ELEMENT DFATransitions(DFATransition*)>
-	<!ELEMENT DFATransition(FromState,DFAConditions,ToState)>
-	<!ELEMENT FromState(State)>
-	<!ELEMENT DFAConditions(DFACondition+)>
-	<!ELEMENT ToState(State)>
-	
+		<!ELEMENT DFATransition(FromState,DFAConditions,ToState)>
+			<!ELEMENT FromState(#PCDATA)>
+			<!ELEMENT DFAConditions(DFACondition+)>
+			<!ELEMENT ToState(#PCDATA)>
 ]>

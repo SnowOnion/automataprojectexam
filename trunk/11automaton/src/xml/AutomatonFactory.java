@@ -11,6 +11,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 
+import exception.NoStateFoundException;
+
 import automaton.Automaton;
 /**************************************************************\
  * This class used Factory Design pattern to implements the creation
@@ -64,7 +66,7 @@ public class AutomatonFactory {
 	 * suppose the user knows the tree structure of the Document.
 	 * @return
 	 ***********************************************************/
-	public static Automaton getAutomatonFromDocument(Document doc){
+	public static Automaton getAutomatonFromDocument(Document doc)throws NoStateFoundException{
 		String automatonType = doc.getDocumentElement().getNodeName();
 		if(automatonType.equals("DFA")){
 			return ddp.getAutomatonFromNode(doc);

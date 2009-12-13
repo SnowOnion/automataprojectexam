@@ -1,23 +1,26 @@
 package xml;
 
 import java.util.ArrayList;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import exception.NoStateFoundException;
 
 import automaton.Automaton;
 import automaton.AutomatonConstant;
 import automaton.AutomatonNFA;
 import automaton.State;
 import automaton.Transition;
-import automaton.TransitionDFA;
 import automaton.TransitionNFA;
 
 public class NFADomParser extends DomParserParent {
 
 	public NFADomParser(){
 		super();
+		this.doc = super.doc;
 		automaton = new AutomatonNFA();
 		//automaton.setAutomatonType("NFA");
 		automaton.setAutomatonType(AutomatonConstant.AUTOMATONTYPES[1]);
@@ -26,22 +29,13 @@ public class NFADomParser extends DomParserParent {
 	 * Read the Automaton from a document, which is a defined XML 
 	 * file.
 	 */
-	public Automaton getAutomatonFromNode(Document doc) {
-		// TODO Auto-generated method stub
-		Element root = doc.getDocumentElement();
+	public Automaton getAutomatonFromNode(Document document) throws NoStateFoundException {
+		Element root = document.getDocumentElement();
 		ArrayList <Element> elements = getAllElementsFromRoot(root);
 		
+		initBasicAutomatonFromNode(document);
 		
-		Element automatonName = elements.get(0);
-		automaton.setAutomatonName(automatonName.getTextContent());
-		
-		Element stateElements = elements.get(1);
-		automaton.setStates(getAllStatesFromNode(stateElements));
-		
-		Element inputSymbols = elements.get(2);
-		automaton.setInputSymbolSet(getAllInputSymbols(inputSymbols));
-		
-		Element transitionElements = elements.get(3);
+		Element transitionElements = elements.get(4);
 		ArrayList<Transition> transitions = new ArrayList<Transition>();
 		NodeList tes = transitionElements.getElementsByTagName("NFATransition");
 		for(int i = 0;i<tes.getLength();i++){
@@ -51,11 +45,17 @@ public class NFADomParser extends DomParserParent {
 		automaton.setTransitions(transitions);
 		return automaton;
 	}
-	private TransitionNFA getTransitionFromNode(Node node) {
-		// TODO Auto-generated method stub
+	private TransitionNFA getTransitionFromNode(Node node) throws NoStateFoundException{
 		Element newTransition = (Element) node;
-		Node fromStateNode =((Element) newTransition.getElementsByTagName("FromState").item(0)).getElementsByTagName("State").item(0);
-		State fromState = getStateFromNode(fromStateNode);
+		Element fromStateNode =(Element) newTransition.getElementsByTagName("FromState").item(0);
+		String fromStateId = fromStateNode.getTextContent();
+		State fromState = null;
+		if(automaton.getStates().containsKey(fromStateId)){
+			fromState = automaton.getStates().get(fromStateId);
+				
+		}else{
+			throw new NoStateFoundException("fromState was not found in state list of the DFA");
+		}
 		ArrayList <String> conditions = new ArrayList<String>();
 		NodeList conditionNodes = ((Element) newTransition.getElementsByTagName("NFAConditions").item(0)).getElementsByTagName("NFACondition");
 		for(int i = 0;i<conditionNodes.getLength();i++){
@@ -63,19 +63,22 @@ public class NFADomParser extends DomParserParent {
 			conditions.add(nfaCondition.getTextContent());
 		}
 		
-		Node toStateNode = ((Element) newTransition.getElementsByTagName("ToState").item(0)).getElementsByTagName("State").item(0);
-		State toState = getStateFromNode(toStateNode);
+		Element toStateNode = (Element) newTransition.getElementsByTagName("ToState").item(0);
+		String toStateId = toStateNode.getTextContent();
+		State toState = null;
+		if(automaton.getStates().containsKey(toStateId)){
+			toState = automaton.getStates().get(toStateId);
+		}else{
+			throw new NoStateFoundException("toState was not found in state list of the DFA");
+		}
 		return  new TransitionNFA(fromState,conditions,toState);
 	}
-
 	
 	@Override
 	public Document getDocumentFromAutomaton(Automaton automaton) {
 		Element root = doc.createElement("NFA");
-		Element automatonName = getElementFromAutomatonName(automaton);
-		Element statesElement = getElementFromAllStates(automaton);
 		
-		Element inputSymbolsElement = getElementFromAllInputSymbols(automaton);
+		initBasicRootElementFromAutomaton(root,automaton);
 		
 		Element transitionsElement = doc.createElement("NFATransitions");
 		ArrayList <Transition> transitions = automaton.getTransitions();
@@ -83,9 +86,6 @@ public class NFADomParser extends DomParserParent {
 			Element transitionElement = getElementFromTransition(transitions.get(i));
 			transitionsElement.appendChild(transitionElement);
 		}
-		root.appendChild(automatonName);
-		root.appendChild(statesElement);
-		root.appendChild(inputSymbolsElement);
 		root.appendChild(transitionsElement);
 		doc.appendChild(root);
 		return doc;
@@ -93,16 +93,16 @@ public class NFADomParser extends DomParserParent {
 	private Element getElementFromTransition(Transition transition) {
 		Element transitionElement = doc.createElement("NFATransition");
 		Element fromState = doc.createElement("FromState");
-		fromState.appendChild(getElementFromState(transition.getFromState()));
+		fromState.setTextContent(transition.getFromState().getStateId());
 		Element conditions = doc.createElement("NFAConditions");
-		ArrayList <String> tempConditions = ((TransitionDFA) transition).getTransitionConditions();
+		ArrayList <String> tempConditions = ((TransitionNFA) transition).getTransitionConditions();
 		for(int i = 0;i<tempConditions.size();i++){
 			Element newCondition = doc.createElement("NFACondition");
 			newCondition.setTextContent(tempConditions.get(i));
 			conditions.appendChild(newCondition);
 		}
 		Element toState = doc.createElement("ToState");
-		toState.appendChild(getElementFromState(transition.getToState()));
+		toState.setTextContent(transition.getToState().getStateId());
 		
 		transitionElement.appendChild(fromState);
 		transitionElement.appendChild(conditions);

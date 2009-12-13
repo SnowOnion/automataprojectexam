@@ -16,9 +16,5 @@ public class AutomatonDFA extends AutomatonNFA{
 	public AutomatonDFA(){
 		
 	}
-	public AutomatonDFA(State state) {
-		super(state);
-		// TODO Auto-generated constructor stub
-	}
  
 }

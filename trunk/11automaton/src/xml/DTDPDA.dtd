@@ -6,19 +6,19 @@
 		<!ELEMENT State(StateId,StateType)>
 		<!ELEMENT StateId(#PCDATA)>
 		<!ELEMENT StateType(#PCDATA)>
-	<!ELEMENT AutomatonInputSymbols(InputSymbol+)>
+	<!ELEMENT InitialState(#PCDATA)>
+	<!ELEMENT AutomatonInputSymbols(InputSymbol*)>
+		<!ELEMENT InputSymbol(#PCDATA)>
 	<!ELEMENT PDAStackSymbols(PDAStackSymbol+)>
-	<!ELEMENT InputSymbol(#PCDATA)>
-	<!ELEMENT PDAStackSymbol(#PCDATA)>
+		<!ELEMENT PDAStackSymbol(#PCDATA)>
 	<!ELEMENT PDAInitialStackSymbol(#PCDATA)>
-	<!ELEMENT PDATransitions(PDATransition)>
-	<!ELEMENT PDATransition(FromState,PDAConditions,ToState)>
-	<!ELEMENT FromState(State)>
-	<!ELEMENT PDAConditions(PDACondition)>
-		<!ELEMENT PDACondition(PDAConditionSymbol,PDAFromStackSymbol,PDAToStackSymbol)>
-		<!ELEMENT PDAConditionSymbol(InputSymbol)>
-		<!ELEMENT PDAFromStackSymbol(PDAStackSymbol)>
-		<!ELEMENT PDAToStackSymbol(PDAStackSymbol+)>
-	<!ELEMENT ToState(State)>
-	
+	<!ELEMENT PDATransitions(PDATransition*)>
+		<!ELEMENT PDATransition(FromState,PDAConditions,ToState)>
+			<!ELEMENT FromState(#PCDATA)>
+			<!ELEMENT PDAConditions(PDACondition+)>
+				<!ELEMENT PDACondition(PDAConditionSymbol,PDAFromStackSymbol,PDAToStackSymbol)>
+				<!ELEMENT PDAConditionSymbol(InputSymbol+)>
+				<!ELEMENT PDAFromStackSymbol(PDAStackSymbol)>
+				<!ELEMENT PDAToStackSymbol(PDAStackSymbol+)>
+			<!ELEMENT ToState(#PCDATA)>
 ]>

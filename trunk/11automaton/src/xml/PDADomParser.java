@@ -5,6 +5,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import exception.NoStateFoundException;
 import automaton.Automaton;
 import automaton.AutomatonConstant;
 import automaton.AutomatonPDA;
@@ -17,36 +18,25 @@ public class PDADomParser extends DomParserParent {
 	
 	public PDADomParser(){
 		super();
+		this.doc = super.doc;
 		automaton = new AutomatonPDA();
 		//automaton.setAutomatonType("PDA");
 		automaton.setAutomatonType(AutomatonConstant.AUTOMATONTYPES[2]);
 	}
 	@Override
-	public Automaton getAutomatonFromNode(Document document) {
+	public Automaton getAutomatonFromNode(Document document) throws NoStateFoundException {
 		Element root = document.getDocumentElement();
 		ArrayList <Element> elements = getAllElementsFromRoot(root);
-	
-		Element automatonName=elements.get(0);
-		automaton.setAutomatonName(automatonName.getTextContent());
-		//System.out.println(automatonName.getNodeName()+"\t"+automatonName.getTextContent());
+
+		initBasicAutomatonFromNode(document);
 		
-		Element stateElements = elements.get(1);
-		automaton.setStates(getAllStatesFromNode(stateElements));
-		
-		//System.out.println(stateElements.getNodeName());
-		//System.out.println(ses.getLength());
-		
-		Element inputSymbols = elements.get(2);
-		automaton.setInputSymbolSet(getAllInputSymbols(inputSymbols));
-		//System.out.println(inputSymbols.getNodeName());
-		
-		Element stackSymbolElements = elements.get(3);
+		Element stackSymbolElements = elements.get(4);
 		((AutomatonPDA)automaton).setStackSymbols(getAllStackSymbolsFromNode(stackSymbolElements));
-		Element initialStackSymbolElement = elements.get(4);
+		Element initialStackSymbolElement = elements.get(5);
 		String initalStack = initialStackSymbolElement.getTextContent();
 		((AutomatonPDA)automaton).setInitialStackSymbol(initalStack);
 		
-		Element transitionElements = elements.get(5);
+		Element transitionElements = elements.get(6);
 		ArrayList<Transition> transitions = new ArrayList <Transition>();
 		NodeList tes = transitionElements.getElementsByTagName("PDATransition");
 		for(int i = 0;i<tes.getLength();i++){
@@ -67,19 +57,31 @@ public class PDADomParser extends DomParserParent {
 		}
 		return stackSymbolSet;
 	}
-	private TransitionPDA getTransitionFromNode(Node node) {
+	private TransitionPDA getTransitionFromNode(Node node) throws NoStateFoundException {
 		Element newTransition = (Element) node;
-		Node fromStateNode=((Element)newTransition.getElementsByTagName("FromState").item(0)).getElementsByTagName("State").item(0);
-		State fromState = getStateFromNode(fromStateNode);
-		
+		Element fromStateNode=(Element)newTransition.getElementsByTagName("FromState").item(0);
+		String fromStateId = fromStateNode.getTextContent();
+		State fromState = null;
+		if(automaton.getStates().containsKey(fromStateId)){
+			fromState = automaton.getStates().get(fromStateId);
+				
+		}else{
+			throw new NoStateFoundException("fromState was not found in state list of the DFA");
+		}
 		ArrayList <TransitionPDACondition> conditions = new ArrayList<TransitionPDACondition>();
 		NodeList conditionNodes = ((Element) newTransition.getElementsByTagName("PDAConditions").item(0)).getElementsByTagName("DFACondition");
 		for(int i = 0;i<conditionNodes.getLength();i++){
 			Node pdaCondition = conditionNodes.item(i);
 			conditions.add(getTransitionPDAConditionFromNode(pdaCondition));
 		}
-		Node toStateNode = ((Element)newTransition.getElementsByTagName("ToState").item(0)).getElementsByTagName("State").item(0);
-		State toState = getStateFromNode(toStateNode);
+		Element toStateNode = (Element)newTransition.getElementsByTagName("ToState").item(0);
+		String toStateId = toStateNode.getTextContent();
+		State toState = null;
+		if(automaton.getStates().containsKey(toStateId)){
+			toState = automaton.getStates().get(toStateId);
+		}else{
+			throw new NoStateFoundException("toState was not found in state list of the DFA");
+		}
 		return new TransitionPDA(fromState,conditions,toState);
 	}
 	
@@ -112,10 +114,7 @@ public class PDADomParser extends DomParserParent {
 	public Document getDocumentFromAutomaton(Automaton automaton) {
 		Element root = doc.createElement("PDA");
 		
-		Element automatonName = getElementFromAutomatonName(automaton);
-		Element statesElement = getElementFromAllStates(automaton);
-		
-		Element inputSymbolsElement = getElementFromAllInputSymbols(automaton);
+		initBasicRootElementFromAutomaton(root,automaton);
 		
 		Element stackSymbolsElement = getElementFromAllStackSymbols(automaton);
 		Element initialStackSymbol = doc.createElement("PDAInitialStackSymbol");
@@ -127,9 +126,6 @@ public class PDADomParser extends DomParserParent {
 			Element transitionElement = getElementFromTransition((TransitionPDA)transitions.get(i));
 			transitionsElement.appendChild(transitionElement);
 		}
-		root.appendChild(automatonName);
-		root.appendChild(statesElement);
-		root.appendChild(inputSymbolsElement);
 		root.appendChild(stackSymbolsElement);
 		root.appendChild(initialStackSymbol);
 		root.appendChild(transitionsElement);
@@ -150,7 +146,7 @@ public class PDADomParser extends DomParserParent {
 	private Element getElementFromTransition(TransitionPDA transition) {
 		Element transitionElement = doc.createElement("PDATransition");
 		Element fromState = doc.createElement("FromState");
-		fromState.appendChild(getElementFromState(transition.getFromState()));
+		fromState.setTextContent(transition.getFromState().getStateId());
 		
 		Element conditions = doc.createElement("PDAConditions");
 		ArrayList <TransitionPDACondition> tempConditions = ((TransitionPDA) transition).getTransitionConditions();
@@ -159,7 +155,7 @@ public class PDADomParser extends DomParserParent {
 			conditions.appendChild(newCondition);
 		}
 		Element toState = doc.createElement("ToState");
-		toState.appendChild(getElementFromState(transition.getToState()));
+		toState.setTextContent(transition.getToState().getStateId());
 		
 		transitionElement.appendChild(fromState);
 		transitionElement.appendChild(conditions);

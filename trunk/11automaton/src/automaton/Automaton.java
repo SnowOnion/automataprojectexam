@@ -1,52 +1,42 @@
 package automaton;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Automaton {
 	protected String automatonName;
 	protected String automatonType;
 	protected ArrayList<String> inputSymbolSet;
 	protected State initialState;
-	protected ArrayList<State> states;
+	protected HashMap<String,State> states;
 	protected ArrayList<Transition> transitions;
 	
 	public Automaton() {
-		
+		states= new HashMap<String,State>();
 	}
 	/***************************************************
 	 * Operation on Automaton State
 	 */
-	public int getStateIndex(State state) {
-		for(int i = 0;i<states.size();i++){
-			if(state.equals(states.get(i))){
-				return i;
-			}
-		}
-		return -1;
-	}
 	public boolean addState(State state) {
-		int index = getStateIndex(state);
-		if (index != -1) {
+		if (states.containsKey(state.getStateId())) {
 			return false;
 		}
-		states.add(state);
+		states.put(state.getStateId(), state);
 		return true;
 	}
 	public boolean removeState(State state) {
-		int index = getStateIndex(state);
-		if (index != -1) {
-			states.remove(state);
+		if (states.containsKey(state.getStateId())) {
+			states.remove(state.getStateId());
 			return true;
 		}
 		return false;
 	}
 	public boolean setState(State state){
-		int index = getStateIndex(state);
-		if(index==-1){
-			return false;
+		if (states.containsKey(state.getStateId())) {
+			states.put(state.getStateId(), state);
+			return true;
 		}
-		states.set(index, state);
-		return true;
+		return false;
 	}
 	/***************************************************
 	 * Operation on Automaton Transitions
@@ -100,7 +90,7 @@ public class Automaton {
 	public ArrayList<String> getInputSymbolSet() {
 		return inputSymbolSet;
 	}
-	public ArrayList <State> getStates() {
+	public HashMap <String,State> getStates() {
 		return states;
 	}
 	public ArrayList<Transition> getTransitions(){
@@ -120,7 +110,7 @@ public class Automaton {
 	public void setInputSymbolSet(ArrayList<String> inputSymbolSet) {
 		this.inputSymbolSet = inputSymbolSet;
 	}
-	public void setStates(ArrayList<State> states) {
+	public void setStates(HashMap <String,State> states) {
 		this.states = states;
 	}
 	public void setInitialState(State initialState) {
