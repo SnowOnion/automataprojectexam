@@ -50,64 +50,72 @@
 == DTD 定义和XML文件==
 XML的样例文件放在xml包中，在xmldata中是一些测试用的XML文件，可以参考TemplateXML来进行创建自己的自动机类，然后可以通过调用AutomatonFactory构造得到一个Automaton。不要写错XML，项目目前的挑错能力很差，如果有不匹配的标签很容易出错。
 
+ # Automaton 有三种（DFA，NFA和PDA），对于每个自动机都有一些共同的属性，比如名字，状态集，初始状态，输入字符集。
+ # 对于每个状态只有两种属性（normal和accepted），初始状态为自动机的一种属性。
+
 === DFA ===
 <?xml version="1.0" encoding="UTF-8"?><br>
-<!DOCTYPE DFA[<br>
-	<!ELEMENT DFA(AutomatonName,AutomatonStates,AutomatonInputSymbols,DFATransitions)><br>
-	<!ELEMENT AutomatonName(#PCDATA)> <br>
-	<!ELEMENT AutomatonStates(State+)><br>
-	<!ELEMENT State(StateId,StateType)><br>
-	<!ELEMENT StateId(#PCDATA)><br>
-	<!ELEMENT StateType(#PCDATA)><br>
-	<!ELEMENT AutomatonInputSymbols(InputSymbol{{{*}}})><br>
-	<!ELEMENT InputSymbol(#PCDATA)><br>
-	<!ELEMENT DFATransitions(DFATransition{{{*}}})><br>
-	<!ELEMENT DFATransition(FromState,DFAConditions,ToState)><br>
-	<!ELEMENT FromState(State)><br>
-	<!ELEMENT DFAConditions(DFACondition+)><br>
-	<!ELEMENT ToState(State)><br>
-]>
-=== NFA ===
-<?xml version="1.0" encoding="UTF-8"?> <br>
-<!DOCTYPE NFA[ <br>
-	<!ELEMENT NFA(AutomatonName,AutomatonStates,AutomatonInputSymbols,NFATransitions)> <br>
+<!DOCTYPE DFA[ <br>
+	<!ELEMENT DFA(AutomatonName,AutomatonStates,AutomatonInputSymbols,DFATransitions)> <br>
 	<!ELEMENT AutomatonName(#PCDATA)> <br>
 	<!ELEMENT AutomatonStates(State+)> <br>
 		<!ELEMENT State(StateId,StateType)> <br>
-		<!ELEMENT StateId(#PCDATA)> <br>
-		<!ELEMENT StateType(#PCDATA)> <br>
+			<!ELEMENT StateId(#PCDATA)> <br>
+			<!ELEMENT StateType(#PCDATA)> <br>
+	<!ELEMENT InitialState(#PCDATA)> <br>
 	<!ELEMENT AutomatonInputSymbols(InputSymbol{{{*}}})> <br>
-	<!ELEMENT InputSymbol(#PCDATA)> <br>
-	<!ELEMENT NFATransitions(NFATransitions{{{*}}})> <br>
-	<!ELEMENT NFATransition(FromState,NFAConditions,ToState)> <br>
-	<!ELEMENT FromState(State)> <br>
-	<!ELEMENT NFAConditions(NFACondition+)> <br>
-	<!ELEMENT ToState(State)> <br>
-]>
+		<!ELEMENT InputSymbol(#PCDATA)> <br>
+	<!ELEMENT DFATransitions(DFATransition{{{*}}})> <br>
+		<!ELEMENT DFATransition(FromState,DFAConditions,ToState)> <br>
+			<!ELEMENT FromState(#PCDATA)> <br>
+			<!ELEMENT DFAConditions(DFACondition+)> <br>
+			<!ELEMENT ToState(#PCDATA)> <br>
+]> <br>
+=== NFA ===
+<?xml version="1.0" encoding="UTF-8"?><br>
+<!DOCTYPE NFA[<br>
+	<!ELEMENT NFA(AutomatonName,AutomatonStates,AutomatonInputSymbols,NFATransitions)><br>
+	<!ELEMENT AutomatonName(#PCDATA)><br>
+	<!ELEMENT AutomatonStates(State+)><br>
+		<!ELEMENT State(StateId,StateType)><br>
+			<!ELEMENT StateId(#PCDATA)><br>
+			<!ELEMENT StateType(#PCDATA)><br>
+	<!ELEMENT InitialState(#PCDATA)><br>
+	<!ELEMENT AutomatonInputSymbols(InputSymbol{{{*}}})><br>
+		<!ELEMENT InputSymbol(#PCDATA)><br>
+	<!ELEMENT NFATransitions(NFATransitions{{{*}}})><br>
+		<!ELEMENT NFATransition(FromState,NFAConditions,ToState)><br>
+			<!ELEMENT FromState(#PCDATA)><br>
+			<!ELEMENT NFAConditions(NFACondition+)><br>
+			<!ELEMENT ToState(#PCDATA)><br>
+]><br>
+
 === PDA ===
 <?xml version="1.0" encoding="UTF-8"?><br>
 <!DOCTYPE PDA[<br>
-	<!ELEMENT PDA(AutomatonName, AutomatonStates, AutomatonInputSymbols, PDAStackSymbols, PDAInitialStackSymbol, PDATransitions)><br>
+	<!ELEMENT PDA(AutomatonName,AutomatonStates,AutomatonInputSymbols,PDAStackSymbols,PDAInitialStackSymbol,PDATransitions)><br>
 	<!ELEMENT AutomatonName(#PCDATA)><br>
 	<!ELEMENT AutomatonStates(State+)><br>
 		<!ELEMENT State(StateId,StateType)><br>
 		<!ELEMENT StateId(#PCDATA)><br>
 		<!ELEMENT StateType(#PCDATA)><br>
-	<!ELEMENT AutomatonInputSymbols(InputSymbol+)><br>
+	<!ELEMENT InitialState(#PCDATA)><br>
+	<!ELEMENT AutomatonInputSymbols(InputSymbol{{{*}}})><br>
+		<!ELEMENT InputSymbol(#PCDATA)><br>
 	<!ELEMENT PDAStackSymbols(PDAStackSymbol+)><br>
-	<!ELEMENT InputSymbol(#PCDATA)><br>
-	<!ELEMENT PDAStackSymbol(#PCDATA)><br>
+		<!ELEMENT PDAStackSymbol(#PCDATA)><br>
 	<!ELEMENT PDAInitialStackSymbol(#PCDATA)><br>
-	<!ELEMENT PDATransitions(PDATransition)><br>
-	<!ELEMENT PDATransition(FromState,PDAConditions,ToState)><br>
-	<!ELEMENT FromState(State)><br>
-	<!ELEMENT PDAConditions(PDACondition)><br>
-		<!ELEMENT PDACondition(PDAConditionSymbol, PDAFromStackSymbol, PDAToStackSymbol)><br>
-		<!ELEMENT PDAConditionSymbol(InputSymbol)><br>
-		<!ELEMENT PDAFromStackSymbol(PDAStackSymbol)><br>
-		<!ELEMENT PDAToStackSymbol(PDAStackSymbol+)><br>
-	<!ELEMENT ToState(State)><br>
-]>
+	<!ELEMENT PDATransitions(PDATransition{{{*}}})><br>
+		<!ELEMENT PDATransition(FromState,PDAConditions,ToState)><br>
+			<!ELEMENT FromState(#PCDATA)><br>
+			<!ELEMENT PDAConditions(PDACondition+)><br>
+				<!ELEMENT PDACondition(PDAConditionSymbol,PDAFromStackSymbol,PDAToStackSymbol)><br>
+				<!ELEMENT PDAConditionSymbol(InputSymbol)><br>
+				<!ELEMENT PDAFromStackSymbol(PDAStackSymbol)><br>
+				<!ELEMENT PDAToStackSymbol(PDAStackSymbol+)><br>
+			<!ELEMENT ToState(#PCDATA)><br>
+]><br>
+
 = 特殊说明 =
 
 
