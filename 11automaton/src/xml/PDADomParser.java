@@ -7,7 +7,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import exception.NoStateFoundException;
 import automaton.Automaton;
-import automaton.AutomatonConstant;
 import automaton.AutomatonPDA;
 import automaton.State;
 import automaton.Transition;
@@ -20,8 +19,6 @@ public class PDADomParser extends DomParserParent {
 		super();
 		this.doc = super.doc;
 		automaton = new AutomatonPDA();
-		//automaton.setAutomatonType("PDA");
-		automaton.setAutomatonType(AutomatonConstant.AUTOMATONTYPES[2]);
 	}
 	@Override
 	public Automaton getAutomatonFromNode(Document document) throws NoStateFoundException {

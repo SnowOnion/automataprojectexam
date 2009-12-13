@@ -16,6 +16,7 @@ public class AutomatonPDA extends Automaton {
 	private String initialStackSymbol;
 
 	public AutomatonPDA() {
+		setAutomatonType(AutomatonConstant.AUTOMATONTYPES[3]);
 		stackSymbols = new ArrayList<String>();
 		initialStackSymbol = null;
 	}
