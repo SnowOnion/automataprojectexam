@@ -9,6 +9,7 @@
 
 
 = Details =
+一个初步的设计文档上传到了svn上63RegToDFA/document下面
 
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
