@@ -40,17 +40,17 @@
 == 类图 ==
 === automaton ===
 这里是基础数据结构的相关类，这些类在包automaton中 <br>
-[http://automataprojectexam.googlecode.com/files/basicClassDiagram1209.JPG]
+[http://automatonmodeling.googlecode.com/files/basic_class_diagram_1214.JPG]
 
 
 === xml ===
-这里是XML的存储和读取的相关类的类图，这些类在包xml中。 <br>
-[http://automataprojectexam.googlecode.com/files/xmlClassDiagram1209.JPG]
+这里是XML的存储和读取的相关类的类图，这些类在包xml中。 两个init的无返回值方法是用来读和写自动机共有属性的，比如名字，输入字符集，状态集，初始状态等等。<br>
+[http://automatonmodeling.googlecode.com/files/xml_class_diagram_1214.JPG]
 
 == DTD 定义和XML文件==
 XML的样例文件放在xml包中，在xmldata中是一些测试用的XML文件，可以参考TemplateXML来进行创建自己的自动机类，然后可以通过调用AutomatonFactory构造得到一个Automaton。不要写错XML，项目目前的挑错能力很差，如果有不匹配的标签很容易出错。
 
- # Automaton 有三种（DFA，NFA和PDA），对于每个自动机都有一些共同的属性，比如名字，状态集，初始状态，输入字符集。
+ # Automaton 有三种（DFA，NFA和PDA），但是，我定义的自动机的类型有四种，（"UNKNOWN","DFA","NFA","PDA"） 对于每个自动机都有一些共同的属性，比如名字，状态集，初始状态，输入字符集。
  # 对于每个状态只有两种属性（normal和accepted），初始状态为自动机的一种属性。
 
 === DFA ===
