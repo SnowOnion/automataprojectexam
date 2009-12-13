@@ -5,6 +5,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import exception.NoStateFoundException;
 import automaton.Automaton;
 import automaton.AutomatonConstant;
 import automaton.AutomatonDFA;
@@ -23,6 +24,7 @@ import automaton.TransitionDFA;
 public class DFADomParser extends DomParserParent {
 	public DFADomParser(){
 		super();
+		this.doc = super.doc;
 		automaton = new AutomatonDFA();
 		//automaton.setAutomatonType("DFA");
 		automaton.setAutomatonType(AutomatonConstant.AUTOMATONTYPES[0]);
@@ -32,27 +34,13 @@ public class DFADomParser extends DomParserParent {
 	 * file.
 	 */
 	@Override
-	public Automaton getAutomatonFromNode(Document document) {
-		// TODO Auto-generated method stub
+	public Automaton getAutomatonFromNode(Document document) throws NoStateFoundException{
 		Element root = document.getDocumentElement();
 		ArrayList <Element> elements = getAllElementsFromRoot(root);
 	
-		Element automatonName=elements.get(0);
-		automaton.setAutomatonName(automatonName.getTextContent());
-		//System.out.println(automatonName.getNodeName()+"\t"+automatonName.getTextContent());
+		initBasicAutomatonFromNode(document);
 		
-		Element stateElements = elements.get(1);
-		automaton.setStates(getAllStatesFromNode(stateElements));
-		
-		//System.out.println(stateElements.getNodeName());
-		//System.out.println(ses.getLength());
-		
-		Element inputSymbols = elements.get(2);
-		automaton.setInputSymbolSet(getAllInputSymbols(inputSymbols));
-		//System.out.println(inputSymbols.getNodeName());
-		
-		
-		Element transitionElements = elements.get(3);
+		Element transitionElements = elements.get(4);
 		ArrayList<Transition> transitions = new ArrayList <Transition>();
 		NodeList tes = transitionElements.getElementsByTagName("DFATransition");
 		for(int i = 0;i<tes.getLength();i++){
@@ -65,18 +53,31 @@ public class DFADomParser extends DomParserParent {
 		return automaton;
 	}
 	
-	private TransitionDFA getTransitionFromNode(Node node) {
+	private TransitionDFA getTransitionFromNode(Node node) throws NoStateFoundException{
 		Element newTransition = (Element) node;
-		Node fromStateNode=((Element)newTransition.getElementsByTagName("FromState").item(0)).getElementsByTagName("State").item(0);
-		State fromState = getStateFromNode(fromStateNode);
+		Element fromStateNode=(Element)newTransition.getElementsByTagName("FromState").item(0);
+		String fromStateId = fromStateNode.getTextContent();
+		State fromState = null;
+		if(automaton.getStates().containsKey(fromStateId)){
+			fromState = automaton.getStates().get(fromStateId);
+				
+		}else{
+			throw new NoStateFoundException("fromState was not found in state list of the DFA");
+		}
 		ArrayList <String> conditions = new ArrayList<String>();
 		NodeList conditionNodes = ((Element) newTransition.getElementsByTagName("DFAConditions").item(0)).getElementsByTagName("DFACondition");
 		for(int i = 0;i<conditionNodes.getLength();i++){
 			Node nfaCondition = conditionNodes.item(i);
 			conditions.add(nfaCondition.getTextContent());
 		}
-		Node toStateNode = ((Element)newTransition.getElementsByTagName("ToState").item(0)).getElementsByTagName("State").item(0);
-		State toState = getStateFromNode(toStateNode);
+		Element toStateNode = (Element)newTransition.getElementsByTagName("ToState").item(0);
+		String toStateId = toStateNode.getTextContent();
+		State toState = null;
+		if(automaton.getStates().containsKey(toStateId)){
+			toState = automaton.getStates().get(toStateId);
+		}else{
+			throw new NoStateFoundException("toState was not found in state list of the DFA");
+		}
 		return new TransitionDFA(fromState,conditions,toState);
 	}
 
@@ -88,21 +89,15 @@ public class DFADomParser extends DomParserParent {
 	@Override
 	public Document getDocumentFromAutomaton(Automaton automaton) {
 		Element root = doc.createElement("DFA");
-			
-		Element automatonName = getElementFromAutomatonName(automaton);
-		Element statesElement = getElementFromAllStates(automaton);
 		
-		Element inputSymbolsElement = getElementFromAllInputSymbols(automaton);
-			
+		initBasicRootElementFromAutomaton(root,automaton);
+				
 		Element transitionsElement = doc.createElement("DFATransitions");
 		ArrayList <Transition> transitions = automaton.getTransitions();
 		for(int i = 0;i<transitions.size();i++){
 			Element transitionElement = getElementFromTransition(transitions.get(i));
 			transitionsElement.appendChild(transitionElement);
 		}
-		root.appendChild(automatonName);
-		root.appendChild(statesElement);
-		root.appendChild(inputSymbolsElement);
 		root.appendChild(transitionsElement);
 			
 		doc.appendChild(root);
@@ -111,7 +106,7 @@ public class DFADomParser extends DomParserParent {
 	private Element getElementFromTransition(Transition transition) {
 		Element transitionElement = doc.createElement("DFATransition");
 		Element fromState = doc.createElement("FromState");
-		fromState.appendChild(getElementFromState(transition.getFromState()));
+		fromState.setTextContent(transition.getFromState().getStateId());
 		Element conditions = doc.createElement("DFAConditions");
 		ArrayList <String> tempConditions = ((TransitionDFA) transition).getTransitionConditions();
 		for(int i = 0;i<tempConditions.size();i++){
@@ -120,7 +115,7 @@ public class DFADomParser extends DomParserParent {
 			conditions.appendChild(newCondition);
 		}
 		Element toState = doc.createElement("ToState");
-		toState.appendChild(getElementFromState(transition.getToState()));
+		toState.setTextContent(transition.getToState().getStateId());
 		
 		transitionElement.appendChild(fromState);
 		transitionElement.appendChild(conditions);

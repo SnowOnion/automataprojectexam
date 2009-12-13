@@ -4,7 +4,7 @@
 	<AutomatonStates>
 		<State>
 			<StateId>P1</StateId>
-			<StateType>initial</StateType>
+			<StateType>normal</StateType>
 		</State>
 		<State>
 			<StateId>P2</StateId>
@@ -19,6 +19,7 @@
 			<StateType>accepted</StateType>
 		</State>
 	</AutomatonStates>
+	<InitialState>P1</InitialState>
 	<AutomatonInputSymbols>
 		<InputSymbol>0</InputSymbol>
 		<InputSymbol>1</InputSymbol>
@@ -32,12 +33,7 @@
 	<PDAInitialStackSymbol>Z</PDAInitialStackSymbol>
 	<PDATransitions>
 		<PDATransition>
-			<FromState>
-				<State>
-					<StateId>P1</StateId>
-					<StateType>initial</StateType>
-				</State>
-			</FromState>
+			<FromState>P1</FromState>
 			<PDAConditions>
 				<PDACondition>
 					<PDAConditionSymbol>0</PDAConditionSymbol>
@@ -48,20 +44,10 @@
 					</PDAToStackSymbol>
 				</PDACondition>
 			</PDAConditions>
-			<ToState>
-				<State>
-					<StateId>P2</StateId>
-					<StateType>normal</StateType>
-				</State>
-			</ToState>
+			<ToState>P2</ToState>
 		</PDATransition>
 		<PDATransition>
-			<FromState>
-				<State>
-					<StateId>P2</StateId>
-					<StateType>normal</StateType>
-				</State>
-			</FromState>
+			<FromState>P2</FromState>
 			<PDAConditions>
 				<PDACondition>
 					<PDAConditionSymbol>0</PDAConditionSymbol>
@@ -70,12 +56,7 @@
 					</PDAToStackSymbol>
 				</PDACondition>
 			</PDAConditions>
-			<ToState>
-				<State>
-					<StateId>P3</StateId>
-					<StateType>accepted</StateType>
-				</State>
-			</ToState>
+			<ToState>P3</ToState>
 		</PDATransition>
 	</PDATransitions>
 </PDA>
