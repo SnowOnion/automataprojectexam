@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class State {
 	// state name should be unique in one Automaton
 	protected String stateId;
-	protected String stateType;
-	
+	//protected String stateType;
+	protected byte stateType;
 	/**********************************************
 	 * transitions and toStates are used to create a tree structure
 	 * for the automaton modeling.
@@ -25,24 +25,16 @@ public class State {
 	 */
 	public State(String stateId) {
 		this.stateId = stateId;
-		stateType = AutomatonConstant.STATETYPES[1];
+		stateType = AutomatonConstant.STATETYPE_NORMAL;
 		transitions = new ArrayList<Transition>();
 		toStates = new ArrayList<State>();
 	}
 
-	public State(String stateId, String stateType) {
+	public State(String stateId, byte stateType) {
 		this.stateId = stateId;
 		this.stateType = stateType;
 		transitions = new ArrayList<Transition>();
 		toStates = new ArrayList<State>();
-	}
-
-	public boolean setStateType(int index) {
-		if (index > AutomatonConstant.STATETYPES.length - 1 || index < 0) {
-			return false;
-		}
-		stateType = AutomatonConstant.STATETYPES[index];
-		return true;
 	}
 
 	public void setStateId(String id) {
@@ -53,18 +45,18 @@ public class State {
 		return stateId;
 	}
 
-	public String getStateType() {
+	public byte getStateType() {
 		return stateType;
 	}
 
-	public void setStateType(String stateType) {
+	public void setStateType(byte stateType) {
 		this.stateType = stateType;
 	}
 
 	public String toString(){
 		StringBuilder builder = new StringBuilder();
 		builder.append("(State Id:"+stateId+"\t");
-		builder.append("State Type:"+stateType+")\n");
+		builder.append("State Type:"+AutomatonConstant.STATETYPES[stateType]+")\n");
 		return builder.toString();
 	}
 	

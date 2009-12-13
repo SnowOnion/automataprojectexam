@@ -7,7 +7,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import exception.NoStateFoundException;
 import automaton.Automaton;
-import automaton.AutomatonConstant;
 import automaton.AutomatonDFA;
 import automaton.State;
 import automaton.Transition;
@@ -26,8 +25,6 @@ public class DFADomParser extends DomParserParent {
 		super();
 		this.doc = super.doc;
 		automaton = new AutomatonDFA();
-		//automaton.setAutomatonType("DFA");
-		automaton.setAutomatonType(AutomatonConstant.AUTOMATONTYPES[0]);
 	}
 	/***************************************************
 	 * Read the Automaton from a document, which is a defined XML 

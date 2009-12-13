@@ -1,16 +1,12 @@
 package xml;
 
 import java.util.ArrayList;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
 import exception.NoStateFoundException;
-
 import automaton.Automaton;
-import automaton.AutomatonConstant;
 import automaton.AutomatonNFA;
 import automaton.State;
 import automaton.Transition;
@@ -22,8 +18,6 @@ public class NFADomParser extends DomParserParent {
 		super();
 		this.doc = super.doc;
 		automaton = new AutomatonNFA();
-		//automaton.setAutomatonType("NFA");
-		automaton.setAutomatonType(AutomatonConstant.AUTOMATONTYPES[1]);
 	}
 	/***************************************************
 	 * Read the Automaton from a document, which is a defined XML 

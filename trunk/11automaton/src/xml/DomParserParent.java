@@ -22,6 +22,7 @@ import org.w3c.dom.NodeList;
 
 import exception.NoStateFoundException;
 import automaton.Automaton;
+import automaton.AutomatonConstant;
 import automaton.State;
 
 public class DomParserParent implements AutomatonXmlInterface {
@@ -82,7 +83,8 @@ public class DomParserParent implements AutomatonXmlInterface {
 	protected State getStateFromNode(Node node) {
 		Element state = (Element) node;
 		String stateName = state.getElementsByTagName("StateId").item(0).getTextContent();
-		String stateType = state.getElementsByTagName("StateType").item(0).getTextContent();
+		String stateTypeString = state.getElementsByTagName("StateType").item(0).getTextContent();
+		byte stateType = AutomatonConstant.getStateTypeByteFromString(stateTypeString);
 		return new State(stateName,stateType);
 	}
 	/*************************************************************
@@ -178,7 +180,9 @@ public class DomParserParent implements AutomatonXmlInterface {
 		Element stateId = doc.createElement("StateId");
 		stateId.setTextContent(state.getStateId());
 		Element stateType = doc.createElement("StateType");
-		stateType.setTextContent(state.getStateType());
+		
+		byte stateTypeByte = state.getStateType();
+		stateType.setTextContent(AutomatonConstant.STATETYPES[stateTypeByte]);
 		
 		stateElement.appendChild(stateId);
 		stateElement.appendChild(stateType);

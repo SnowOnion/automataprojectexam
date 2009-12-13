@@ -14,7 +14,7 @@ package automaton;
  */
 public class AutomatonDFA extends AutomatonNFA{
 	public AutomatonDFA(){
-		
+		setAutomatonType(AutomatonConstant.AUTOMATONTYPES[1]);
 	}
  
 }

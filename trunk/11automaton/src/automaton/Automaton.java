@@ -1,7 +1,9 @@
 package automaton;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class Automaton {
 	protected String automatonName;
@@ -95,6 +97,22 @@ public class Automaton {
 	}
 	public ArrayList<Transition> getTransitions(){
 		return transitions;
+	}
+	/**************************************************
+	 * retrun the list of accepted states
+	 * @return
+	 */
+	public HashMap<String,State> getAcceptedStates(){
+		Collection <State> tempStates = states.values();
+		Iterator <State>iterator = tempStates.iterator();
+		HashMap<String,State> acceptedStates = new HashMap<String,State>();
+		while(iterator.hasNext()){
+			State temp = iterator.next();
+			if(temp.stateType==AutomatonConstant.STATETYPE_ACCEPTED){
+				acceptedStates.put(temp.getStateId(), temp);
+			}
+		}
+		return acceptedStates;
 	}
 
 	/***************************************************
