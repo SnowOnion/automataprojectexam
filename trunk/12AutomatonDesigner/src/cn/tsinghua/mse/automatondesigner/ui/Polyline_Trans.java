@@ -50,6 +50,12 @@ public class Polyline_Trans implements IPaint {
 	 */
 	@Override
 	public void paint(GC gc, byte statue, String type) {
+		if (statue == Circle_State.IMAGE_TYPE_SELECTED){
+			gc.setForeground(gc.getDevice().getSystemColor(SWT.COLOR_RED));
+		}
+		else{
+			gc.setForeground(gc.getDevice().getSystemColor(SWT.COLOR_BLACK));
+		}
 		if (polyLine == null || polyLine.size() == 0) {
 			gc.drawLine(beginCircle.getCentre().x, beginCircle.getCentre().y,
 					endCircle.getCentre().x, endCircle.getCentre().y);
@@ -68,8 +74,8 @@ public class Polyline_Trans implements IPaint {
 	}
 
 	private void paintk(GC g, int x1, int y1, int x2, int y2) {
-		double H = 7; // 箭头高度
-		double L = 5; // 底边的一半
+		double H = 8; // 箭头高度
+		double L = 4; // 底边的一半
 		int x3 = 0;
 		int y3 = 0;
 		int x4 = 0;
@@ -119,6 +125,24 @@ public class Polyline_Trans implements IPaint {
 			mathstr[1] = vy;
 		}
 		return mathstr;
+	}
+	
+	public boolean isOnThePolyline(Point p){
+		ArrayList<Point> ps = new ArrayList<Point>();
+		ps.add(beginCircle.getCentre());
+		ps.addAll(polyLine);
+		ps.add(endCircle.getCentre());
+		for (int i = 0; i < ps.size()-1; i++){
+			Point p1 = ps.get(i);
+			Point p2 = ps.get(1+i);
+			double totalDistance = Point2D.distance(p1.x, p1.y, p2.x, p2.y);
+			double d1 = Point2D.distance(p.x, p.y, p2.x, p2.y);
+			double d2 = Point2D.distance(p.x, p.y, p1.x, p1.y);
+			if (d1 + d2 <= totalDistance + 5){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public Circle_State getBeginCircle() {

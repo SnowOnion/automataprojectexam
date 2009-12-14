@@ -170,6 +170,11 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	protected void doDelete() {
 		IWorkbenchPart currentView = mainWindow.getActivePage().getActivePart();
 		if (currentView != null && currentView instanceof View_Main) {
+			if (((View_Main) currentView).isContainsCiricle()){
+				if (!MessageDialog.openQuestion(mainWindow.getShell(), "确认", "删除状态将删除所有与该状态关联的转换函数，是否继续？")){
+					return;
+				}
+			}
 			if (!((View_Main) currentView).doDelete()) {
 				MessageDialog.openError(mainWindow.getShell(), "删除失败！",
 						"没有可供删除的组件被选中！");
