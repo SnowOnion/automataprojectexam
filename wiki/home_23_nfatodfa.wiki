@@ -1,4 +1,4 @@
-#summary 22组：实现NFA转DFA的工具李守勤 2009220700
+#summary 23组：实现NFA转DFA的工具李守勤 2009220700
 
 = Introduction =
 
