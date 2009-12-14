@@ -152,4 +152,11 @@ public class View_Main extends ViewPart {
 		}
 		return result;
 	}
+	
+	public boolean isContainsCiricle(){
+		if (canvas.getNumofSelectedCircle() == 0){
+			return false;
+		}
+		return true;
+	}
 }
