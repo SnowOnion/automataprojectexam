@@ -10,6 +10,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 
 import cn.tsinghua.mse.automatondesigner.dataobject.TransFunction;
 import cn.tsinghua.mse.automatondesigner.interfaces.IPaint;
@@ -27,10 +28,15 @@ public class Polyline_Trans implements IPaint {
 	private ArrayList<Point> polyLine = null;
 	private Circle_State beginCircle = null;
 	private Circle_State endCircle = null;
+	
+	private ArrayList<Point> Oranal_PolyLine = null;
+	private ArrayList<Integer> selectedPointIdx = null;
 
 	public Polyline_Trans() {
 		transFunc = null;
 		polyLine = new ArrayList<Point>();
+		Oranal_PolyLine = new ArrayList<Point>();
+		selectedPointIdx = new ArrayList<Integer>();
 	}
 
 	public Polyline_Trans(TransFunction func, ArrayList<Point> pl,
@@ -39,6 +45,8 @@ public class Polyline_Trans implements IPaint {
 		polyLine = pl;
 		beginCircle = bCircle;
 		endCircle = eCircle;
+		Oranal_PolyLine = CommonTool.PointsClone(pl);
+		selectedPointIdx = new ArrayList<Integer>();
 	}
 
 	/*
@@ -70,6 +78,22 @@ public class Polyline_Trans implements IPaint {
 			paintk(gc, polyLine.get(polyLine.size() - 1).x, polyLine
 					.get(polyLine.size() - 1).y, endCircle.getCentre().x,
 					endCircle.getCentre().y);
+			if (statue == Circle_State.IMAGE_TYPE_SELECTED){
+				for(Point p : polyLine){
+					gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_WHITE));
+					gc.fillRoundRectangle(p.x-4, p.y-4, 8, 8, 2, 2);
+					gc.drawRoundRectangle(p.x-4, p.y-4, 8, 8, 2, 2);
+				}
+			}
+			else if (selectedPointIdx != null && selectedPointIdx.size() > 0){
+				for(int i : selectedPointIdx){
+					Point p = polyLine.get(i);
+					gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_WHITE));
+					gc.fillRoundRectangle(p.x-4, p.y-4, 8, 8, 2, 2);
+					gc.setForeground(gc.getDevice().getSystemColor(SWT.COLOR_RED));
+					gc.drawRoundRectangle(p.x-4, p.y-4, 8, 8, 2, 2);
+				}
+			}
 		}
 	}
 
@@ -81,7 +105,7 @@ public class Polyline_Trans implements IPaint {
 		int x4 = 0;
 		int y4 = 0;
 		double D = Math.abs(Point2D.distance(x1, y1, x2, y2));
-		if (D <= Circle_State.DEFAULTRADIUS ){
+		if (D <= Circle_State.DEFAULTRADIUS/2 ){
 			return;
 		}
 		x2 = (int) (x1+(x2-x1)*(D-10)/D);
@@ -138,11 +162,94 @@ public class Polyline_Trans implements IPaint {
 			double totalDistance = Point2D.distance(p1.x, p1.y, p2.x, p2.y);
 			double d1 = Point2D.distance(p.x, p.y, p2.x, p2.y);
 			double d2 = Point2D.distance(p.x, p.y, p1.x, p1.y);
-			if (d1 + d2 <= totalDistance + 5){
+			if (d1 + d2 <= totalDistance + 2){
 				return true;
 			}
 		}
 		return false;
+	}
+	
+	public void updateOrginalPolyline(){
+		if (polyLine == null || polyLine.size() == 0){
+			return;
+		}
+		for (int i = 0; i < polyLine.size(); i++){
+			Oranal_PolyLine.get(i).x = polyLine.get(i).x;
+			Oranal_PolyLine.get(i).y = polyLine.get(i).y;
+		}
+	}
+	
+	public Point isOnKneePoint(Point p){
+		if (polyLine == null || polyLine.size() == 0){
+			return null;
+		}
+		else{
+			for(Point pnt : polyLine){
+				if (Point2D.distance(p.x, p.y, pnt.x, pnt.y) <= 4)
+					return pnt;
+			}
+			return null;
+		}
+	}
+	
+	
+	public void movePolyline(int XDist, int YDist){
+		if (polyLine == null || polyLine.size() == 0){
+			return;
+		}
+		for (int i = 0; i < polyLine.size(); i++){
+			polyLine.get(i).x = Oranal_PolyLine.get(i).x + XDist;
+			polyLine.get(i).y = Oranal_PolyLine.get(i).y + YDist;
+		}
+	}
+	
+	public void moveSelectedPnts(int XDist, int YDist){
+		if (selectedPointIdx == null || selectedPointIdx.size() == 0){
+			return;
+		}
+		for(int i : selectedPointIdx){
+			polyLine.get(i).x = Oranal_PolyLine.get(i).x + XDist;
+			polyLine.get(i).y = Oranal_PolyLine.get(i).y + YDist;
+		}
+	}
+	
+	public boolean isSelected(Point p){
+		int idx = polyLine.indexOf(p);
+		return selectedPointIdx.contains(idx);
+	}
+	
+	public void recordPntsInRect(Rectangle rect){
+		if (polyLine == null || polyLine.size() == 0){
+			return;
+		}
+		clearSelectedPointIdx();
+		for (int i = 0; i < polyLine.size(); i++){
+			if (rect.contains(polyLine.get(i))){
+				selectedPointIdx.add(i);
+			}
+		}
+	}
+	
+	public void removePnt(Point p){
+		int idx = polyLine.indexOf(p);
+		polyLine.remove(idx);
+		Oranal_PolyLine.remove(idx);
+	}
+
+	public void addSelectedPntIdx(Point p, boolean removeifexist){
+		if (selectedPointIdx == null){
+			selectedPointIdx = new ArrayList<Integer>();
+		}
+		int idx = polyLine.indexOf(p);
+		if (!selectedPointIdx.contains(idx))
+			selectedPointIdx.add(idx);
+		else if (removeifexist){
+			selectedPointIdx.remove(new Integer(idx));
+		}
+	}
+	
+	public void clearSelectedPointIdx(){
+		selectedPointIdx.clear();
 	}
 
 	public Circle_State getBeginCircle() {

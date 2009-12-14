@@ -100,9 +100,24 @@ public class Menu_StateRightClick extends Composite {
 		});
 		menuItem_4.setText(AutomatonConst.STATE_TYPE_INI_FINAL);
 		
+		MenuItem menuItem_6 = new MenuItem(menu, SWT.NONE);
+		menuItem_6.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				doShowProperty();
+			}
+		});
+		menuItem_6.setImage(ResourceManager.getPluginImage("AutomatonDesigner", "icons/file16.png"));
+		menuItem_6.setText(" Ù–‘");
+		
 		
 	}
 	
+	protected void doShowProperty() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public void showMenu(int x, int y){
 		menu.setLocation(x, y);
 		menu.setVisible(true);

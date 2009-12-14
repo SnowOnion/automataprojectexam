@@ -20,6 +20,7 @@ public class Circle_State implements IPaint {
 	public static final byte IMAGE_TYPE_COMMON = 1;
 	public static final byte IMAGE_TYPE_SELECTED = 2;
 	public static final byte IMAGE_TYPE_MOVING = 3;
+	//public static final byte IMAGE_TYPE_PARTSELECTED = 4;
 
 	private static Long INDEXID = 0l;
 
