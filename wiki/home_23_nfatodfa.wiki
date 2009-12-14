@@ -2,9 +2,14 @@
 
 = Introduction =
 
-实现NFA转DFA的工具
+题目 实现NFA转DFA的工具 
+组号 23 
+组员 李守勤 2009220700
+邮箱 lishouqin@gmail.com 
 
-李守勤 2009220700
+
+
+
 
 
 = Details =
