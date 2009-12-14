@@ -1,13 +1,12 @@
-#summary One-sentence summary of this page.
+#summary 63组：Reg2DFA的转换工具 刘培尊 欧阳明
 
 = Introduction =
 
-Add your content here.
+||题目||正则表达式-自动机的转换工具||
+||组号||62||
+||组员|| 韩伟明 2009220704 胡亚军 2009220649||
+||邮箱||hwmtop@gmail.com||
 
 
 = Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+正则表达式和自动机相互转换
