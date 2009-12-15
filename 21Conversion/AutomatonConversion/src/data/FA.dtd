@@ -1,0 +1,37 @@
+<!--
+ * Create by: huangcd
+ * Date: 2009-12-10
+ * Time: 10:02:42
+-->
+<!ELEMENT FiniteAutomaton (States,InputSymbols,Transitions)>
+    <!-- Type information is required -->
+    <!ATTLIST FiniteAutomaton type (DFA | NFA) #REQUIRED>
+    <!-- name is nullable -->
+    <!ATTLIST FiniteAutomaton name CDATA "unnamed">
+
+    <!ELEMENT States (State+)>
+        <!ELEMENT State (StateTypes)>
+            <!-- stateID must be unique, and required -->
+            <!ATTLIST State stateID ID #REQUIRED>
+            <!ELEMENT StateTypes (StateType+)>
+                <!ELEMENT StateType EMPTY>
+                    <!ATTLIST StateType type (INITIAL | FINAL | COMMON) #REQUIRED>
+                
+    <!ELEMENT InputSymbols (InputSymbol+)>
+        <!ELEMENT InputSymbol EMPTY>
+            <!-- symbol must be unique, and required -->
+            <!ATTLIST InputSymbol symbol ID #REQUIRED>
+
+    <!ELEMENT Transitions (Transition*)>
+        <!ELEMENT Transition (FromState,Conditions?,ToStates)>
+        <!ELEMENT FromState EMPTY>             
+            <!-- stateID must be appeared before -->
+            <!ATTLIST FromState stateID IDREF #REQUIRED>
+        <!ELEMENT Conditions (Condition)>
+            <!ELEMENT Condition EMPTY>
+            <!-- symbol must be appeared before -->
+            <!ATTLIST Condition symbol IDREF #REQUIRED>
+            <!-- stateID must be appeared before -->
+        <!ELEMENT ToStates (ToState+)>
+            <!ELEMENT ToState EMPTY>
+                <!ATTLIST ToState stateID IDREF #REQUIRED>
