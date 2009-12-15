@@ -13,6 +13,8 @@ import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 
+import automatondesigner.SystemConstant;
+
 import cn.tsinghua.mse.automatondesigner.dataobject.TransFunction;
 import cn.tsinghua.mse.automatondesigner.interfaces.IPaint;
 import cn.tsinghua.mse.automatondesigner.tools.CommonTool;
@@ -58,8 +60,8 @@ public class Polyline_Trans implements IPaint {
 	 * .swt.graphics.GC, byte, java.lang.String)
 	 */
 	@Override
-	public void paint(GC gc, byte statue, String type) {
-		if (statue == Circle_State.IMAGE_TYPE_SELECTED){
+	public void paint(GC gc, byte statue) {
+		if (statue == SystemConstant.IMAGE_TYPE_SELECTED){
 			gc.setForeground(gc.getDevice().getSystemColor(SWT.COLOR_RED));
 		}
 		else{
@@ -79,7 +81,7 @@ public class Polyline_Trans implements IPaint {
 			paintk(gc, polyLine.get(polyLine.size() - 1).x, polyLine
 					.get(polyLine.size() - 1).y, endCircle.getCentre().x,
 					endCircle.getCentre().y);
-			if (statue == Circle_State.IMAGE_TYPE_SELECTED){
+			if (statue == SystemConstant.IMAGE_TYPE_SELECTED){
 				for(Point p : polyLine){
 					gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_WHITE));
 					gc.fillRoundRectangle(p.x-4, p.y-4, 8, 8, 2, 2);
@@ -106,7 +108,7 @@ public class Polyline_Trans implements IPaint {
 		int x4 = 0;
 		int y4 = 0;
 		double D = Math.abs(Point2D.distance(x1, y1, x2, y2));
-		if (D <= Circle_State.DEFAULTRADIUS/2 ){
+		if (D <= SystemConstant.DEFAULTRADIUS/2 ){
 			return;
 		}
 		x2 = (int) (x1+(x2-x1)*(D-10)/D);
@@ -170,7 +172,7 @@ public class Polyline_Trans implements IPaint {
 		return false;
 	}
 	
-	public void updateOrginalPolyline(){
+	public void updateOriginalLocation(){
 		if (polyLine == null || polyLine.size() == 0){
 			return;
 		}

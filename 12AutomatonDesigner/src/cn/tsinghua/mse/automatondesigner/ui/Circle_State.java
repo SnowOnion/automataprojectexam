@@ -7,6 +7,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 
+import automatondesigner.SystemConstant;
+
 import cn.tsinghua.mse.automatondesigner.dataobject.AutomatonConst;
 import cn.tsinghua.mse.automatondesigner.dataobject.State;
 import cn.tsinghua.mse.automatondesigner.interfaces.IPaint;
@@ -16,10 +18,6 @@ import cn.tsinghua.mse.automatondesigner.interfaces.IPaint;
  * 
  */
 public class Circle_State implements IPaint {
-	public static final int DEFAULTRADIUS = 20;
-	public static final byte IMAGE_TYPE_COMMON = 1;
-	public static final byte IMAGE_TYPE_SELECTED = 2;
-	public static final byte IMAGE_TYPE_MOVING = 3;
 	//public static final byte IMAGE_TYPE_PARTSELECTED = 4;
 
 	private static Long INDEXID = 0l;
@@ -37,18 +35,9 @@ public class Circle_State implements IPaint {
 	}
 
 	private int radius;
-	private String stateType;
-
-	public String getStateType() {
-		return stateType;
-	}
 
 	public Long getIndexID() {
 		return INDEXID;
-	}
-
-	public void setStateType(String stateType) {
-		this.stateType = stateType;
 	}
 
 	public Circle_State() {
@@ -56,17 +45,15 @@ public class Circle_State implements IPaint {
 		m_State = null;
 		centre = null;
 		originalCentre = null;
-		radius = DEFAULTRADIUS;
-		stateType = AutomatonConst.STATE_TYPE_COMMON;
+		radius = SystemConstant.DEFAULTRADIUS;
 	}
 
-	public Circle_State(State s, Point p, String statetype) {
+	public Circle_State(State s, Point p) {
 		m_State = s;
 		INDEXID++;
 		centre = new Point(p.x, p.y);
 		originalCentre = new Point(p.x, p.y);
-		stateType = statetype;
-		radius = DEFAULTRADIUS;
+		radius = SystemConstant.DEFAULTRADIUS;
 	}
 
 	public State getM_State() {
@@ -99,26 +86,22 @@ public class Circle_State implements IPaint {
 	}
 
 	@Override
-	public void paint(GC gc, byte statue, String type) {
+	public void paint(GC gc, byte statue) {
 		// if (type == IMAGE_TYPE_SELECTED || type == IMAGE_TYPE_COMMON ) {
-		if (statue == IMAGE_TYPE_SELECTED)
+		if (statue == SystemConstant.IMAGE_TYPE_SELECTED)
 			gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_RED));
-		else if (statue == IMAGE_TYPE_COMMON)
+		else if (statue == SystemConstant.IMAGE_TYPE_COMMON)
 			gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_BLUE));
 		gc.fillRoundRectangle(centre.x - radius / 2, centre.y - radius / 2,
 				radius, radius, radius - 4, radius - 4);
 		gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_WHITE));
 		gc.fillRoundRectangle(centre.x - radius / 2 + 2, centre.y - radius / 2
 				+ 2, radius - 4, radius - 4, radius - 8, radius - 8);
-		if (type.equals(AutomatonConst.STATE_TYPE_INI_FINAL)){
-			paintFSAddition(gc, statue==IMAGE_TYPE_SELECTED);
-			paintISArrow(gc, statue==IMAGE_TYPE_SELECTED);
+		if ((m_State.getM_type()&AutomatonConst.STATE_INITIAL_TYPE)!= 0){
+			paintISArrow(gc, statue==SystemConstant.IMAGE_TYPE_SELECTED);
 		}
-		else if (type.equals(AutomatonConst.STATE_TYPE_INITIAL)){
-			paintISArrow(gc, statue==IMAGE_TYPE_SELECTED);
-		}
-		else if (type.equals(AutomatonConst.STATE_TYPE_FINAL)){
-			paintFSAddition(gc, statue==IMAGE_TYPE_SELECTED);
+		if ((m_State.getM_type()&AutomatonConst.STATE_FINAL_TYPE)!= 0){
+			paintFSAddition(gc, statue==SystemConstant.IMAGE_TYPE_SELECTED);
 		}
 		// if (type == IMAGE_TYPE_SELECTED)
 		// gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_RED));
@@ -171,6 +154,12 @@ public class Circle_State implements IPaint {
 				/ 2, centre.y);
 		gc.drawLine(centre.x - radius / 2 - 10, centre.y - 4, centre.x - radius
 				/ 2, centre.y + 1);
+	}
+
+	@Override
+	public void updateOriginalLocation() {
+		originalCentre.x = centre.x;
+		originalCentre.y = centre.y;
 	}
 
 }
