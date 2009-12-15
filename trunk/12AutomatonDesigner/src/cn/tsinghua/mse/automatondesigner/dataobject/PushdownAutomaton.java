@@ -2,10 +2,13 @@ package cn.tsinghua.mse.automatondesigner.dataobject;
 
 import java.util.ArrayList;
 
+import automatondesigner.SystemConstant;
+
 /**
  * 下推自动机类，继承自Automaton类
+ * 
  * @author David
- *
+ * 
  */
 public class PushdownAutomaton extends Automaton {
 
@@ -26,9 +29,8 @@ public class PushdownAutomaton extends Automaton {
 
 	public PushdownAutomaton(ArrayList<State> states, ArrayList<String> inputs,
 			ArrayList<TransFunction> funcs, State start,
-			ArrayList<State> finals, String type,
 			ArrayList<String> stackSymbols, String initStack) {
-		super(states, inputs, funcs, start, finals, AutomatonConst.AUTOMATON_TYPE_PDA);
+		super(states, inputs, funcs, start, AutomatonConst.AUTOMATON_TYPE_PDA);
 		this.setM_StackSymbols(stackSymbols);
 		this.setM_InitStackSymbol(initStack);
 	}
