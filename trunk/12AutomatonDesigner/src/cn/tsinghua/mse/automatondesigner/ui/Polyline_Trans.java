@@ -5,6 +5,7 @@ package cn.tsinghua.mse.automatondesigner.ui;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
@@ -192,6 +193,24 @@ public class Polyline_Trans implements IPaint {
 		}
 	}
 	
+	public void addKneePoint(Point p){
+		ArrayList<Point> ps = new ArrayList<Point>();
+		ps.add(beginCircle.getCentre());
+		ps.addAll(polyLine);
+		ps.add(endCircle.getCentre());
+		for (int i = 0; i < ps.size()-1; i++){
+			Point p1 = ps.get(i);
+			Point p2 = ps.get(1+i);
+			double totalDistance = Point2D.distance(p1.x, p1.y, p2.x, p2.y);
+			double d1 = Point2D.distance(p.x, p.y, p2.x, p2.y);
+			double d2 = Point2D.distance(p.x, p.y, p1.x, p1.y);
+			if (d1 + d2 <= totalDistance + 2){
+				polyLine.add(i, p);
+				Oranal_PolyLine.add(i, new Point(p.x, p.y));
+				return;
+			}
+		}
+	}
 	
 	public void movePolyline(int XDist, int YDist){
 		if (polyLine == null || polyLine.size() == 0){
@@ -282,6 +301,17 @@ public class Polyline_Trans implements IPaint {
 
 	public void setPolyLine(ArrayList<Point> polyLine) {
 		this.polyLine = polyLine;
+	}
+
+	public boolean removeSelectedPtn() {
+		if (selectedPointIdx == null || selectedPointIdx.size() == 0)
+			return false;
+		Collections.sort(selectedPointIdx);
+		for (int i = selectedPointIdx.size()-1; i >= 0; i--){
+			removePnt(polyLine.get(selectedPointIdx.get(i)));
+		}
+		selectedPointIdx.clear();
+		return true;
 	}
 
 }
