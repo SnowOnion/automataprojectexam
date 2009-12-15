@@ -1,15 +1,24 @@
 #summary 64组：Regular2NFA 的转换工具 李燕 周磊
 
-= Introduction =
+= 组号 =
+ # 64组
 
-||题目||正则表达式-自动机的转换工具||
-||组号||64||
-||组员|| 李燕 2009220680 || 周磊 2009220673||
-||邮箱||lyautomata@gmail.com||stephen.lei.zhou@gmail.com
+= 题目 =
+ # 正则表达式-自动机的转换工具
 
-= Details =
+= 小组成员 =
+||姓名||学号||邮箱||
+||李 燕||2009220680||lyautomata@gmail.com||
+||周 磊||2009220673||stephen.lei.zhou@gmail.com||
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+= 项目内容 =
+
+= 项目进度 =
+
+= 开发环境 =
+
+= 类图 =
+
+= 特殊说明 =
+
+= 其他 =
