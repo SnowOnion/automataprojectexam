@@ -7,6 +7,7 @@ import java.util.Set;
  * Date: 2009-12-10
  * Time: 9:23:40
  */
+@SuppressWarnings({"JavaDoc"})
 public interface State extends Comparable<State> {
     /**
      * return the types of the current state
@@ -42,4 +43,8 @@ public interface State extends Comparable<State> {
      * @return
      */
     public boolean updateOwner();
+
+    boolean addStateType(StateType type);
+
+    FiniteAutomaton getOwner();
 }

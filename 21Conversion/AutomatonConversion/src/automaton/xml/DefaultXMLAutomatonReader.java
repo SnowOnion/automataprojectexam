@@ -1,4 +1,4 @@
-package automaton.xml;
+package automaton.io.xml;
 
 import automaton.*;
 import org.dom4j.Document;
@@ -32,7 +32,6 @@ public class DefaultXMLAutomatonReader implements XMLAutomatonReader {
     private static final String NFA_NAME;
     private static final String STATE_TYPE_ATTR;
     private static final String STATE_TYPES;
-    private static final String STATE_TYPE;
     private static final String SYMBOL;
     private static final String FINAL_STATE;
     private static final String INITIAL_STATE;
@@ -53,7 +52,6 @@ public class DefaultXMLAutomatonReader implements XMLAutomatonReader {
         DFA_NAME = "DFA";
         NFA_NAME = "NFA";
         STATE_TYPES = "StateTypes";
-        STATE_TYPE = "StateType";
         SYMBOL = "symbol";
         FINAL_STATE = "FINAL";
         INITIAL_STATE = "INITIAL";
@@ -62,7 +60,8 @@ public class DefaultXMLAutomatonReader implements XMLAutomatonReader {
         TO_STATES = "ToStates";
     }
 
-    private DFA parseDFA(Element root) {
+    @SuppressWarnings({"unchecked"})
+    private DFA<String> parseDFA(Element root) {
         String name = root.attributeValue(FA_NAME);
         DFA<String> dfa = new DFA<String>(name);
 
@@ -112,8 +111,8 @@ public class DefaultXMLAutomatonReader implements XMLAutomatonReader {
         return dfa;
     }
 
-    private NFA parseNFA(Element root) {
-        //TODO: change the DFAState to NFAState
+    @SuppressWarnings({"unchecked"})
+    private NFA<String> parseNFA(Element root) {
         String name = root.attributeValue(FA_NAME);
         NFA<String> nfa = new NFA<String>(name);
         // parse states
@@ -147,15 +146,24 @@ public class DefaultXMLAutomatonReader implements XMLAutomatonReader {
         for (Element xmlTransition : xmlTransitions) {
             String fromID = xmlTransition.element(FROM_STATE).attributeValue(STATE_ID);
             NFAState fromState = nfa.getStateByID(fromID);
-            List<Element> conditions = xmlTransition.element(CONDITIONS).elements();
             List<Element> xmlToStates = xmlTransition.element(TO_STATES).elements();
-            for (Element xmlToState : xmlToStates) {
-                String toID = xmlToState.attributeValue(STATE_ID);
-                NFAState toState = nfa.getStateByID(toID);
-                for (Element condition : conditions) {
-                    String condSymbol = condition.attributeValue(SYMBOL);
-                    // add transition
-                    nfa.addTransition(fromState, condSymbol, toState);
+            Element xmlConditions = xmlTransition.element(CONDITIONS);
+            if (xmlConditions == null) {
+                for (Element xmlToState : xmlToStates) {
+                    String toID = xmlToState.attributeValue(STATE_ID);
+                    NFAState toState = nfa.getStateByID(toID);
+                    nfa.addEpsilonTransition(fromState, toState);
+                }
+            } else {
+                List<Element> conditions = xmlTransition.element(CONDITIONS).elements();
+                for (Element xmlToState : xmlToStates) {
+                    String toID = xmlToState.attributeValue(STATE_ID);
+                    NFAState toState = nfa.getStateByID(toID);
+                    for (Element condition : conditions) {
+                        String condSymbol = condition.attributeValue(SYMBOL);
+                        // add transition
+                        nfa.addTransition(fromState, condSymbol, toState);
+                    }
                 }
             }
         }
@@ -164,7 +172,7 @@ public class DefaultXMLAutomatonReader implements XMLAutomatonReader {
 
 
     @Override
-    public DFA readDFA(File file) throws Exception {
+    public DFA<String> readDFA(File file) throws Exception {
         try {
             Document doc = reader.read(file);
             Element root = doc.getRootElement();
@@ -183,7 +191,7 @@ public class DefaultXMLAutomatonReader implements XMLAutomatonReader {
     }
 
     @Override
-    public DFA readDFA(String content) throws Exception {
+    public DFA<String> readDFA(String content) throws Exception {
         try {
             Document doc = reader.read(content);
             Element root = doc.getRootElement();
@@ -202,7 +210,7 @@ public class DefaultXMLAutomatonReader implements XMLAutomatonReader {
     }
 
     @Override
-    public DFA readDFA(InputStream in) throws Exception {
+    public DFA<String> readDFA(InputStream in) throws Exception {
         try {
             Document doc = reader.read(in);
             Element root = doc.getRootElement();
@@ -221,7 +229,7 @@ public class DefaultXMLAutomatonReader implements XMLAutomatonReader {
     }
 
     @Override
-    public DFA readDFA(URL url) throws Exception {
+    public DFA<String> readDFA(URL url) throws Exception {
         try {
             Document doc = reader.read(url);
             Element root = doc.getRootElement();
@@ -324,7 +332,7 @@ public class DefaultXMLAutomatonReader implements XMLAutomatonReader {
     }
 
     @Override
-    public NFA readNFA(File file) throws Exception {
+    public NFA<String> readNFA(File file) throws Exception {
         try {
             Document doc = reader.read(file);
             Element root = doc.getRootElement();
@@ -343,7 +351,7 @@ public class DefaultXMLAutomatonReader implements XMLAutomatonReader {
     }
 
     @Override
-    public NFA readNFA(String content) throws Exception {
+    public NFA<String> readNFA(String content) throws Exception {
         try {
             Document doc = reader.read(content);
             Element root = doc.getRootElement();
@@ -362,7 +370,7 @@ public class DefaultXMLAutomatonReader implements XMLAutomatonReader {
     }
 
     @Override
-    public NFA readNFA(InputStream in) throws Exception {
+    public NFA<String> readNFA(InputStream in) throws Exception {
         try {
             Document doc = reader.read(in);
             Element root = doc.getRootElement();
@@ -381,7 +389,7 @@ public class DefaultXMLAutomatonReader implements XMLAutomatonReader {
     }
 
     @Override
-    public NFA readNFA(URL url) throws Exception {
+    public NFA<String> readNFA(URL url) throws Exception {
         try {
             Document doc = reader.read(url);
             Element root = doc.getRootElement();

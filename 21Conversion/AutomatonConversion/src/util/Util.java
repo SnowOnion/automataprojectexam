@@ -14,14 +14,15 @@ import java.util.logging.Logger;
  * Time: 20:24:36
  */
 public class Util {
-    private static String loggerPath;
     private static Map<Class, Logger> loggerMap;
     private static FileHandler defaultFileHandler;
-    private static String projectHome;
+    private static String home;
 
     static {
-        loggerPath = "./log/" + new Date().toString().replaceAll("[\\s:]", "_") + ".xml";
-        File loggerFile = new File(loggerPath);
+        String loggerPath =
+                "./log/" + new Date().toString().replaceAll("[\\s:]", "_") + ".xml";
+        File loggerFile;
+        loggerFile = new File(loggerPath);
         try {
             loggerFile.createNewFile();
         } catch (IOException e) {
@@ -33,7 +34,7 @@ public class Util {
             e.printStackTrace();
         }
         loggerMap = new HashMap<Class, Logger>();
-        projectHome = System.getProperty("user.dir");
+        home = System.getProperty("user.dir");
     }
 
     public static Logger getLogger(Class c) {
@@ -41,19 +42,15 @@ public class Util {
             return loggerMap.get(c);
         Logger logger = Logger.getLogger(c.getName());
         logger.addHandler(defaultFileHandler);
+        logger.setUseParentHandlers(false);
         loggerMap.put(c, logger);
         return logger;
     }
 
-    public static String getProjectHome() {
-        return projectHome;
+    public static String getHome() {
+        return home;
     }
 
-    /**
-     * 
-     * @param text
-     * @return
-     */
     public static String textToUnicode(String text) {
         StringBuilder buffer = new StringBuilder();
         for (char c : text.toCharArray()) {

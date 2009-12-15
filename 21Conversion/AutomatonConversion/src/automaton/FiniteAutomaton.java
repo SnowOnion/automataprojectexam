@@ -1,14 +1,11 @@
 package automaton;
 
+import graph.AutomatonGraph;
 import util.Util;
 
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
-import graph.TransitionEdge;
-import graph.AutomatonGraph;
 
 /**
  * Create by: huangcd
@@ -85,14 +82,10 @@ public abstract class FiniteAutomaton<C extends Comparable<C>, S extends State> 
     /**
      * an empty implmentation of the accept function
      *
-     * @param symbols
-     * @return
+     * @param symbols a list of input symbols
+     * @return true if the input symbols is accepted by the automaton, false otherwise
      */
-    public boolean accept(List<C> symbols) {
-        log.log(Level.WARNING, "invoke a empty method, PLEASE REWRITE THIS METHOD in the subclass");
-        return false;
-
-    }
+    public abstract boolean accept(List<C> symbols);
 
     public Set<S> getStates() {
         return states;

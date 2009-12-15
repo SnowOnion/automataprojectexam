@@ -11,12 +11,14 @@ import java.util.logging.Logger;
  * Date: 2009-12-10
  * Time: 14:16:03
  */
+@SuppressWarnings({"JavaDoc", "unchecked"})
 public class NFAState<C extends Comparable<C>> implements State {
     private static Logger log;
     private FiniteAutomaton owner;
     private String stateID;
     private Set<StateType> stateTypes;
     private Map<C, Set<NFAState>> transitionMap;
+    private Set<NFAState> epsilonTransition;
 
     static {
         log = Util.getLogger(NFAState.class);
@@ -26,6 +28,7 @@ public class NFAState<C extends Comparable<C>> implements State {
         stateTypes = new TreeSet<StateType>();
         stateTypes.add(StateType.COMMON);
         transitionMap = new TreeMap<C, Set<NFAState>>();
+        epsilonTransition = new TreeSet<NFAState>();
     }
 
     public NFAState(String stateID, FiniteAutomaton owner) {
@@ -62,15 +65,16 @@ public class NFAState<C extends Comparable<C>> implements State {
         return result;
     }
 
-    public Set<NFAState> shift(C symbol) throws UnconvertableException {
+    public Set<NFAState> shift(C symbol) {
         if (!transitionMap.containsKey(symbol)) {
-            //TODO: change this description
-            log.log(Level.SEVERE, "the symbol \"" + symbol + "\" is not miss", this);
-            throw new UnconvertableException("the symbol \"" + symbol + "\" is not miss");
+            return null;
+//            log.log(Level.SEVERE, "the symbol \"" + symbol + "\" is not miss", this);
+//            throw new UnconvertableException("the symbol \"" + symbol + "\" is not miss");
         }
         return transitionMap.get(symbol);
     }
 
+    @Override
     public boolean addStateType(StateType type) {
         return stateTypes.add(type);
     }
@@ -80,6 +84,17 @@ public class NFAState<C extends Comparable<C>> implements State {
         if (stateTypes == null || stateTypes.isEmpty())
             log.log(Level.WARNING, "null or empty state types found", this);
         return stateTypes;
+    }
+
+    public boolean addEpsilonTransition(NFAState state) {
+        return epsilonTransition.add(state);
+    }
+
+    public TreeSet<NFAState> getEpsilonClosure() {
+        TreeSet<NFAState> result = new TreeSet<NFAState>(epsilonTransition);
+        log.log(Level.INFO, "calculate epsilon closure, result is " + result, this);
+        result.add(this);
+        return result;
     }
 
     @Override
@@ -97,6 +112,7 @@ public class NFAState<C extends Comparable<C>> implements State {
         return stateTypes.contains(StateType.INITIAL);
     }
 
+    @Override
     public FiniteAutomaton getOwner() {
         return owner;
     }
@@ -128,10 +144,9 @@ public class NFAState<C extends Comparable<C>> implements State {
 
         NFAState nfaState = (NFAState) o;
 
-        if (owner != null ? !owner.equals(nfaState.owner) : nfaState.owner != null) return false;
-        if (stateID != null ? !stateID.equals(nfaState.stateID) : nfaState.stateID != null) return false;
+        return !(owner != null ? !owner.equals(nfaState.owner) : nfaState.owner != null)
+                && !(stateID != null ? !stateID.equals(nfaState.stateID) : nfaState.stateID != null);
 
-        return true;
     }
 
     @Override

@@ -1,43 +1,32 @@
 package automaton;
 
+import graph.AutomatonGraph;
 import util.Util;
 
-import java.util.List;
+import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
-import graph.TransitionEdge;
-import graph.AutomatonGraph;
 
 /**
  * Create by: huangcd
  * Date: 2009-12-10
  * Time: 11:43:31
  */
+@SuppressWarnings({"unchecked"})
 public class NFA<C extends Comparable<C>> extends FiniteAutomaton<C, NFAState> {
     private final static Logger log;
-    private boolean allowVarepsilon;
-    private C varepsilon;
 
     static {
         log = Util.getLogger(NFA.class);
     }
 
-    public NFA(String name)
-    {
+    public NFA(String name) {
         super.setName(name);
     }
 
-    public NFA(String name, boolean allowVarepsilon, C varepsilon) {
-        super.setName(name);
-        this.allowVarepsilon = allowVarepsilon;
-        if (this.allowVarepsilon)
-            this.varepsilon = varepsilon;            
-    }
 
-    public boolean addVarepsilonTransition(NFAState from, NFAState to) {
-        //TODO: complete this method
-        return from.addTransition(varepsilon, to);
+    public boolean addEpsilonTransition(NFAState from, NFAState to) {
+        return from.addEpsilonTransition(to);
     }
 
 
@@ -47,24 +36,123 @@ public class NFA<C extends Comparable<C>> extends FiniteAutomaton<C, NFAState> {
 
     @Override
     public boolean accept(List<C> symbols) {
-        //TODO: finish me
-        return super.accept(symbols);
+        return toDFA().accept(symbols);
     }
 
     @Override
     public boolean isEmpty() {
-        //TODO: finish me
-        return false;
+        return toDFA().isEmpty();
     }
 
     @Override
     public boolean isInfinite() {
-        //TODO: finish me
-        return false;
+        return toDFA().isInfinite();
+    }
+
+    private DFAState constructDFAState(String name, TreeSet<NFAState> closure,
+                                       boolean isInitialState, DFA owner) {
+        Set<StateType> stateTypes = new TreeSet<StateType>();
+        stateTypes.add(StateType.COMMON);
+        if (isInitialState) {
+            stateTypes.add(StateType.INITIAL);
+        }
+        for (NFAState state : closure) {
+            if (state.isFinalState()) {
+                stateTypes.add(StateType.FINAL);
+            }
+        }
+
+        return new DFAState(name, stateTypes, owner);
+    }
+
+    private TreeSet<NFAState> shift(TreeSet<NFAState> states, C symbol) {
+        TreeSet<NFAState> result = new TreeSet<NFAState>();
+        for (NFAState state : states) {
+            Set<NFAState> shiftSet;
+//            try {
+            shiftSet = state.shift(symbol);
+            if (shiftSet == null)
+                continue;
+//            } catch (UnconvertableException e) {
+//                continue;
+//            }
+            for (NFAState s : shiftSet) {
+                result.addAll(s.getEpsilonClosure());
+            }
+        }
+        return result;
+    }
+
+    private String getNFAStateSetName(TreeSet<NFAState> states) {
+        StringBuilder buffer = new StringBuilder();
+        for (NFAState state : states) {
+            buffer.append(state.getStateID()).append(",");
+        }
+        if (buffer.length() > 0)
+            buffer.deleteCharAt(buffer.length() - 1);
+        return buffer.toString();
+    }
+
+    public DFA toDFA() {
+        log.log(Level.INFO, "try to convert the current NFA to a DFA", this);
+
+        String dfaName = "DFA[" + this.getName() + "]";
+        DFA dfa = new DFA(dfaName);
+
+        // add symbols
+        for (C symbol : getSymbols()) {
+            dfa.addSymbol(symbol);
+        }
+
+        Map<DFAState, TreeSet<NFAState>> stateMap = new HashMap<DFAState, TreeSet<NFAState>>();
+        Map<String, DFAState> dfaStateMap = new HashMap<String, DFAState>();
+
+        // add initial state
+        TreeSet<NFAState> initialNFAStates = getInitialState().getEpsilonClosure();
+        String initialStateName = getNFAStateSetName(initialNFAStates);
+        DFAState initialState = constructDFAState(initialStateName,
+                initialNFAStates, true, dfa);
+        dfa.addState(initialState);
+        stateMap.put(initialState, initialNFAStates);
+        dfaStateMap.put(initialStateName, initialState);
+
+        Stack<DFAState> stateStack = new Stack<DFAState>();
+        stateStack.add(initialState);
+        while (!stateStack.isEmpty()) {
+            DFAState fromState = stateStack.pop();
+            TreeSet<NFAState> fromNFAStates = stateMap.get(fromState);
+            for (C symbol : getSymbols()) {
+                TreeSet<NFAState> toNFAStates = shift(fromNFAStates, symbol);
+                DFAState toState;
+                String toName = getNFAStateSetName(toNFAStates);
+                if (dfaStateMap.containsKey(toName)) {
+                    toState = (DFAState) dfa.getStateByID(toName);
+                    dfa.addTransition(fromState, symbol, toState);
+                } else {
+                    String toStateName = getNFAStateSetName(toNFAStates);
+                    toState = constructDFAState(toStateName, toNFAStates, false, dfa);
+                    dfa.addState(toState);
+                    stateMap.put(toState, toNFAStates);
+                    dfaStateMap.put(toStateName, toState);
+                    dfa.addTransition(fromState, symbol, toState);
+                    stateStack.push(toState);
+                }
+            }
+        }
+        return dfa;
     }
 
     @Override
     public AutomatonGraph<C, NFAState> toJUNGraph() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        //TODO: finish me
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        String content = super.toString();
+        content = content.replaceFirst
+                (getClass().getSuperclass().getSimpleName(), getClass().getSimpleName());
+        return content;
     }
 }

@@ -222,13 +222,11 @@
   </component>
   <component name="ProjectFileVersion" converted="true" />
   <component name="ProjectKey">
-    <option name="state" value="project://default" />
+    <option name="state" value="https://automataprojectexam.googlecode.com/svn/trunk/21Conversion/21Conversion.ipr" />
   </component>
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AutomatonConversion/AutomatonConversion.iml" filepath="$PROJECT_DIR$/AutomatonConversion/AutomatonConversion.iml" />
-      <module fileurl="file://$PROJECT_DIR$/AutomatonConversion_bak/AutomatonConversion_bak.iml" filepath="$PROJECT_DIR$/AutomatonConversion_bak/AutomatonConversion_bak.iml" />
-      <module fileurl="file://$PROJECT_DIR$/JUNGVisual/JUNGVisual.iml" filepath="$PROJECT_DIR$/JUNGVisual/JUNGVisual.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK">
@@ -266,7 +264,7 @@
     </diagram>
   </component>
   <component name="VcsDirectoryMappings">
-    <mapping directory="" vcs="" />
+    <mapping directory="" vcs="svn" />
   </component>
   <component name="libraryTable">
     <library name="dom4j">
@@ -285,6 +283,10 @@
       <SOURCES />
       <jarDirectory url="file://$PROJECT_DIR$/lib/jung2" recursive="false" />
     </library>
+  </component>
+  <component name="uidesigner-configuration">
+    <option name="INSTRUMENT_CLASSES" value="false" />
+    <option name="DEFAULT_LAYOUT_MANAGER" value="BorderLayout" />
   </component>
 </project>
 

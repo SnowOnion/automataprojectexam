@@ -12,6 +12,7 @@ import java.util.logging.Logger;
  * Date: 2009-12-10
  * Time: 9:48:09
  */
+@SuppressWarnings({"JavaDoc", "unchecked"})
 public class DFAState<C extends Comparable<C>> implements State {
     private static Logger log;
     private FiniteAutomaton owner;
@@ -59,19 +60,20 @@ public class DFAState<C extends Comparable<C>> implements State {
     }
 
     public Collection<DFAState> getAllShiftableState() {
-        return transitionMap.values();
+        return new TreeSet<DFAState>(transitionMap.values());
     }
 
-    public DFAState shift(C symbol) throws UnconvertableException {
+    public DFAState shift(C symbol) {
         if (!transitionMap.containsKey(symbol)) {
-            //TODO: change this description
-            String message = "the symbol \"" + symbol + "\" is not accept by the current " + this;
-            log.log(Level.INFO, message, this);
-            throw new UnconvertableException(message);
+            return null;
+//            String message = "the symbol \"" + symbol + "\" is not accept by the current " + this;
+//            log.log(Level.INFO, message, this);
+//            throw new UnconvertableException(message);
         }
         return transitionMap.get(symbol);
     }
 
+    @Override
     public boolean addStateType(StateType type) {
         return stateTypes.add(type);
     }
@@ -108,6 +110,7 @@ public class DFAState<C extends Comparable<C>> implements State {
         return stateTypes.contains(StateType.INITIAL);
     }
 
+    @Override
     public FiniteAutomaton getOwner() {
         return owner;
     }
@@ -139,10 +142,9 @@ public class DFAState<C extends Comparable<C>> implements State {
 
         DFAState dfaState = (DFAState) o;
 
-        if (owner != null ? !owner.equals(dfaState.owner) : dfaState.owner != null) return false;
-        if (stateID != null ? !stateID.equals(dfaState.stateID) : dfaState.stateID != null) return false;
+        return !(owner != null ? !owner.equals(dfaState.owner) : dfaState.owner != null)
+                && !(stateID != null ? !stateID.equals(dfaState.stateID) : dfaState.stateID != null);
 
-        return true;
     }
 
     @Override
