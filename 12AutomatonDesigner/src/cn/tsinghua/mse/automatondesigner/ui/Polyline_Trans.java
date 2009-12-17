@@ -98,6 +98,16 @@ public class Polyline_Trans implements IPaint {
 				}
 			}
 		}
+		drawLabe(gc, statue);
+	}
+	
+	private void drawLabe(GC gc, byte statue){
+		ArrayList<Point> ps = new ArrayList<Point>();
+		ps.add(beginCircle.getCentre());
+		ps.addAll(polyLine);
+		ps.add(endCircle.getCentre());
+		int num = ps.size()/2;
+		gc.drawText(transFunc.getStrCondition(), (ps.get(num).x+ps.get(num-1).x)/2, (ps.get(num).y+ps.get(num-1).y)/2, true);
 	}
 
 	private void paintk(GC g, int x1, int y1, int x2, int y2) {

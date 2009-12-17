@@ -25,7 +25,7 @@ public class Dialog_State extends Dialog {
 	private Combo cmb_StateType;
 	private State state = null;
 	private Shell shell = null;
-	int result  = 1;
+	int result  = SystemConstant.DIALOG_RESULT_CANCLE;
 	private Automaton automaton;
 	
 	public Dialog_State(Shell parent, Automaton a, State s) {
@@ -102,7 +102,7 @@ public class Dialog_State extends Dialog {
 		}
 		state.setM_Name(name);
 		automaton.modifyStateType(state, getbStateType());
-		result = 2;
+		result = SystemConstant.DIALOG_RESULT_SAVE;
 		shell.close();
 	}
 	
@@ -122,7 +122,7 @@ public class Dialog_State extends Dialog {
 	}
 	
 	protected void doCancle() {
-		result = 1;
+		result = SystemConstant.DIALOG_RESULT_CANCLE;
 		shell.close();
 	}
 }

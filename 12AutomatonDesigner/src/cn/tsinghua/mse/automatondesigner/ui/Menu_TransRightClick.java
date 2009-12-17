@@ -5,6 +5,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.SWT;
+
+import cn.tsinghua.mse.automatondesigner.dataobject.TransFunction;
+
 import com.swtdesigner.ResourceManager;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -12,7 +15,7 @@ import org.eclipse.swt.events.SelectionEvent;
 public class Menu_TransRightClick extends Composite {
 	Menu menu;
 	private Point currPoint = null;
-	public Menu_TransRightClick(final Canvas_Automaton parent, int style, Point p) {
+	public Menu_TransRightClick(final Canvas_Automaton parent, int style, Point p, final Polyline_Trans polyline) {
 
 		super(parent, style);
 		menu = new Menu(this);
@@ -45,7 +48,7 @@ public class Menu_TransRightClick extends Composite {
 		menuItem_1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				doShowProperty();
+				parent.showTransFuncProperty(polyline);
 			}
 		});
 		menuItem_1.setImage(ResourceManager.getPluginImage("AutomatonDesigner", "icons/file16.png"));

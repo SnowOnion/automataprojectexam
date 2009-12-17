@@ -99,9 +99,9 @@ public class Automaton {
 		if (state.getM_type() == type)
 			return true;
 		if ((type & AutomatonConst.STATE_INITIAL_TYPE) != 0) {
-			if (m_StartState != null){
+			if (m_StartState != null) {
 				m_StartState
-					.setM_type((byte) (m_StartState.getM_type() & AutomatonConst.STATE_FINAL_TYPE));
+						.setM_type((byte) (m_StartState.getM_type() & AutomatonConst.STATE_FINAL_TYPE));
 			}
 			m_StartState = state;
 		} else {
@@ -112,14 +112,33 @@ public class Automaton {
 		state.setM_type(type);
 		return true;
 	}
-	
-	public boolean checkStateNameUnique(String newname){
-		for (State s : m_States){
-			if (s.getM_Name().equals(newname)){
+
+	public boolean checkStateNameUnique(String newname) {
+		for (State s : m_States) {
+			if (s.getM_Name().equals(newname)) {
 				return false;
 			}
 		}
 		return true;
+	}
+
+	public String getNextNameIdx(String prefix) {
+		int result = 0;
+		for (State s : m_States) {
+			String name = s.getM_Name();
+			int idx = 0;
+			if (name.startsWith(prefix)) {
+				try {
+					idx = Integer.valueOf(name.substring(prefix.length()));
+				} catch (Exception e) {
+
+				}
+				if (idx >= result) {
+					result = idx + 1;
+				}
+			}
+		}
+		return prefix + result;
 	}
 
 	// /**
@@ -147,10 +166,12 @@ public class Automaton {
 	 * @param s
 	 *            要添加的输入符号
 	 */
-	public void addInputSymbol(String s) {
+	public boolean addInputSymbol(String s) {
 		if (!m_InputSymbols.contains(s)) {
 			m_InputSymbols.add(s);
+			return true;
 		}
+		return false;
 	}
 
 	/**
