@@ -215,7 +215,7 @@ public class Automaton {
 	 * 
 	 * @param transFunction
 	 *            要删除的转移函数对象
-	 * @return
+	 * @return 删除操作是否成功
 	 */
 	public boolean removeTransFunction(TransFunction transFunction) {
 		return m_transFunctions.remove(transFunction);

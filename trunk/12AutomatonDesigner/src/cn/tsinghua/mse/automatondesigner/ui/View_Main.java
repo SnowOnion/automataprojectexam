@@ -46,7 +46,6 @@ public class View_Main extends ViewPart {
 
 	/**
 	 * 新建文件时使用的构造函数
-	 * @wbp.parser.constructor
 	 */
 	public View_Main() {
 		super();
@@ -58,8 +57,7 @@ public class View_Main extends ViewPart {
 	/**
 	 * 打开已有文件时使用的构造函数
 	 * 
-	 * @param automaton
-	 * @wbp.parser.constructor
+	 * @param automaton 已经构造好的自动机
 	 */
 	public View_Main(Automaton automaton) {
 		isDirty = false;

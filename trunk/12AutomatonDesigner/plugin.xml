@@ -44,4 +44,20 @@
             name="未命名1">
       </view>
    </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="AutomatonDesigner.application"
+            name="Automaton Designer">
+         <property
+               name="appName"
+               value="Automaton Designer">
+         </property>
+         <property
+               name="windowImages"
+               value="icons/views.gif">
+         </property>
+      </product>
+   </extension>
 </plugin>
