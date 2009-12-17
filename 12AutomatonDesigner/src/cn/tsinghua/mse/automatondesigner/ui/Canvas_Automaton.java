@@ -680,7 +680,7 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 	/**
 	 * 执行删除选中元素的操作，返回值表示是否成功删除。
 	 * 
-	 * @return
+	 * @return 是否删除成功
 	 */
 	public boolean doDelete() {
 		boolean result = false;
