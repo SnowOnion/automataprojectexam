@@ -40,6 +40,16 @@ public class TransFunction {
 		return false;
 	}
 	
+	public void removeCondition(Object cond){
+		if (cond instanceof String){
+			for (int i = m_TransCondition.size()-1; i >= 0; i--){
+				if (m_TransCondition.get(i).getM_InputSymbol().equals(cond)){
+					m_TransCondition.remove(i);
+				}
+			}
+		}
+	}
+	
 	public State getM_BeginState() {
 		return m_BeginState;
 	}

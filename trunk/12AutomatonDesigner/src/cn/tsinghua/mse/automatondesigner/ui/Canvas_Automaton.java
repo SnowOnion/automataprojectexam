@@ -54,9 +54,8 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 	private ArrayList<Circle_State> m_SelectedCircles;
 	private View_Main m_mainView = null;
 
-	public View_Main getM_mainView() {
-		return m_mainView;
-	}
+	// 为自动机状态自动命名的前缀字符串。
+	private String prefix_StateName = SystemConstant.PREFIX_STATE_NAME;
 
 	private Rectangle selectRectangle = null;
 
@@ -69,8 +68,8 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 	private Point currectPnt = null;
 
 	private ArrayList<Polyline_Trans> m_SelectedPolylines;
-	
-	//此变量仅供内部暂存多边形，为右键delete操作和双击操作提供便利。
+
+	// 此变量仅供内部暂存折线，为右键delete操作和双击操作提供便利。
 	private Polyline_Trans storePolyline = null;
 
 	public Polyline_Trans getStorePolyline() {
@@ -94,6 +93,18 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 		currectPolyline = new ArrayList<Point>();
 		m_Polylines = new ArrayList<Polyline_Trans>();
 		currectPnt = new Point(-100, -100);
+	}
+
+	public String getPrefix_StateName() {
+		return prefix_StateName;
+	}
+
+	public void setPrefix_StateName(String prefixStateName) {
+		prefix_StateName = prefixStateName;
+	}
+
+	public View_Main getM_mainView() {
+		return m_mainView;
 	}
 
 	public void paint(GC gc) {
@@ -188,15 +199,14 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 		switch (toolType) {
 		case View_ToolBox.TOOLTYPE_SELECT:
 			Object obj = getCurrSelected(e.x, e.y, false);
-			if (obj == null){
-				
-			}else if (obj instanceof Circle_State){
-				//showLocationShell(((Circle_State)obj).getCentre(), (IPaint)obj);
-				showStateProperty((Circle_State)obj);
-			}else if (obj instanceof Polyline_Trans){
-				
-			}else if (obj instanceof Point){
-				showLocationShell((Point)obj, storePolyline);
+			if (obj == null) {
+
+			} else if (obj instanceof Circle_State) {
+				showStateProperty((Circle_State) obj);
+			} else if (obj instanceof Polyline_Trans) {
+				showTransFuncProperty((Polyline_Trans)obj);
+			} else if (obj instanceof Point) {
+				showLocationShell((Point) obj, storePolyline);
 			}
 			break;
 		case View_ToolBox.TOOLTYPE_STATE:
@@ -238,10 +248,29 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 		}
 	}
 
-	public void showStateProperty(Circle_State circle) {
-		Dialog_State shell = new Dialog_State(this.getShell(), getM_mainView().getM_Automaton(), circle.getM_State());
+	public void showLocationShell(Point p, IPaint paint) {
+		Dialog_Location shell = new Dialog_Location(this.getShell(), p);
 		int result = shell.open();
-		if (result == 2){
+		if (result == SystemConstant.DIALOG_RESULT_SAVE) {
+			paint.updateOriginalLocation();
+			redraw();
+		}
+	}
+	
+	public void showTransFuncProperty(Polyline_Trans trans) {
+		Dialog_TransFunction dialog = new Dialog_TransFunction(this.getShell(), this, trans);
+		int result = dialog.open();
+		if (result == SystemConstant.DIALOG_RESULT_SAVE) {
+			//circle.updateOriginalLocation();
+			redraw();
+		}
+	}
+
+	public void showStateProperty(Circle_State circle) {
+		Dialog_State shell = new Dialog_State(this.getShell(), getM_mainView()
+				.getM_Automaton(), circle.getM_State());
+		int result = shell.open();
+		if (result == SystemConstant.DIALOG_RESULT_SAVE) {
 			circle.updateOriginalLocation();
 			redraw();
 		}
@@ -409,7 +438,7 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 					clearAllSelectedItems();
 					m_SelectedCircles.add(circle);
 					Menu_StateRightClick rightmenu = new Menu_StateRightClick(
-							this, SWT.POP_UP, (Circle_State)obj);
+							this, SWT.POP_UP, (Circle_State) obj);
 					Point pnt = getScreemLocation();
 					rightmenu.showMenu(pnt.x + e.x + 6, pnt.y + e.y + 52);
 				} else if (obj instanceof Polyline_Trans) {
@@ -417,12 +446,12 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 					clearAllSelectedItems();
 					m_SelectedPolylines.add(polyline);
 					Menu_TransRightClick rightmenu = new Menu_TransRightClick(
-							this, SWT.POP_UP, new Point(e.x, e.y));
+							this, SWT.POP_UP, new Point(e.x, e.y), polyline);
 					Point pnt = getScreemLocation();
 					rightmenu.showMenu(pnt.x + e.x + 6, pnt.y + e.y + 52);
 				} else if (obj instanceof Point) {
 					Menu_KneePointRightClick rightmenu = new Menu_KneePointRightClick(
-							this, SWT.POP_UP, (Point)obj);
+							this, SWT.POP_UP, (Point) obj);
 					Point pnt = getScreemLocation();
 					rightmenu.showMenu(pnt.x + e.x + 6, pnt.y + e.y + 52);
 				}
@@ -432,8 +461,9 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 		case View_ToolBox.TOOLTYPE_STATE:
 			// 新加状态
 			if (e.button == 1) {
-				Circle_State newCircle = new Circle_State(new State("", AutomatonConst.STATE_COMMON_TYPE),
-						new Point(e.x, e.y));
+				Circle_State newCircle = new Circle_State(new State(m_mainView
+						.getM_Automaton().getNextNameIdx(prefix_StateName),
+						AutomatonConst.STATE_COMMON_TYPE), new Point(e.x, e.y));
 				m_Circles.add(newCircle);
 				m_SelectedCircles.clear();
 				m_SelectedCircles.add(newCircle);
@@ -496,15 +526,7 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 			break;
 		}
 	}
-	
-	public void showLocationShell(Point p, IPaint paint){
-		Dialog_Location shell = new Dialog_Location(this.getShell(), p);
-		int result = shell.open();
-		if (result == 2){
-			paint.updateOriginalLocation();
-			redraw();
-		}
-	}
+
 
 	private void clearAllSelectedItems() {
 		m_SelectedCircles.clear();
@@ -689,7 +711,7 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 			m_SelectedCircles.clear();
 			result = true;
 		}
-		if ((m_SelectedPolylines != null && m_SelectedPolylines.size() > 0)){
+		if ((m_SelectedPolylines != null && m_SelectedPolylines.size() > 0)) {
 			for (Polyline_Trans trans : m_SelectedPolylines) {
 				m_mainView.getM_Automaton().removeTransFunction(
 						trans.getTransFunc());
@@ -718,9 +740,18 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 		}
 		return m_SelectedCircles.size();
 	}
+	
+	public Circle_State getCirclebyName(String stateName){
+		for (Circle_State circle : m_Circles){
+			if (stateName.equals(circle.getM_State().getM_Name()))
+				return circle;
+		}
+		return null;
+	}
 
 	public void setSelectedStateType(byte type) {
-		m_mainView.getM_Automaton().modifyStateType(m_SelectedCircles.get(0).getM_State(), type);
+		m_mainView.getM_Automaton().modifyStateType(
+				m_SelectedCircles.get(0).getM_State(), type);
 		redraw();
 	}
 

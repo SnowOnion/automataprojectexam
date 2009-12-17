@@ -103,6 +103,7 @@ public class Circle_State implements IPaint {
 		if ((m_State.getM_type()&AutomatonConst.STATE_FINAL_TYPE)!= 0){
 			paintFSAddition(gc, statue==SystemConstant.IMAGE_TYPE_SELECTED);
 		}
+		gc.drawString(m_State.getM_Name(), centre.x-6, centre.y-6, true);
 		// if (type == IMAGE_TYPE_SELECTED)
 		// gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_RED));
 		// else if (type == IMAGE_TYPE_COMMON)

@@ -23,4 +23,9 @@ public class SystemConstant {
 	public static final byte IMAGE_TYPE_COMMON = 1;
 	public static final byte IMAGE_TYPE_SELECTED = 2;
 	public static final byte IMAGE_TYPE_MOVING = 3;
+	
+	public static final String PREFIX_STATE_NAME = "q";
+	
+	public static final byte DIALOG_RESULT_CANCLE = 1;
+	public static final byte DIALOG_RESULT_SAVE = 2;
 }

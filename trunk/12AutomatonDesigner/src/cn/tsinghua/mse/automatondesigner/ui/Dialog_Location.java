@@ -2,6 +2,9 @@ package cn.tsinghua.mse.automatondesigner.ui;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
+
+import automatondesigner.SystemConstant;
+
 import com.swtdesigner.ResourceManager;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.SWT;
@@ -20,7 +23,7 @@ public class Dialog_Location extends Dialog {
 	private Text tx_Y;
 	private Point point = null;
 	private Shell shell = null;
-	private int result;	//返回值，取消返回1，成功修改返回2。
+	private int result = SystemConstant.DIALOG_RESULT_CANCLE;	//返回值，取消返回1，成功修改返回2。
 
 	public Dialog_Location(Shell parent, Point p) {
 		super(parent);
@@ -100,7 +103,7 @@ public class Dialog_Location extends Dialog {
 		}
 		point.x = x;
 		point.y = y;
-		result = 2;
+		result = SystemConstant.DIALOG_RESULT_SAVE;
 		this.shell.close();
 	}
 
@@ -116,7 +119,7 @@ public class Dialog_Location extends Dialog {
 	}
 
 	protected void doCancle() {
-		result = 1;
+		result = SystemConstant.DIALOG_RESULT_CANCLE;;
 		this.shell.close();
 	}
 
