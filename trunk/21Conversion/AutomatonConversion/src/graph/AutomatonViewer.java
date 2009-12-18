@@ -2,11 +2,12 @@ package graph;
 
 import automaton.FiniteAutomaton;
 import automaton.State;
-import edu.uci.ics.jung.algorithms.layout.FRLayout;
+import edu.uci.ics.jung.algorithms.layout.CircleLayout;
 import edu.uci.ics.jung.algorithms.layout.Layout;
 import edu.uci.ics.jung.visualization.RenderContext;
 import edu.uci.ics.jung.visualization.VisualizationModel;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
+import edu.uci.ics.jung.visualization.renderers.Renderer;
 import org.apache.commons.collections15.Transformer;
 
 import java.awt.*;
@@ -19,10 +20,6 @@ import java.awt.geom.Ellipse2D;
  */
 public class AutomatonViewer<C extends Comparable<C>, S extends State>
         extends VisualizationViewer<S, TransitionEdge<C, S>> {
-    private Transformer<TransitionEdge<C, S>, String> edgeLabel;
-    private Transformer<S, String> vertexLabel;
-    private Transformer<S, Shape> vertexShape;
-    private Transformer<S, Paint> vertexFillPaint;
 
     public AutomatonViewer(Layout<S, TransitionEdge<C, S>> layout) {
         super(layout);
@@ -44,9 +41,10 @@ public class AutomatonViewer<C extends Comparable<C>, S extends State>
         init();
     }
 
-    public static <C extends Comparable<C>, S extends State> AutomatonViewer<C, S> createAutomatonViewer(FiniteAutomaton<C, S> automaton) {
+    public static <C extends Comparable<C>, S extends State> AutomatonViewer<C, S>
+    createAutomatonViewer(FiniteAutomaton<C, S> automaton) {
         AutomatonGraph<C, S> graph = automaton.toJUNGraph();
-        Layout<S, TransitionEdge<C, S>> layout = new FRLayout<S, TransitionEdge<C, S>>(graph);// Layout(graph);
+        Layout<S, TransitionEdge<C, S>> layout = new CircleLayout<S, TransitionEdge<C, S>>(graph);// Layout(graph);
         return new AutomatonViewer<C, S>(layout, new Dimension(600, 400));
     }
 
@@ -54,30 +52,32 @@ public class AutomatonViewer<C extends Comparable<C>, S extends State>
         RenderContext<S, TransitionEdge<C, S>> context = this.getRenderContext();
         final double size = 20;
 
-        edgeLabel = new Transformer<TransitionEdge<C, S>, String>() {
+        Transformer<TransitionEdge<C, S>, String> edgeLabel = new Transformer<TransitionEdge<C, S>, String>() {
             @Override
             public String transform(TransitionEdge<C, S> edge) {
                 return edge.toString();
             }
         };
-        vertexLabel = new Transformer<S, String>() {
+        Transformer<S, String> vertexLabel = new Transformer<S, String>() {
             @Override
             public String transform(S s) {
                 return s.getStateID();
             }
         };
-        vertexFillPaint = new Transformer<S, Paint>() {
+        Transformer<S, Paint> vertexFillPaint = new Transformer<S, Paint>() {
             @Override
             public Paint transform(S s) {
-                Paint result = Color.BLUE;
-                return result;
+                if (s.isFinalState())
+                    return new Color(160, 160, 255);
+                else if (s.isInitialSate())
+                    return new Color(100, 100, 255);
+                return new Color(204, 204, 255);
             }
         };
-        vertexShape = new Transformer<S, Shape>() {
+        Transformer<S, Shape> vertexShape = new Transformer<S, Shape>() {
             @Override
             public Shape transform(S s) {
-                Shape result = new Ellipse2D.Double(-size, -size, 2 * size, 2 * size);
-                return result;
+                return new Ellipse2D.Double(-size, -size, 2 * size, 2 * size);
             }
         };
 
@@ -85,5 +85,13 @@ public class AutomatonViewer<C extends Comparable<C>, S extends State>
         context.setVertexLabelTransformer(vertexLabel);
         context.setVertexFillPaintTransformer(vertexFillPaint);
         context.setVertexShapeTransformer(vertexShape);
+        context.setVertexStrokeTransformer(new Transformer<S, Stroke>() {
+            @Override
+            public Stroke transform(S s) {
+                return new BasicStroke(0.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 1.0f, new float[]{1.0f}, 1.0f);
+            }
+        });
+
+        getRenderer().getVertexLabelRenderer().setPosition(Renderer.VertexLabel.Position.CNTR);
     }
 }

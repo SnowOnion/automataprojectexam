@@ -130,7 +130,7 @@
             <ToStates>
                 <ToState stateID="Q2"/>
             </ToStates>
-        </Transition>        
+        </Transition>
         <Transition>
             <FromState stateID="Q14"/>
             <Conditions>

@@ -27,7 +27,7 @@
         <!ELEMENT FromState EMPTY>             
             <!-- stateID must be appeared before -->
             <!ATTLIST FromState stateID IDREF #REQUIRED>
-        <!ELEMENT Conditions (Condition)>
+        <!ELEMENT Conditions (Condition+)>
             <!ELEMENT Condition EMPTY>
             <!-- symbol must be appeared before -->
             <!ATTLIST Condition symbol IDREF #REQUIRED>
