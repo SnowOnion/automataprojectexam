@@ -5,7 +5,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-import util.Util;
+import static util.Util.*;
 
 import java.io.File;
 import java.io.InputStream;
@@ -22,42 +22,11 @@ import java.util.logging.Logger;
 public class DefaultXMLAutomatonReader implements XMLAutomatonReader {
     private final static SAXReader reader;
     private final static Logger log;
-    private final static String STATES_XPATH;
-    private final static String SYMBOLS_XPATH;
-    private final static String TRANSITIONS_XPATH;
-    private final static String STATE_ID;
-    private final static String FA_NAME;
-    private static final String FA_TYPE;
-    private static final String DFA_NAME;
-    private static final String NFA_NAME;
-    private static final String STATE_TYPE_ATTR;
-    private static final String STATE_TYPES;
-    private static final String SYMBOL;
-    private static final String FINAL_STATE;
-    private static final String INITIAL_STATE;
-    private static final String FROM_STATE;
-    private static final String CONDITIONS;
-    private static final String TO_STATES;
 
     static {
         reader = new SAXReader();
-        log = Util.getLogger(DefaultXMLAutomatonReader.class);
-        STATES_XPATH = "//States/State";
-        SYMBOLS_XPATH = "//InputSymbols/InputSymbol";
-        TRANSITIONS_XPATH = "//Transitions/Transition";
-        STATE_ID = "stateID";
-        FA_NAME = "name";
-        FA_TYPE = "type";
-        STATE_TYPE_ATTR = "type";
-        DFA_NAME = "DFA";
-        NFA_NAME = "NFA";
-        STATE_TYPES = "StateTypes";
-        SYMBOL = "symbol";
-        FINAL_STATE = "FINAL";
-        INITIAL_STATE = "INITIAL";
-        FROM_STATE = "FromState";
-        CONDITIONS = "Conditions";
-        TO_STATES = "ToStates";
+        log = getLogger(DefaultXMLAutomatonReader.class);
+
     }
 
     @SuppressWarnings({"unchecked"})
@@ -66,7 +35,7 @@ public class DefaultXMLAutomatonReader implements XMLAutomatonReader {
         DFA<String> dfa = new DFA<String>(name);
 
         // parse states
-        List<Element> xmlStates = root.selectNodes(STATES_XPATH);
+        List<Element> xmlStates = root.element(STATES).elements(STATE);
         for (Element xmlState : xmlStates) {
             String id = xmlState.attributeValue(STATE_ID);
             DFAState state = new DFAState(id, dfa);
@@ -84,7 +53,7 @@ public class DefaultXMLAutomatonReader implements XMLAutomatonReader {
         }
 
         // parse symbols
-        List<Element> xmlSymbols = root.selectNodes(SYMBOLS_XPATH);
+        List<Element> xmlSymbols = root.element(INPUT_SYMBOLS).elements(INPUT_SYMBOL);
         for (Element xmlSymbol : xmlSymbols) {
             String symbol = xmlSymbol.attributeValue(SYMBOL);
             // add symbol
@@ -92,7 +61,7 @@ public class DefaultXMLAutomatonReader implements XMLAutomatonReader {
         }
 
         // parse transitions
-        List<Element> xmlTransitions = root.selectNodes(TRANSITIONS_XPATH);
+        List<Element> xmlTransitions = root.element(TRANSITIONS).elements(TRANSITION);
         for (Element xmlTransition : xmlTransitions) {
             String fromID = xmlTransition.element(FROM_STATE).attributeValue(STATE_ID);
             DFAState fromState = dfa.getStateByID(fromID);
@@ -116,7 +85,7 @@ public class DefaultXMLAutomatonReader implements XMLAutomatonReader {
         String name = root.attributeValue(FA_NAME);
         NFA<String> nfa = new NFA<String>(name);
         // parse states
-        List<Element> xmlStates = root.selectNodes(STATES_XPATH);
+        List<Element> xmlStates = root.element(STATES).elements(STATE);
         for (Element xmlState : xmlStates) {
             String id = xmlState.attributeValue(STATE_ID);
             NFAState state = new NFAState(id, nfa);
@@ -134,7 +103,7 @@ public class DefaultXMLAutomatonReader implements XMLAutomatonReader {
         }
 
         // parse symbols
-        List<Element> xmlSymbols = root.selectNodes(SYMBOLS_XPATH);
+        List<Element> xmlSymbols = root.element(INPUT_SYMBOLS).elements(INPUT_SYMBOL);
         for (Element xmlSymbol : xmlSymbols) {
             String symbol = xmlSymbol.attributeValue(SYMBOL);
             // add symbol
@@ -142,7 +111,7 @@ public class DefaultXMLAutomatonReader implements XMLAutomatonReader {
         }
 
         // parse transitions
-        List<Element> xmlTransitions = root.selectNodes(TRANSITIONS_XPATH);
+        List<Element> xmlTransitions = root.element(TRANSITIONS).elements(TRANSITION);
         for (Element xmlTransition : xmlTransitions) {
             String fromID = xmlTransition.element(FROM_STATE).attributeValue(STATE_ID);
             NFAState fromState = nfa.getStateByID(fromID);

@@ -18,7 +18,7 @@ import java.util.List;
 @SuppressWarnings({"unchecked"})
 public class Test {
     public static void main(String[] args) throws Exception {
-        String path = Util.getHome() + "\\AutomatonConversion\\src\\data\\";
+        String path = Util.getHome() + "\\data\\";
         String dfaFile = path + "aComplexDFA.xml";
 //        String dfaFile = path + "out.xml";
         DefaultXMLAutomatonReader reader = new DefaultXMLAutomatonReader();

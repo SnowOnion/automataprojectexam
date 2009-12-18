@@ -6,6 +6,7 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.tree.DefaultDocumentType;
 import util.Util;
+import static util.Util.*;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -24,7 +25,7 @@ public class DefaultXMLAutomatonWriter implements XMLAutomatonWriter {
     private static final Logger log;
 
     static {
-        log = Util.getLogger(DefaultXMLAutomatonWriter.class);
+        log = getLogger(DefaultXMLAutomatonWriter.class);
     }
 
     public boolean write(FiniteAutomaton fa, File file) {
@@ -54,36 +55,37 @@ public class DefaultXMLAutomatonWriter implements XMLAutomatonWriter {
 
     private Document createDocument(FiniteAutomaton fa) {
         Document doc = DocumentHelper.createDocument();
-        doc.setDocType(new DefaultDocumentType("FiniteAutomaton", "FA.dtd"));
+        doc.setDocType(new DefaultDocumentType(DOCUMENT_TYPE, SYSTEM_ID));
 
         // add root
-        Element root = doc.addElement("FiniteAutomaton");
-        root.addAttribute("type", fa.getClass().getSimpleName());
-        root.addAttribute("name", fa.getName());
+        Element root = doc.addElement(DOCUMENT_TYPE);
+        root.addAttribute(FA_TYPE, fa.getClass().getSimpleName());
+        root.addAttribute(FA_NAME, fa.getName());
 
         // add States
-        Element XMLStates = root.addElement("States");
+        Element XMLStates = root.addElement(STATES);
         Set<State> states = fa.getStates();
         for (State state : states) {
-            Element XMLState = XMLStates.addElement("State");
-            XMLState.addAttribute("stateID", state.getStateID());
-            Element XMLStateTypes = XMLState.addElement("StateTypes");
+            Element XMLState = XMLStates.addElement(STATE);
+            XMLState.addAttribute(STATE_ID, state.getStateID());
+            Element XMLStateTypes = XMLState.addElement(STATE_TYPES);
             // add state Type
             Set<StateType> stateTypes = state.getStateTypes();
             for (StateType stateType : stateTypes) {
-                XMLStateTypes.addElement("StateType").addAttribute("type", stateType.toString());
+                XMLStateTypes.addElement(STATE_TYPE).
+                        addAttribute(STATE_TYPE_ATTR, stateType.toString());
             }
         }
 
         // add Symbols
-        Element XMLSymbols = root.addElement("InputSymbols");
+        Element XMLSymbols = root.addElement(INPUT_SYMBOLS);
         Set symbols = fa.getSymbols();
         for (Object symbol : symbols) {
-            XMLSymbols.addElement("InputSymbol").addAttribute("symbol", symbol.toString());
+            XMLSymbols.addElement(INPUT_SYMBOL).addAttribute(SYMBOL, symbol.toString());
         }
 
         // add Transitions
-        Element XMLTransitions = root.addElement("Transitions");
+        Element XMLTransitions = root.addElement(Util.TRANSITIONS);
         for (State state : states) {
             // add nfa transitions
             if (state instanceof NFAState) {
@@ -91,11 +93,11 @@ public class DefaultXMLAutomatonWriter implements XMLAutomatonWriter {
                 Set<NFAState> epsilonTransitions = nfaState.getEpsilonTransition();
                 // add epsilon transitions
                 if (!epsilonTransitions.isEmpty()) {
-                    Element XMLTransition = XMLTransitions.addElement("Transition");
-                    XMLTransition.addElement("FromState").addAttribute("stateID", nfaState.getStateID());
-                    Element XMLToStates = XMLTransition.addElement("ToStates");
+                    Element XMLTransition = XMLTransitions.addElement(TRANSITION);
+                    XMLTransition.addElement(FROM_STATE).addAttribute(STATE_ID, nfaState.getStateID());
+                    Element XMLToStates = XMLTransition.addElement(TO_STATES);
                     for (NFAState toState : epsilonTransitions) {
-                        XMLToStates.addElement("ToState").addAttribute("stateID", toState.getStateID());
+                        XMLToStates.addElement(TO_STATE).addAttribute(STATE_ID, toState.getStateID());
                     }
                 }
 
@@ -103,13 +105,13 @@ public class DefaultXMLAutomatonWriter implements XMLAutomatonWriter {
                 for (Object symbol : symbols) {
                     Set<NFAState> toStates = nfaState.shift((Comparable) symbol);
                     if (toStates != null && !toStates.isEmpty()) {
-                        Element XMLTransition = XMLTransitions.addElement("Transition");
-                        XMLTransition.addElement("FromState").addAttribute("stateID", nfaState.getStateID());
-                        XMLTransition.addElement("Conditions").addElement("Condition").
-                                addAttribute("symbol", symbol.toString());
-                        Element XMLToStates = XMLTransition.addElement("ToStates");
+                        Element XMLTransition = XMLTransitions.addElement(TRANSITION);
+                        XMLTransition.addElement(FROM_STATE).addAttribute(STATE_ID, nfaState.getStateID());
+                        XMLTransition.addElement(CONDITIONS).addElement(CONDITION).
+                                addAttribute(SYMBOL, symbol.toString());
+                        Element XMLToStates = XMLTransition.addElement(TO_STATES);
                         for (NFAState toState : toStates) {
-                            XMLToStates.addElement("ToState").addAttribute("stateID", toState.getStateID());
+                            XMLToStates.addElement(TO_STATE).addAttribute(STATE_ID, toState.getStateID());
                         }
                     }
                 }
@@ -121,12 +123,12 @@ public class DefaultXMLAutomatonWriter implements XMLAutomatonWriter {
                 for (Object symbol : symbols) {
                     DFAState toState = dfaState.shift((Comparable) symbol);
                     if (toState != null) {
-                        Element XMLTransition = XMLTransitions.addElement("Transition");
-                        XMLTransition.addElement("FromState").addAttribute("stateID", dfaState.getStateID());
-                        XMLTransition.addElement("Conditions").addElement("Condition").
-                                addAttribute("symbol", symbol.toString());
-                        XMLTransition.addElement("ToStates").addElement("ToState").
-                                addAttribute("stateID", toState.getStateID());
+                        Element XMLTransition = XMLTransitions.addElement(TRANSITION);
+                        XMLTransition.addElement(FROM_STATE).addAttribute(STATE_ID, dfaState.getStateID());
+                        XMLTransition.addElement(CONDITIONS).addElement(CONDITION).
+                                addAttribute(Util.SYMBOL, symbol.toString());
+                        XMLTransition.addElement(TO_STATES).addElement(TO_STATE).
+                                addAttribute(STATE_ID, toState.getStateID());
                     }
 
                 }

@@ -17,20 +17,79 @@ public class Util {
     private static Map<Class, Logger> loggerMap;
     private static FileHandler defaultFileHandler;
     private static String home;
+    private static boolean logable;
+    public final static String STATE_ID;
+    public final static String FA_NAME;
+    public static final String FA_TYPE;
+    public static final String DFA_NAME;
+    public static final String NFA_NAME;
+    public static final String STATE_TYPE_ATTR;
+    public static final String STATE_TYPES;
+    public static final String SYMBOL;
+    public static final String FINAL_STATE;
+    public static final String INITIAL_STATE;
+    public static final String FROM_STATE;
+    public static final String CONDITIONS;
+    public static final String TO_STATES;
+    public static final String STATES;
+    public static final String STATE;
+    public static final String TRANSITIONS;
+    public static final String TRANSITION;
+    public static final String INPUT_SYMBOLS;
+    public static final String INPUT_SYMBOL;
+    public static final String DOCUMENT_TYPE;
+    public static final String SYSTEM_ID;
+    public static final String CONDITION;
+    public static final String STATE_TYPE;
+    public static final String TO_STATE;
+
+    // assign constant
+    static {
+        SYSTEM_ID = "FA.dtd";
+        DOCUMENT_TYPE = "FiniteAutomaton";
+        FA_NAME = "name";
+        DFA_NAME = "DFA";
+        NFA_NAME = "NFA";
+        FA_TYPE = "type";
+
+        STATE = "State";
+        STATES = "States";
+        STATE_ID = "stateID";
+        STATE_TYPE_ATTR = "type";
+        STATE_TYPES = "StateTypes";
+        STATE_TYPE = "StateType";
+        INITIAL_STATE = "INITIAL";
+        FINAL_STATE = "FINAL";
+
+        INPUT_SYMBOLS = "InputSymbols";
+        INPUT_SYMBOL = "InputSymbol";
+        SYMBOL = "symbol";
+
+        TRANSITION = "Transition";
+        TRANSITIONS = "Transitions";
+        FROM_STATE = "FromState";
+        CONDITIONS = "Conditions";
+        CONDITION = "Condition";
+        TO_STATES = "ToStates";
+        TO_STATE = "ToState";
+    }
+
 
     static {
+        logable = true;
         String loggerPath =
                 "./log/" + new Date().toString().replaceAll("[\\s:]", "_") + ".xml";
         File loggerFile;
         loggerFile = new File(loggerPath);
         try {
+            loggerFile.getParentFile().mkdirs();
             loggerFile.createNewFile();
         } catch (IOException e) {
-            e.printStackTrace();
         }
         try {
             defaultFileHandler = new FileHandler(loggerPath);
         } catch (IOException e) {
+            logable = false;
             e.printStackTrace();
         }
         loggerMap = new HashMap<Class, Logger>();
@@ -41,7 +100,8 @@ public class Util {
         if (loggerMap.containsKey(c))
             return loggerMap.get(c);
         Logger logger = Logger.getLogger(c.getName());
-        logger.addHandler(defaultFileHandler);
+        if (logable)
+            logger.addHandler(defaultFileHandler);
         logger.setUseParentHandlers(false);
         loggerMap.put(c, logger);
         return logger;

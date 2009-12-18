@@ -247,6 +247,149 @@
     <option name="ADDITIONAL_OPTIONS_STRING" value="" />
   </component>
   <component name="SvnBranchConfigurationManager">
+    <option name="myConfigurationMap">
+      <map>
+        <entry key="$PROJECT_DIR$">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://automataprojectexam.googlecode.com/svn/branches">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                  <entry key="https://automataprojectexam.googlecode.com/svn/tags">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                  <entry key="https://automataprojectexam.googlecode.com/svn/wiki">
+                    <value>
+                      <list>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1261121600363" />
+                          <option name="revision" value="227" />
+                          <option name="url" value="https://automataprojectexam.googlecode.com/svn/wiki/home_19Modeling_partial.wiki" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1260942139175" />
+                          <option name="revision" value="215" />
+                          <option name="url" value="https://automataprojectexam.googlecode.com/svn/wiki/home_23_nfatodfa.wiki" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1260870088343" />
+                          <option name="revision" value="198" />
+                          <option name="url" value="https://automataprojectexam.googlecode.com/svn/wiki/home_64_Regular2NFA.wiki" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1260813433771" />
+                          <option name="revision" value="185" />
+                          <option name="url" value="https://automataprojectexam.googlecode.com/svn/wiki/home_RET_june_vickyson.wiki" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1260812018945" />
+                          <option name="revision" value="176" />
+                          <option name="url" value="https://automataprojectexam.googlecode.com/svn/wiki/PageName.wiki" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1260811107161" />
+                          <option name="revision" value="174" />
+                          <option name="url" value="https://automataprojectexam.googlecode.com/svn/wiki/ProjectInstruction.wiki" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1260796474671" />
+                          <option name="revision" value="169" />
+                          <option name="url" value="https://automataprojectexam.googlecode.com/svn/wiki/home_24_NFATODFA.wiki" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1260779765756" />
+                          <option name="revision" value="161" />
+                          <option name="url" value="https://automataprojectexam.googlecode.com/svn/wiki/home_21Conversion.wiki" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1260750844448" />
+                          <option name="revision" value="145" />
+                          <option name="url" value="https://automataprojectexam.googlecode.com/svn/wiki/home_62_RegularToDFA.wiki" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1260729791699" />
+                          <option name="revision" value="139" />
+                          <option name="url" value="https://automataprojectexam.googlecode.com/svn/wiki/home_11automaton.wiki" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1260722024477" />
+                          <option name="revision" value="134" />
+                          <option name="url" value="https://automataprojectexam.googlecode.com/svn/wiki/home_52_RETools.wiki" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1260691735309" />
+                          <option name="revision" value="132" />
+                          <option name="url" value="https://automataprojectexam.googlecode.com/svn/wiki/home_Regular2DFA.wiki" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1260548937084" />
+                          <option name="revision" value="126" />
+                          <option name="url" value="https://automataprojectexam.googlecode.com/svn/wiki/home_NFA2DFA.wiki" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1260499851216" />
+                          <option name="revision" value="103" />
+                          <option name="url" value="https://automataprojectexam.googlecode.com/svn/wiki/home_AutomatonDesigner.wiki" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1260462081885" />
+                          <option name="revision" value="95" />
+                          <option name="url" value="https://automataprojectexam.googlecode.com/svn/wiki/home_32_DFA_algorithm_1.wiki" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1260452694568" />
+                          <option name="revision" value="86" />
+                          <option name="url" value="https://automataprojectexam.googlecode.com/svn/wiki/home_31_DFA_algorithm_1.wiki" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1260447133931" />
+                          <option name="revision" value="83" />
+                          <option name="url" value="https://automataprojectexam.googlecode.com/svn/wiki/home_41_DFA_algorithm2.wiki" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1260435093504" />
+                          <option name="revision" value="75" />
+                          <option name="url" value="https://automataprojectexam.googlecode.com/svn/wiki/53RegexpUtil.wiki" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1260375935407" />
+                          <option name="revision" value="59" />
+                          <option name="url" value="https://automataprojectexam.googlecode.com/svn/wiki/home_Reg2FA.wiki" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1260267785482" />
+                          <option name="revision" value="38" />
+                          <option name="url" value="https://automataprojectexam.googlecode.com/svn/wiki/WiKiPageName.wiki" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1260258452064" />
+                          <option name="revision" value="27" />
+                          <option name="url" value="https://automataprojectexam.googlecode.com/svn/wiki/README.wiki" />
+                        </SvnBranchItem>
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://automataprojectexam.googlecode.com/svn/branches" />
+                  <option value="https://automataprojectexam.googlecode.com/svn/tags" />
+                  <option value="https://automataprojectexam.googlecode.com/svn/wiki" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://automataprojectexam.googlecode.com/svn/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="mySupportsUserInfoFilter" value="true" />
   </component>
   <component name="UMLDiagramComponent">
