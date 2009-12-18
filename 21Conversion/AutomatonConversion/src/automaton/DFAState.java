@@ -117,7 +117,7 @@ public class DFAState<C extends Comparable<C>> implements State {
 
     @Override
     public boolean updateOwner() {
-        //TODO: test me
+        //TODO: sample me
         owner.removeState(this);
         return owner.addState(this);
     }

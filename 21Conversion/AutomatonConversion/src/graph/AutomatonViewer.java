@@ -42,8 +42,8 @@ public class AutomatonViewer<C extends Comparable<C>, S extends State>
     }
 
     public static <C extends Comparable<C>, S extends State> AutomatonViewer<C, S>
-    createAutomatonViewer(FiniteAutomaton<C, S> automaton) {
-        AutomatonGraph<C, S> graph = automaton.toJUNGraph();
+    createAutomatonViewer(FiniteAutomaton<C, S> automaton, C epsilon) {
+        AutomatonGraph<C, S> graph = automaton.toJUNGraph(epsilon);
         Layout<S, TransitionEdge<C, S>> layout = new CircleLayout<S, TransitionEdge<C, S>>(graph);// Layout(graph);
         return new AutomatonViewer<C, S>(layout, new Dimension(600, 400));
     }

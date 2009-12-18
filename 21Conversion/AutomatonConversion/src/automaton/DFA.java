@@ -110,7 +110,7 @@ public class DFA<C extends Comparable<C>> extends FiniteAutomaton<C, DFAState> {
     }
 
     @Override
-    public AutomatonGraph<C, DFAState> toJUNGraph() {
+    public AutomatonGraph<C, DFAState> toJUNGraph(C epsilon) {
         AutomatonGraph<C, DFAState> graph
                 = new AutomatonGraph<C, DFAState>();
         for (DFAState state : getStates()) {

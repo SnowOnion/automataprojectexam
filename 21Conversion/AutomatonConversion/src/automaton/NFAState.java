@@ -1,5 +1,6 @@
 package automaton;
 
+import graph.TransitionEdge;
 import util.Util;
 
 import java.util.*;
@@ -19,7 +20,7 @@ public class NFAState<C extends Comparable<C>> implements State {
     private Set<StateType> stateTypes;
     private Map<C, Set<NFAState>> transitionMap;
 
-    private Set<NFAState> epsilonTransition;
+    private Set<NFAState> epsilonTransitions;
 
     static {
         log = Util.getLogger(NFAState.class);
@@ -29,7 +30,7 @@ public class NFAState<C extends Comparable<C>> implements State {
         stateTypes = new TreeSet<StateType>();
         stateTypes.add(StateType.COMMON);
         transitionMap = new TreeMap<C, Set<NFAState>>();
-        epsilonTransition = new TreeSet<NFAState>();
+        epsilonTransitions = new TreeSet<NFAState>();
     }
 
     public NFAState(String stateID, FiniteAutomaton owner) {
@@ -88,15 +89,15 @@ public class NFAState<C extends Comparable<C>> implements State {
     }
 
     public boolean addEpsilonTransition(NFAState state) {
-        return epsilonTransition.add(state);
+        return epsilonTransitions.add(state);
     }
 
-    public Set<NFAState> getEpsilonTransition() {
-        return epsilonTransition;
+    public Set<NFAState> getEpsilonTransitions() {
+        return epsilonTransitions;
     }
 
     public TreeSet<NFAState> getEpsilonClosure() {
-        TreeSet<NFAState> result = new TreeSet<NFAState>(epsilonTransition);
+        TreeSet<NFAState> result = new TreeSet<NFAState>(epsilonTransitions);
         log.log(Level.INFO, "calculate epsilon closure, result is " + result, this);
         result.add(this);
         return result;
@@ -105,6 +106,28 @@ public class NFAState<C extends Comparable<C>> implements State {
     @Override
     public String getStateID() {
         return stateID;
+    }
+
+    public Set<TransitionEdge<C, NFAState>> constructEdges(C epsilon) {
+        Set<TransitionEdge<C, NFAState>> result = new HashSet<TransitionEdge<C, NFAState>>();
+        // non-epsilon edges
+        for (Map.Entry<C, Set<NFAState>> entry : transitionMap.entrySet()) {
+            Set<NFAState> states = entry.getValue();
+            C value = entry.getKey();
+            for (NFAState to : states) {
+                TransitionEdge<C, NFAState> edge = TransitionEdge.createEdge
+                        (this, to, value);
+                result.add(edge);
+            }
+        }
+
+        // epsilon edges
+        for (NFAState to : epsilonTransitions) {
+            TransitionEdge<C, NFAState> edge = TransitionEdge.createEdge
+                    (this, to, epsilon);
+            result.add(edge);
+        }
+        return result;
     }
 
     @Override
@@ -124,7 +147,7 @@ public class NFAState<C extends Comparable<C>> implements State {
 
     @Override
     public boolean updateOwner() {
-        //TODO: test me
+        //TODO: sample me
         owner.removeState(this);
         return owner.addState(this);
     }
