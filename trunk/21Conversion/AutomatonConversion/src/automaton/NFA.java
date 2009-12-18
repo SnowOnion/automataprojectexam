@@ -1,6 +1,8 @@
 package automaton;
 
+import edu.uci.ics.jung.graph.util.EdgeType;
 import graph.AutomatonGraph;
+import graph.TransitionEdge;
 import util.Util;
 
 import java.util.*;
@@ -143,9 +145,18 @@ public class NFA<C extends Comparable<C>> extends FiniteAutomaton<C, NFAState> {
     }
 
     @Override
-    public AutomatonGraph<C, NFAState> toJUNGraph() {
-        //TODO: finish me
-        return null;
+    public AutomatonGraph<C, NFAState> toJUNGraph(C epsilon) {
+        AutomatonGraph<C, NFAState> graph
+                = new AutomatonGraph<C, NFAState>();
+        for (NFAState state : getStates()) {
+            graph.addVertex(state);
+            Set<TransitionEdge<C, NFAState>> edges = state.constructEdges(epsilon);
+            for (TransitionEdge<C, NFAState> edge : edges) {
+                graph.addEdge(edge, edge.getFrom(), edge.getTo(), EdgeType.DIRECTED);
+            }
+        }
+        return graph;
+
     }
 
     @Override

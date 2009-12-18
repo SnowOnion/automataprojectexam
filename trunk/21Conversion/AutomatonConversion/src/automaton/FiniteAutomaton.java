@@ -130,5 +130,5 @@ public abstract class FiniteAutomaton<C extends Comparable<C>, S extends State> 
 
     public abstract boolean isInfinite();
 
-    public abstract AutomatonGraph<C, S> toJUNGraph();
+    public abstract AutomatonGraph<C, S> toJUNGraph(C epsilon);
 }

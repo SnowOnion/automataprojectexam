@@ -90,7 +90,7 @@ public class DefaultXMLAutomatonWriter implements XMLAutomatonWriter {
             // add nfa transitions
             if (state instanceof NFAState) {
                 NFAState nfaState = (NFAState) state;
-                Set<NFAState> epsilonTransitions = nfaState.getEpsilonTransition();
+                Set<NFAState> epsilonTransitions = nfaState.getEpsilonTransitions();
                 // add epsilon transitions
                 if (!epsilonTransitions.isEmpty()) {
                     Element XMLTransition = XMLTransitions.addElement(TRANSITION);

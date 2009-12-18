@@ -1,11 +1,14 @@
-package test;
+package sample;
 
 import automaton.DFA;
 import automaton.NFA;
 import automaton.io.xml.DefaultXMLAutomatonReader;
 import automaton.io.xml.DefaultXMLAutomatonWriter;
+import edu.uci.ics.jung.visualization.VisualizationViewer;
+import graph.AutomatonViewer;
 import util.Util;
 
+import javax.swing.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,14 +60,14 @@ public class Test {
 //        input.add("c");
 //        System.out.println("nfa.accept(bbc) = " + nfa.accept(input));
 //
-//        System.out.println("nfa.isEmpty() = " + nfa.isEmpty());
+//        System.out.println("nfa.isEmpty() = " + nfa.isEmpty());        
 //        System.out.println("nfa.isInfinite() = " + nfa.isInfinite());
 //
-//        VisualizationViewer viewer = AutomatonViewer.createAutomatonViewer(dfa);
-//        JFrame frame = new JFrame("Simple Graph Viewer");
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.getContentPane().add(viewer);
-//        frame.pack();
-//        frame.setVisible(true);
+        VisualizationViewer viewer = AutomatonViewer.createAutomatonViewer(nfa, "ε");
+        JFrame frame = new JFrame("Simple Graph Viewer");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(viewer);
+        frame.pack();
+        frame.setVisible(true);
     }
 }
