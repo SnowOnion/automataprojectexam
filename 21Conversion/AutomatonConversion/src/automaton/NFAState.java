@@ -18,6 +18,7 @@ public class NFAState<C extends Comparable<C>> implements State {
     private String stateID;
     private Set<StateType> stateTypes;
     private Map<C, Set<NFAState>> transitionMap;
+
     private Set<NFAState> epsilonTransition;
 
     static {
@@ -88,6 +89,10 @@ public class NFAState<C extends Comparable<C>> implements State {
 
     public boolean addEpsilonTransition(NFAState state) {
         return epsilonTransition.add(state);
+    }
+
+    public Set<NFAState> getEpsilonTransition() {
+        return epsilonTransition;
     }
 
     public TreeSet<NFAState> getEpsilonClosure() {
