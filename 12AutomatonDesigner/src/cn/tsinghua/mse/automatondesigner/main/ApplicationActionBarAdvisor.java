@@ -46,6 +46,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	private Action rightAlignAction;
 	private Action topAlignAction;
 	private Action bottomAlignAction;
+	private IAction quitAction;
 
 	public ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
 		super(configurer);
@@ -80,9 +81,12 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		register(copyAction);
 
 		aboutAction = ActionFactory.ABOUT.create(window);
+		aboutAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor("AutomatonDesigner", "icons/file16.png"));
+		aboutAction.setText("¹ØÓÚ...");
 		register(aboutAction);
 
 		helpContentsAction = ActionFactory.HELP_CONTENTS.create(window);
+		helpContentsAction.setText("°ïÖú");
 		register(helpContentsAction);
 
 		closeAction = ActionFactory.CLOSE.create(window);
@@ -165,6 +169,12 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 				.getPluginImageDescriptor("AutomatonDesigner",
 						"icons/bottom_align.png"));
 		register(bottomAlignAction);
+		{
+			quitAction = ActionFactory.QUIT.create(window);
+			quitAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor("AutomatonDesigner", "icons/exit.png"));
+			quitAction.setText("ÍË³ö");
+			register(quitAction);
+		}
 	}
 
 	protected void doDelete() {
@@ -219,7 +229,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		fileMenuanager.add(new Separator());
 		fileMenuanager.add(saveAction);
 		fileMenuanager.add(new Separator());
-		fileMenuanager.add(exitAction);
+		fileMenuanager.add(quitAction);
 		menuBar.add(fileMenuanager);
 
 		MenuManager editMenuManager = new MenuManager("±à¼­",
