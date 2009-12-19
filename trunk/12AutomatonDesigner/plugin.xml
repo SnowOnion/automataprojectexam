@@ -56,7 +56,7 @@
          </property>
          <property
                name="windowImages"
-               value="icons/views.gif">
+               value="icons/new16.gif,icons/views.gif">
          </property>
       </product>
    </extension>
