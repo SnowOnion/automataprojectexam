@@ -26,7 +26,7 @@
 ||姓名||学号||邮箱||
 ||马晟||2009212623||williamma.wm@gmail.com||
 ||王玥||2009 ||pipituliuliu@gmail.com||
-||郭鑫||2009 ||gheart123@gmail.com||
+||郭鑫||2009212624 ||gheart123@gmail.com||
 
 
 = 项目设计及开发 =
@@ -37,85 +37,9 @@
  # Java （JDK 1.6）基本Swing编程
  # (Optional) Flex，Eclipse RCP 平台框架的使用（后期可能会使用，在基础类实现了以后）
 
-== 类图 ==
-=== automaton ===
-这里是基础数据结构的相关类，这些类在包automaton中 <br>
-[http://automatonmodeling.googlecode.com/files/basic_class_diagram_1214.JPG]
 
-
-=== xml ===
-这里是XML的存储和读取的相关类的类图，这些类在包xml中。 两个init的无返回值方法是用来读和写自动机共有属性的，比如名字，输入字符集，状态集，初始状态等等。<br>
-[http://automatonmodeling.googlecode.com/files/xml_class_diagram_1214.JPG]
-
-== DTD 定义和XML文件==
-XML的样例文件放在xml包中，在xmldata中是一些测试用的XML文件，可以参考TemplateXML来进行创建自己的自动机类，然后可以通过调用AutomatonFactory构造得到一个Automaton。不要写错XML，项目目前的挑错能力很差，如果有不匹配的标签很容易出错。
-
- # Automaton 有三种（DFA，NFA和PDA），但是，我定义的自动机的类型有四种，（"UNKNOWN","DFA","NFA","PDA"） 对于每个自动机都有一些共同的属性，比如名字，状态集，初始状态，输入字符集。
- # 对于每个状态只有两种属性（normal和accepted），初始状态为自动机的一种属性。
-
-=== DFA ===
-<?xml version="1.0" encoding="UTF-8"?><br>
-<!DOCTYPE DFA[ <br>
-	<!ELEMENT DFA(AutomatonName,AutomatonStates,AutomatonInputSymbols,DFATransitions)> <br>
-	<!ELEMENT AutomatonName(#PCDATA)> <br>
-	<!ELEMENT AutomatonStates(State+)> <br>
-		<!ELEMENT State(StateId,StateType)> <br>
-			<!ELEMENT StateId(#PCDATA)> <br>
-			<!ELEMENT StateType(#PCDATA)> <br>
-	<!ELEMENT InitialState(#PCDATA)> <br>
-	<!ELEMENT AutomatonInputSymbols(InputSymbol{{{*}}})> <br>
-		<!ELEMENT InputSymbol(#PCDATA)> <br>
-	<!ELEMENT DFATransitions(DFATransition{{{*}}})> <br>
-		<!ELEMENT DFATransition(FromState,DFAConditions,ToState)> <br>
-			<!ELEMENT FromState(#PCDATA)> <br>
-			<!ELEMENT DFAConditions(DFACondition+)> <br>
-			<!ELEMENT ToState(#PCDATA)> <br>
-]> <br>
-=== NFA ===
-<?xml version="1.0" encoding="UTF-8"?><br>
-<!DOCTYPE NFA[<br>
-	<!ELEMENT NFA(AutomatonName,AutomatonStates,AutomatonInputSymbols,NFATransitions)><br>
-	<!ELEMENT AutomatonName(#PCDATA)><br>
-	<!ELEMENT AutomatonStates(State+)><br>
-		<!ELEMENT State(StateId,StateType)><br>
-			<!ELEMENT StateId(#PCDATA)><br>
-			<!ELEMENT StateType(#PCDATA)><br>
-	<!ELEMENT InitialState(#PCDATA)><br>
-	<!ELEMENT AutomatonInputSymbols(InputSymbol{{{*}}})><br>
-		<!ELEMENT InputSymbol(#PCDATA)><br>
-	<!ELEMENT NFATransitions(NFATransitions{{{*}}})><br>
-		<!ELEMENT NFATransition(FromState,NFAConditions,ToState)><br>
-			<!ELEMENT FromState(#PCDATA)><br>
-			<!ELEMENT NFAConditions(NFACondition+)><br>
-			<!ELEMENT ToState(#PCDATA)><br>
-]><br>
-
-=== PDA ===
-<?xml version="1.0" encoding="UTF-8"?><br>
-<!DOCTYPE PDA[<br>
-	<!ELEMENT PDA(AutomatonName,AutomatonStates,AutomatonInputSymbols,PDAStackSymbols,PDAInitialStackSymbol,PDATransitions)><br>
-	<!ELEMENT AutomatonName(#PCDATA)><br>
-	<!ELEMENT AutomatonStates(State+)><br>
-		<!ELEMENT State(StateId,StateType)><br>
-		<!ELEMENT StateId(#PCDATA)><br>
-		<!ELEMENT StateType(#PCDATA)><br>
-	<!ELEMENT InitialState(#PCDATA)><br>
-	<!ELEMENT AutomatonInputSymbols(InputSymbol{{{*}}})><br>
-		<!ELEMENT InputSymbol(#PCDATA)><br>
-	<!ELEMENT PDAStackSymbols(PDAStackSymbol+)><br>
-		<!ELEMENT PDAStackSymbol(#PCDATA)><br>
-	<!ELEMENT PDAInitialStackSymbol(#PCDATA)><br>
-	<!ELEMENT PDATransitions(PDATransition{{{*}}})><br>
-		<!ELEMENT PDATransition(FromState,PDAConditions,ToState)><br>
-			<!ELEMENT FromState(#PCDATA)><br>
-			<!ELEMENT PDAConditions(PDACondition+)><br>
-				<!ELEMENT PDACondition(PDAConditionSymbol,PDAFromStackSymbol,PDAToStackSymbol)><br>
-				<!ELEMENT PDAConditionSymbol(InputSymbol)><br>
-				<!ELEMENT PDAFromStackSymbol(PDAStackSymbol)><br>
-				<!ELEMENT PDAToStackSymbol(PDAStackSymbol+)><br>
-			<!ELEMENT ToState(#PCDATA)><br>
-]><br>
-
+== 具体设计内容见文档 ==
+[http://automataprojectexam.googlecode.com/files/11_项目设计.pdf 11_项目设计.pdf]
 = 特殊说明 =
 
 
