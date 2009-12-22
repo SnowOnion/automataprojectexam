@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE PDA[
+	<!ELEMENT PDA(States,InputSymbols,StackSymbols,InitialStackSymbol,Transitions)>
+	<!ATTLIST NFA type (PDA) #REQUIRED>
+    <!ATTLIST NFA name #PCDATA "unnamed">
+	<!ATTLIST NFA initialState #PCDATA "P1">
+	
+	<!ELEMENT States(State+)>
+		<!ELEMENT State(StateId,StateType,Nail)>
+		<!ELEMENT StateId(#PCDATA)>
+		<!ELEMENT StateType(#PCDATA)>
+		<!ELEMENT Nail(#PCDATA)>
+			<!-- X,Y information is required -->
+    		<!ATTLIST Nail x #PCDATA>
+    		<!ATTLIST Nail y #PCDATA>	
+    <!ELEMENT InputSymbols(InputSymbol+)>
+		<!ELEMENT InputSymbol(#PCDATA)>
+	<!ELEMENT StackSymbols(PDAStackSymbol+)>
+		<!ELEMENT PDAStackSymbol(#PCDATA)>
+	<!ELEMENT InitialStackSymbol(#PCDATA)>
+	<!ELEMENT Transitions(PDATransition)>
+		<!ELEMENT PDATransition(FromState,PDAConditions,ToState)>
+			<!ELEMENT FromState(#PCDATA)>
+			<!ELEMENT PDAConditions(PDACondition)>
+				<!ELEMENT PDACondition(ConditionSymbol,FromStackSymbol,ToStackSymbol)>
+				<!ELEMENT ConditionSymbol(InputSymbol)>
+				<!ELEMENT FromStackSymbol(#PCDATA)>
+				<!ELEMENT ToStackSymbol(PDAStackSymbol+)>
+			<!ELEMENT ToState(#PCDATA)>
+]>

@@ -4,7 +4,7 @@
 	<AutomatonStates>
 		<State>
 			<StateId>P1</StateId>
-			<StateType>initial</StateType>
+			<StateType>normal</StateType>
 		</State>
 		<State>
 			<StateId>P2</StateId>
@@ -14,6 +14,7 @@
 			<StateId>P3</StateId>
 			<StateType>accepted</StateType></State>
 	</AutomatonStates>
+	<InitialState>P1</InitialState>
 	<AutomatonInputSymbols>
 		<InputSymbol>0</InputSymbol>
 		<InputSymbol>1</InputSymbol>
@@ -21,34 +22,20 @@
 	</AutomatonInputSymbols>
 	<NFATransitions>
 		<NFATransition>
-		<FromState>
-			<State>
-				<StateId>P1</StateId>
-				<StateType>initial</StateType>
-			</State>
-		</FromState>
+		<FromState>P1</FromState>
 		<NFAConditions>
 			<NFACondition>0</NFACondition>
 			<NFACondition>1</NFACondition>
 		</NFAConditions>
-		<ToState>
-			<State>
-				<StateId>P2</StateId>
-				<StateType>normal</StateType>
-			</State>
-		</ToState>
+		<ToState>P2</ToState>
 		</NFATransition>
 		<NFATransition>
-			<FromState>
-				<State>
-					<StateId>P2</StateId>
-					<StateType>normal</StateType></State></FromState>
+			<FromState>P2</FromState>
 			<NFAConditions>
-				<NFACondition>2</NFACondition></NFAConditions>
-			<ToState>
-				<State>
-					<StateId>P3</StateId>
-					<StateType>accepted</StateType></State></ToState></NFATransition>
+				<NFACondition>2</NFACondition>
+			</NFAConditions>
+			<ToState>P3</ToState>
+		</NFATransition>
 	</NFATransitions>
 </NFA>
 	

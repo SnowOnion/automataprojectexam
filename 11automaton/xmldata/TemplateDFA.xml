@@ -4,7 +4,7 @@
 		<AutomatonStates>
 			<State>
 				<StateId>P1</StateId>
-				<StateType>initial</StateType>
+				<StateType>normal</StateType>
 			</State>
 			<State>
 				<StateId>P2</StateId>
@@ -15,100 +15,51 @@
 				<StateType>normal</StateType>
 			</State>
 			<State>
-				<StateId>p4</StateId>
+				<StateId>P4</StateId>
 				<StateType>accepted</StateType>
 			</State>
 		</AutomatonStates>
+		<InitialState>P1</InitialState>
 		<AutomatonInputSymbols>
 			<InputSymbol>0</InputSymbol>
 			<InputSymbol>1</InputSymbol>
 		</AutomatonInputSymbols>
 		<DFATransitions>
 			<DFATransition>
-				<FromState>
-					<State>
-						<StateId>P1</StateId>
-						<StateType>initial</StateType>
-					</State>
-				</FromState>
+				<FromState>P1</FromState>
 				<DFAConditions>
 					<DFACondition>0</DFACondition>
 				</DFAConditions>
-				<ToState>
-					<State>
-						<StateId>P2</StateId>
-						<StateType>normal</StateType>
-					</State>
-				</ToState>
+				<ToState>P2</ToState>
 			</DFATransition>
 			<DFATransition>
-				<FromState>
-					<State>
-						<StateId>P1</StateId>
-						<StateType>initial</StateType>
-					</State>
-				</FromState>
+				<FromState>P1</FromState>
 				<DFAConditions>
 					<DFACondition>1</DFACondition>
 				</DFAConditions>
-				<ToState>
-					<State>
-						<StateId>P3</StateId>
-						<StateType>normal</StateType>
-					</State>
-				</ToState>
+				<ToState>P3</ToState>
 			</DFATransition>
 			<DFATransition>
-				<FromState>
-					<State>
-						<StateId>P1</StateId>
-						<StateType>initial</StateType>
-					</State>
-				</FromState>
+				<FromState>P1</FromState>
 				<DFAConditions>
 					<DFACondition>1</DFACondition>
 				</DFAConditions>
-				<ToState>
-					<State>
-						<StateId>P3</StateId>
-						<StateType>normal</StateType>
-					</State>
-				</ToState>
+				<ToState>P3</ToState>
 			</DFATransition>
 			<DFATransition>
-				<FromState>
-					<State>
-						<StateId>P1</StateId>
-						<StateType>initial</StateType>
-					</State>
-				</FromState>
+				<FromState>P1</FromState>
 				<DFAConditions>
 					<DFACondition>1</DFACondition>
 				</DFAConditions>
-				<ToState>
-					<State>
-						<StateId>P3</StateId>
-						<StateType>normal</StateType>
-					</State>
-				</ToState>
+				<ToState>P3</ToState>
 			</DFATransition>
 			<DFATransition>
-				<FromState>
-					<State>
-						<StateId>P2</StateId>
-						<StateType>normal</StateType>
-					</State>
-				</FromState>
+				<FromState>P2</FromState>
 				<DFAConditions>
 					<DFACondition>0</DFACondition>
 					<DFACondition>1</DFACondition>
 				</DFAConditions>
-				<ToState>
-					<State>
-						<StateId>P4</StateId>
-						<StateType>accepted</StateType>
-					</State>
-				</ToState>
+				<ToState>P4</ToState>
 			</DFATransition>
 		</DFATransitions>
 	</DFA>

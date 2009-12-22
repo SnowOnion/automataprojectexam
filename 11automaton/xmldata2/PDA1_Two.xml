@@ -1,47 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<PDA>
-	<AutomatonName>PDA Test</AutomatonName>
-	<AutomatonStates>
+<PDA type ="PDA" name="test PDA Automaton" initialState="P1">
+	<States>
 		<State>
 			<StateId>P1</StateId>
 			<StateType>normal</StateType>
+			<Nail x="10" y="20"/>
 		</State>
 		<State>
 			<StateId>P2</StateId>
 			<StateType>normal</StateType>
+			<Nail x="20" y="10"/>
 		</State>
 		<State>
 			<StateId>P3</StateId>
 			<StateType>normal</StateType>
+			<Nail x="20" y="30"/>
 		</State>
 		<State>
 			<StateId>P4</StateId>
 			<StateType>accepted</StateType>
+			<Nail x="30" y="20"/>
 		</State>
-	</AutomatonStates>
-	<InitialState>P1</InitialState>
-	<AutomatonInputSymbols>
+	</States>
+	<InputSymbols>
 		<InputSymbol>0</InputSymbol>
 		<InputSymbol>1</InputSymbol>
 		<InputSymbol>2</InputSymbol>
-	</AutomatonInputSymbols>
-	<PDAStackSymbols>
+	</InputSymbols>
+	<StackSymbols>
 		<PDAStackSymbol>Z</PDAStackSymbol>
 		<PDAStackSymbol>X</PDAStackSymbol>
 		<PDAStackSymbol>Y</PDAStackSymbol>
-	</PDAStackSymbols>
-	<PDAInitialStackSymbol>Z</PDAInitialStackSymbol>
-	<PDATransitions>
+	</StackSymbols>
+	<InitialStackSymbol>Z</InitialStackSymbol>
+	<Transitions>
 		<PDATransition>
 			<FromState>P1</FromState>
 			<PDAConditions>
 				<PDACondition>
-					<PDAConditionSymbol>0</PDAConditionSymbol>
-					<PDAFromStackSymbol>Z</PDAFromStackSymbol>
-					<PDAToStackSymbol>
+					<ConditionSymbol>0</ConditionSymbol>
+					<FromStackSymbol>Z</FromStackSymbol>
+					<ToStackSymbol>
 						<PDAStackSymbol>X</PDAStackSymbol>
 						<PDAStackSymbol>Z</PDAStackSymbol>
-					</PDAToStackSymbol>
+					</ToStackSymbol>
 				</PDACondition>
 			</PDAConditions>
 			<ToState>P2</ToState>
@@ -50,13 +52,15 @@
 			<FromState>P2</FromState>
 			<PDAConditions>
 				<PDACondition>
-					<PDAConditionSymbol>0</PDAConditionSymbol>
-					<PDAFromStackSymbol>X</PDAFromStackSymbol>
-					<PDAToStackSymbol>
-					</PDAToStackSymbol>
+					<ConditionSymbol>0</ConditionSymbol>
+					<FromStackSymbol>X</FromStackSymbol>
+					<ToStackSymbol>
+						<PDAToStackSymbol>
+						</PDAToStackSymbol>
+					</ToStackSymbol>
 				</PDACondition>
 			</PDAConditions>
 			<ToState>P3</ToState>
 		</PDATransition>
-	</PDATransitions>
+	</Transitions>
 </PDA>

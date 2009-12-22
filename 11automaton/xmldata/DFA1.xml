@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DFA>
-		<AutomatonName>test DFA</AutomatonName>
-		<AutomatonStates>
-			<State>
-				<StateId>P1</StateId>
-				<StateType>normal</StateType>
-			</State>
-			<State>
-				<StateId>P2</StateId>
-				<StateType>normal</StateType>
-			</State>
-			<State>
-				<StateId>P3</StateId>
-				<StateType>normal</StateType>
-			</State>
-			<State>
-				<StateId>P4</StateId>
-				<StateType>accepted</StateType>
-			</State>
-		</AutomatonStates>
-		<InitialState>P1</InitialState>
-		<AutomatonInputSymbols>
-			<InputSymbol>0</InputSymbol>
-			<InputSymbol>1</InputSymbol>
-		</AutomatonInputSymbols>
-		<DFATransitions>
-			<DFATransition>
-				<FromState>P1</FromState>
-				<DFAConditions>
-					<DFACondition>0</DFACondition>
-				</DFAConditions>
-				<ToState>P2</ToState>
-			</DFATransition>
+	<AutomatonName>test DFA</AutomatonName>
+	<AutomatonStates>
+		<State>
+			<StateId>P1</StateId>
+			<StateType>normal</StateType>
+		</State>
+		<State>
+			<StateId>P2</StateId>
+			<StateType>normal</StateType>
+		</State>
+		<State>
+			<StateId>P3</StateId>
+			<StateType>normal</StateType>
+		</State>
+		<State>
+			<StateId>P4</StateId>
+			<StateType>accepted</StateType>
+		</State>
+	</AutomatonStates>
+	<InitialState>P1</InitialState>
+	<AutomatonInputSymbols>
+		<InputSymbol>0</InputSymbol>
+		<InputSymbol>1</InputSymbol>
+	</AutomatonInputSymbols>
+	<DFATransitions>
+		<DFATransition>
+			<FromState>P1</FromState>
+			<DFAConditions>
+				<DFACondition>0</DFACondition>
+			</DFAConditions>
+			<ToState>P2</ToState>
+		</DFATransition>
 			<DFATransition>
 				<FromState>P1</FromState>
 				<DFAConditions>
@@ -62,4 +62,4 @@
 				<ToState>P4</ToState>
 			</DFATransition>
 		</DFATransitions>
-	</DFA>
+</DFA>

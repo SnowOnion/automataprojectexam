@@ -1,9 +1,10 @@
-package xml;
+package xml2;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -19,17 +20,18 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import exception.NoStateFoundException;
+import xml.AutomatonXmlInterface;
 import automaton.Automaton;
 import automaton.AutomatonConstant;
+import automaton.Nail;
 import automaton.State;
+import exception.NoStateFoundException;
 
-public class DomParserParent implements AutomatonXmlInterface {
+public class DomParserParentTwo implements AutomatonXmlInterface{
 	protected Document doc;
 	protected Automaton automaton;
-	
-	public DomParserParent(){
+	protected ArrayList<Element> elements;
+	public DomParserParentTwo(){
 		try{
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			doc = builder.newDocument();
@@ -55,18 +57,15 @@ public class DomParserParent implements AutomatonXmlInterface {
 	 */
 	protected void initBasicAutomatonFromNode(Document document) throws NoStateFoundException{
 		Element root = document.getDocumentElement();
-		ArrayList <Element> elements = getAllElementsFromRoot(root);
+		automaton.setAutomatonName(root.getAttribute("name"));
+		automaton.setAutomatonType(root.getAttribute("type"));
+
+		elements = getAllElementsFromRoot(root);
 		
-		Element automatonName=elements.get(0);
-		automaton.setAutomatonName(automatonName.getTextContent());
-		//System.out.println(automatonName.getNodeName()+"\t"+automatonName.getTextContent());
-		
-		Element stateElements = elements.get(1);
+		Element stateElements = elements.get(0);
 		automaton.setStates(getAllStatesFromNode(stateElements));
 		
-		Element initialStateElement = elements.get(2);
-		String stateId = initialStateElement.getTextContent();
-		
+		String stateId = root.getAttribute("initialState");
 		State initialState = null;
 		if(automaton.getStates().containsKey(stateId)){
 			initialState = automaton.getStates().get(stateId);
@@ -75,7 +74,7 @@ public class DomParserParent implements AutomatonXmlInterface {
 		}
 		automaton.setInitialState(initialState);
 		
-		Element inputSymbols = elements.get(3);
+		Element inputSymbols = elements.get(1);
 		automaton.setInputSymbolSet(getAllInputSymbols(inputSymbols));
 		//System.out.println(inputSymbols.getNodeName());
 		
@@ -85,7 +84,22 @@ public class DomParserParent implements AutomatonXmlInterface {
 		String stateName = state.getElementsByTagName("StateId").item(0).getTextContent();
 		String stateTypeString = state.getElementsByTagName("StateType").item(0).getTextContent();
 		byte stateType = AutomatonConstant.getStateTypeByteFromString(stateTypeString);
-		return new State(stateName,stateType);
+		Element nailElement = (Element)state.getElementsByTagName("Nail").item(0);
+		String nailX = nailElement.getAttribute("x");
+		String nailY = nailElement.getAttribute("y");
+		Nail nail = new Nail(nailX,nailY);
+		return new State(stateName,stateType,nail);
+	}
+	protected HashSet <Nail> getTransitionNailsFromNodeList(NodeList nailsElement){
+		HashSet <Nail> nails = null;
+		if(nailsElement.getLength()>0){
+			nails = new HashSet <Nail>();
+			for(int i = 0;i<nailsElement.getLength();i++){
+				Element nailTemp = (Element)nailsElement.item(i);
+				nails.add(new Nail(nailTemp.getAttribute("x"),nailTemp.getAttribute("y")));
+			}
+		}
+		return nails;
 	}
 	/*************************************************************
 	 * 
@@ -139,23 +153,19 @@ public class DomParserParent implements AutomatonXmlInterface {
 		return null;
 	}
 	protected void initBasicRootElementFromAutomaton(Element root,Automaton automaton){
-		Element automatonName = getElementFromAutomatonName(automaton);
 		Element statesElement = getElementFromAllStates(automaton);
-		Element initialStateElement = doc.createElement("InitialState");
-		initialStateElement.setTextContent(automaton.getInitialState().getStateId());
 		Element inputSymbolsElement = getElementFromAllInputSymbols(automaton);
-		root.appendChild(automatonName);
+		
+		root.setAttribute("initialState", automaton.getInitialState().getStateId());
+		root.setAttribute("name", automaton.getAutomatonName());
+		root.setAttribute("type", automaton.getAutomatonType());
+		
 		root.appendChild(statesElement);
-		root.appendChild(initialStateElement);
 		root.appendChild(inputSymbolsElement);
 	}
-	protected Element getElementFromAutomatonName(Automaton automaton){
-		Element automatonName = doc.createElement("AutomatonName");
-		automatonName.setTextContent(automaton.getAutomatonName());
-		return automatonName;
-	}
+
 	protected Element getElementFromAllStates(Automaton automaton){
-		Element statesElement = doc.createElement("AutomatonStates");
+		Element statesElement = doc.createElement("States");
 		HashMap<String,State> states = automaton.getStates();
 		Collection <State> stateList = states.values();
 		Iterator <State>stateIterator = stateList.iterator();
@@ -166,7 +176,7 @@ public class DomParserParent implements AutomatonXmlInterface {
 		return statesElement;
 	}
 	protected Element getElementFromAllInputSymbols(Automaton automaton){
-		Element inputSymbolsElement = doc.createElement("AutomatonInputSymbols");
+		Element inputSymbolsElement = doc.createElement("InputSymbols");
 		ArrayList <String> inputSymbols = automaton.getInputSymbolSet();
 		for(int i = 0;i<inputSymbols.size();i++){
 			Element inputSymbolElement = doc.createElement("InputSymbol");
