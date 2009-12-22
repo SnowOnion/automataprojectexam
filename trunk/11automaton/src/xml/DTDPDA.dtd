@@ -7,17 +7,17 @@
 		<!ELEMENT StateId(#PCDATA)>
 		<!ELEMENT StateType(#PCDATA)>
 	<!ELEMENT InitialState(#PCDATA)>
-	<!ELEMENT AutomatonInputSymbols(InputSymbol*)>
+	<!ELEMENT AutomatonInputSymbols(InputSymbol+)>
 		<!ELEMENT InputSymbol(#PCDATA)>
 	<!ELEMENT PDAStackSymbols(PDAStackSymbol+)>
 		<!ELEMENT PDAStackSymbol(#PCDATA)>
 	<!ELEMENT PDAInitialStackSymbol(#PCDATA)>
-	<!ELEMENT PDATransitions(PDATransition*)>
+	<!ELEMENT PDATransitions(PDATransition)>
 		<!ELEMENT PDATransition(FromState,PDAConditions,ToState)>
 			<!ELEMENT FromState(#PCDATA)>
-			<!ELEMENT PDAConditions(PDACondition+)>
+			<!ELEMENT PDAConditions(PDACondition)>
 				<!ELEMENT PDACondition(PDAConditionSymbol,PDAFromStackSymbol,PDAToStackSymbol)>
-				<!ELEMENT PDAConditionSymbol(InputSymbol+)>
+				<!ELEMENT PDAConditionSymbol(InputSymbol)>
 				<!ELEMENT PDAFromStackSymbol(PDAStackSymbol)>
 				<!ELEMENT PDAToStackSymbol(PDAStackSymbol+)>
 			<!ELEMENT ToState(#PCDATA)>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE NFA[
+	<!ELEMENT NFA(States,InputSymbols,Transitions)>
+		<!ATTLIST NFA type (DFA | NFA) #REQUIRED>
+   		<!ATTLIST NFA name #PCDATA "unnamed">
+		<!ATTLIST NFA initialState #PCDATA "P1">
+	
+	<!ELEMENT States(State+)>
+		<!ELEMENT State(StateId,StateType,Nail)>
+			<!ELEMENT StateId(#PCDATA)>
+			<!ELEMENT StateType(#PCDATA)>
+			<!ELEMENT Nail(#PCDATA)>
+				<!-- X,Y information is required -->
+    			<!ATTLIST Nail x #PCDATA>
+    			<!ATTLIST Nail y #PCDATA>
+	<!ELEMENT InputSymbols(InputSymbol*)>
+		<!ELEMENT InputSymbol(#PCDATA)>
+		
+	<!ELEMENT Transitions(NFATransition*)>
+		<!ELEMENT NFATransition(FromState,NFAConditions,ToState,Nails)>
+			<!ELEMENT FromState(#PCDATA)>
+			<!ELEMENT NFAConditions(NFACondition+)>
+			<!ELEMENT ToState(#PCDATA)>
+			<!ELEMENT Nails(Nail*)>
+]>
