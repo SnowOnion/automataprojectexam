@@ -1,8 +1,7 @@
-#summary One-sentence summary of this page.
-
+#summary 组25：NFA到DFA的转换工具
 = Introduction =
 
-*bold* NFA/DFA的转换工具
+*bold* NFA的DFA的转换工具
 
 要求：
 用JAVA编写，保证可扩展性；
