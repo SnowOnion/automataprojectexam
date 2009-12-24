@@ -4,19 +4,14 @@
 *NFA的DFA的转换工具*
 
 要求：
-用JAVA编写，保证可扩展性；
-检查某个字符串是否被指定的自动机接受；
-判断语言是否为空。是否为无穷；
-实现NFA到DFA的转换。
+# 用JAVA编写，保证可扩展性；
+# 检查某个字符串是否被指定的自动机接受；
+# 判断语言是否为空。是否为无穷；
+# 实现NFA到DFA的转换。
 
 = Details =
 
 开发环境：
-Windows XP Pro
-NetBeans 6.7
-JDK 1.6
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+* Windows XP Pro
+* NetBeans 6.7
+* JDK 1.6
