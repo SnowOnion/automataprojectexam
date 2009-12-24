@@ -1,7 +1,7 @@
-#summary 组25：NFA到DFA的转换工具
+#summary 组25：NFA到DFA的转换工具 夏凡2009220694
 = Introduction =
 
-*bold* NFA的DFA的转换工具
+*NFA的DFA的转换工具*
 
 要求：
 用JAVA编写，保证可扩展性；
