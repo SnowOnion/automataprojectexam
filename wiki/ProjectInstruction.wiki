@@ -20,6 +20,7 @@
 ||23||2, NFA/DFA的转换工具||李守勤(2009220700)||lishouqin@gmail.com||
 ||24||2, NFA/DFA的转换工具||(2008291712)||wangjingjiestar@gmail.com||
 ||25||2, NFA/DFA的转换工具||夏凡(2009220694)||xiafanr9@gmail.com||
+||26||2, NFA/DFA的转换工具||董秋芸(2009220696)||himalaya.dqy@gmail.com||
 ||41||4, DFA算法2||卢欣晔(2009212567)、谭士杰(2009212568)||newleaf.lu@gmail.com||
 ||51||5, 正则表达式工具  || 马占雷(XXX)、金纯(XXX)||mazhanlei2009@gmail.com||
 ||52||5, 正则表达式工具  || 胡浩(2005212611)、李凤翔(2009212641)、邓双（2009212636）||Huhao.ThSS@gmail.com||
