@@ -1,0 +1,11 @@
+#Tool of NFA to DFA
+=项目介绍 =
+
+设计、实现一个能将NFA转化为DFA的小工具
+
+=项目成员 =
+
+||姓名||学号||email||
+||董秋芸||2009220696||himalaya.dqy@hotmail.com||
+
+= 项目内容 =
