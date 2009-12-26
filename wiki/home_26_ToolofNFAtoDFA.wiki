@@ -1,5 +1,4 @@
 #Tool of NFA to DFA
-= 项目进度 =
 
 =项目介绍 =
 
@@ -12,9 +11,8 @@
 
 = 开发环境 =
  #OS:Microsoft Windows XP Professional Service Pack 2
- #编程语言：Java
  #IDE:eclipse-jee-galileo-win32
  #JDK:jdk-6u1-windows-i586-p
- 
+ #开发语言：Java
 = 项目内容 =
-
+= 项目进度 =
