@@ -1,4 +1,4 @@
-_Group 27: A Simple Conversion Tool of NFA and DFA._
+#summary Group 27: A Simple Conversion Tool of NFA and DFA.
 
 == Important ==
 
