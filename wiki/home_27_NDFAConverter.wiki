@@ -18,7 +18,7 @@
 
 == Useful Links ==
 
-  * WikiSyntax 
+  * [http://code.google.com/p/support/wiki/WikiSyntax WikiSyntax]
   * [http://code.google.com/p/automataprojectexam/issues/detail?id=2 Data Standard Discussion]
 
 == Known Issues == 
