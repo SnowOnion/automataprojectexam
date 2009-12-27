@@ -1,0 +1,24 @@
+_Group 27: A Simple Conversion Tool of NFA and DFA._
+
+== Important ==
+
+*Deadline for Alpha Version: <font color="red">Jan 9, 2010</font> !*
+
+== Team Member ==
+
+|| *Name* || *Student No.* || *Email* ||
+|| Mengyue Qi || 2008212572 || qimengyue#gmail.com ||
+
+== Todo List ==
+
+  * Set up the development environment(Eclipse & SVN);
+  * Read some documents/papers for this conversion algorithm;
+  * Implement the core program;
+  * ...
+
+== Useful Links ==
+
+  * WikiSyntax 
+  * [http://code.google.com/p/automataprojectexam/issues/detail?id=2 Data Standard Discussion]
+
+== Known Issues == 
