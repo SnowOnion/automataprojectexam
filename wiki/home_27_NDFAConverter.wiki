@@ -21,4 +21,8 @@
   * [http://code.google.com/p/support/wiki/WikiSyntax WikiSyntax]
   * [http://code.google.com/p/automataprojectexam/issues/detail?id=2 Data Standard Discussion]
 
+  * [http://rw4.cs.uni-sb.de/projects/ganimal/GANIFA/page16_e.htm Algorithm Page 1] _Unread_
+  * [http://www.algorithm-code.com/wiki/Converts_NFA_to_DFA Algorithm Page 2] _Unread_
+  * [http://www.cs.pitt.edu/~mock/cs1622/lectures/lecture05.pdf Algorithm Page 3] _Unread_
+
 == Known Issues == 
