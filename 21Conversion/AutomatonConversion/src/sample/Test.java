@@ -4,8 +4,8 @@ import automaton.DFA;
 import automaton.NFA;
 import automaton.io.xml.DefaultXMLAutomatonReader;
 import automaton.io.xml.DefaultXMLAutomatonWriter;
-import edu.uci.ics.jung.visualization.VisualizationViewer;
-import graph.AutomatonViewer;
+import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
+import graph.FAViewer;
 import util.Util;
 
 import javax.swing.*;
@@ -63,10 +63,15 @@ public class Test {
 //        System.out.println("nfa.isEmpty() = " + nfa.isEmpty());        
 //        System.out.println("nfa.isInfinite() = " + nfa.isInfinite());
 //
-        VisualizationViewer viewer = AutomatonViewer.createAutomatonViewer(nfa, "ε");
+        try {
+            UIManager.setLookAndFeel(new NimbusLookAndFeel());
+        } catch (Exception e) {
+
+        }
+        JComponent component = FAViewer.createViewer(nfa, "epsilon");
         JFrame frame = new JFrame("Simple Graph Viewer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(viewer);
+        frame.getContentPane().add(component);
         frame.pack();
         frame.setVisible(true);
     }

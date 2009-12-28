@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="graph.FAViewer">
+  <grid id="27dc6" binding="panel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="d29bc" binding="controlPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints border-constraint="South"/>
+        <properties/>
+        <border type="none" title="control"/>
+        <children>
+          <component id="ea998" class="javax.swing.JComboBox" binding="layoutsBox">
+            <constraints/>
+            <properties>
+              <model>
+                <item value="CircleLayout"/>
+                <item value="KKLayout"/>
+                <item value="SpringLayout2"/>
+                <item value="StaticLayout"/>
+                <item value="FRLayout"/>
+                <item value="FRLayout2"/>
+                <item value="ISOMLayout"/>
+              </model>
+            </properties>
+          </component>
+          <component id="d40bc" class="javax.swing.JComboBox" binding="operactionMode">
+            <constraints/>
+            <properties>
+              <model>
+                <item value="TRANSFORMING"/>
+                <item value="PICKING"/>
+              </model>
+            </properties>
+          </component>
+          <component id="f1ffd" class="javax.swing.JCheckBox" binding="edgeBox">
+            <constraints/>
+            <properties>
+              <selected value="true"/>
+              <text value="Show Edges"/>
+              <toolTipText value="display edges label"/>
+            </properties>
+          </component>
+          <component id="eddae" class="javax.swing.JCheckBox" binding="verticesBox">
+            <constraints/>
+            <properties>
+              <selected value="true"/>
+              <text value="Show Vertices"/>
+              <toolTipText value="display vertices label"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="1d6fa" binding="graphViewer" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none" title="AutomatonViewer"/>
+        <children/>
+      </grid>
+    </children>
+  </grid>
+</form>
