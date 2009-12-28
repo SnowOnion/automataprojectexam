@@ -24,6 +24,44 @@ public class NFA {
     private String _startStatus;
     private ArrayList<String> _allFinalStatus = new ArrayList<String>();
     private ArrayList<NfaTranstraction> _allTransactions = new ArrayList<NfaTranstraction>();
+
+    public boolean IsAccept(String testString)
+    {
+        String currStatus = _startStatus;
+        for (char c : testString.toCharArray())
+        {
+            String nextStatus = FindNextStatus(currStatus, String.valueOf(c));
+            if (nextStatus.equals(""))
+            {
+                return false;
+            }
+
+            currStatus = nextStatus;
+        }
+
+        if (_allFinalStatus.indexOf(currStatus) >= 0)
+        {
+            return true;
+        }
+                
+        return false;
+    }
+
+    private String FindNextStatus(String currStatus, String symbol)
+    {
+        String nextStatus = "";
+        for (NfaTranstraction tran : _allTransactions)
+        {
+            if (tran.getStartStatus().equals(currStatus) &&
+                tran.getSymbols().contains(symbol))
+            {
+                nextStatus = tran.getEndStatus();
+                break;
+            }
+        }
+
+        return nextStatus;
+    }
     
     public String toString()
     {
