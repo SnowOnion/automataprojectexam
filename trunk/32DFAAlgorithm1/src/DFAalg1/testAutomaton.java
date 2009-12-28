@@ -75,7 +75,6 @@ public class testAutomaton {
 		testAlg.minOP(auto);
 		Automaton a = testAlg.intersectionOP(s1, s2);
 		Automaton b = testAlg.minOP(a);
-		System.out.println("fu");
 	}
 	
 	static Automaton constructAutomatonS1(){
