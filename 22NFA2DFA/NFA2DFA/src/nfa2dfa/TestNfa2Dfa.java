@@ -20,26 +20,31 @@ public class TestNfa2Dfa {
         nfa.getAllStatus().add("q3");
         nfa.getAllStatus().add("q4");
         nfa.getAllStatus().add("q5");
-        
-        nfa.getAllSymbols().add("+,-");
-        nfa.getAllSymbols().add("0,1,...,9");
+
+        nfa.getAllSymbols().add("+");
+        nfa.getAllSymbols().add("-");
         nfa.getAllSymbols().add(".");
+        for (int i = 0; i < 10; i++)
+        {
+            nfa.getAllSymbols().add(String.valueOf(i));
+        }
         
         nfa.getAllTransactions().add(new NfaTranstraction("q0", "q1",
-                new String[]{NFA.EmptySymbol, "+,-"}));
+            new String[]{NFA.EmptySymbol, "+", "-"}));
         nfa.getAllTransactions().add(new NfaTranstraction("q1", "q1",
-            "0,1,...,9"));
+            new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}));
         nfa.getAllTransactions().add(new NfaTranstraction("q1", "q2",
             "."));
         nfa.getAllTransactions().add(new NfaTranstraction("q2", "q3",
-            "0,1,...,9"));
+            new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}));
         nfa.getAllTransactions().add(new NfaTranstraction("q3", "q3",
-            "0,1,...,9"));
+            new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}));
         nfa.getAllTransactions().add(new NfaTranstraction("q3", "q5",
             NFA.EmptySymbol));
         nfa.getAllTransactions().add(new NfaTranstraction("q1", "q4",
-            "0,1,...,9"));
+            new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}));
         nfa.getAllTransactions().add(new NfaTranstraction("q4", "q3",
             "."));
     }
+
 }
