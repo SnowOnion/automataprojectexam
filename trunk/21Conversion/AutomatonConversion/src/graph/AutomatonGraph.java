@@ -10,5 +10,4 @@ import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
  */
 public class AutomatonGraph<C extends Comparable<C>, S extends State> extends
         DirectedSparseMultigraph<S, TransitionEdge<C, S>> {
-
 }

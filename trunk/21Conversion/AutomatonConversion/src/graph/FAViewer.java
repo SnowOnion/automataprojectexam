@@ -1,5 +1,7 @@
 package graph;
 
+import automaton.DFA;
+import automaton.DFAState;
 import automaton.FiniteAutomaton;
 import automaton.State;
 import edu.uci.ics.jung.algorithms.layout.CircleLayout;
@@ -17,9 +19,14 @@ import org.apache.commons.collections15.Transformer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Set;
 
 /**
  * Create by: huangcd
@@ -30,18 +37,25 @@ import java.awt.geom.Ellipse2D;
 public class FAViewer<S extends State> {
     private JPanel panel;
     private JPanel controlPanel;
-    private JComboBox operactionMode;
+    private JComboBox operactionModeBox;
     private JCheckBox edgeBox;
     private JCheckBox verticesBox;
     private JPanel graphViewer;
     private JComboBox layoutsBox;
+    private JEditorPane inputPane;
+    private JButton runButton;
+    private JPanel graphControlPanel;
+    private JPanel FAControlPanel;
+    private JButton cleanButton;
+    private S vistingState;
 
     private JComponent _createViewer(FiniteAutomaton<String, S> automaton, String epsilon) {
 
         AutomatonGraph<String, S> graph = automaton.toJUNGraph(epsilon);
         Layout<S, TransitionEdge<String, S>> layout =
                 new CircleLayout<S, TransitionEdge<String, S>>(graph);
-        VisualizationViewer<S, TransitionEdge<String, S>> viewer = new FAVisualizationViewer<S>(layout, new Dimension(600, 400));
+        VisualizationViewer<S, TransitionEdge<String, S>> viewer =
+                new FAVisualizationViewer<S>(layout, new Dimension(700, 500));
         graphViewer.add(new GraphZoomScrollPane(viewer), BorderLayout.CENTER);
         return $$$getRootComponent$$$();
     }
@@ -69,9 +83,13 @@ public class FAViewer<S extends State> {
         panel = new JPanel();
         panel.setLayout(new BorderLayout(0, 0));
         controlPanel = new JPanel();
-        controlPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        controlPanel.setLayout(new BorderLayout(0, 0));
         panel.add(controlPanel, BorderLayout.SOUTH);
         controlPanel.setBorder(BorderFactory.createTitledBorder("control"));
+        graphControlPanel = new JPanel();
+        graphControlPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        controlPanel.add(graphControlPanel, BorderLayout.NORTH);
+        graphControlPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), null));
         layoutsBox = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
         defaultComboBoxModel1.addElement("CircleLayout");
@@ -82,23 +100,40 @@ public class FAViewer<S extends State> {
         defaultComboBoxModel1.addElement("FRLayout2");
         defaultComboBoxModel1.addElement("ISOMLayout");
         layoutsBox.setModel(defaultComboBoxModel1);
-        controlPanel.add(layoutsBox);
-        operactionMode = new JComboBox();
+        graphControlPanel.add(layoutsBox);
+        operactionModeBox = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel2 = new DefaultComboBoxModel();
         defaultComboBoxModel2.addElement("TRANSFORMING");
         defaultComboBoxModel2.addElement("PICKING");
-        operactionMode.setModel(defaultComboBoxModel2);
-        controlPanel.add(operactionMode);
+        operactionModeBox.setModel(defaultComboBoxModel2);
+        graphControlPanel.add(operactionModeBox);
         edgeBox = new JCheckBox();
         edgeBox.setSelected(true);
         edgeBox.setText("Show Edges");
         edgeBox.setToolTipText("display edges label");
-        controlPanel.add(edgeBox);
+        graphControlPanel.add(edgeBox);
         verticesBox = new JCheckBox();
         verticesBox.setSelected(true);
         verticesBox.setText("Show Vertices");
         verticesBox.setToolTipText("display vertices label");
-        controlPanel.add(verticesBox);
+        graphControlPanel.add(verticesBox);
+        FAControlPanel = new JPanel();
+        FAControlPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        controlPanel.add(FAControlPanel, BorderLayout.SOUTH);
+        FAControlPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), null));
+        inputPane = new JEditorPane();
+        inputPane.setFont(new Font("Comic Sans MS", inputPane.getFont().getStyle(), 15));
+        inputPane.setMinimumSize(new Dimension(240, 30));
+        inputPane.setPreferredSize(new Dimension(240, 30));
+        inputPane.setToolTipText("symbols should be separated by '|'");
+        FAControlPanel.add(inputPane);
+        runButton = new JButton();
+        runButton.setText("run");
+        FAControlPanel.add(runButton);
+        cleanButton = new JButton();
+        cleanButton.setEnabled(false);
+        cleanButton.setText("clean");
+        FAControlPanel.add(cleanButton);
         graphViewer = new JPanel();
         graphViewer.setLayout(new BorderLayout(0, 0));
         panel.add(graphViewer, BorderLayout.CENTER);
@@ -112,22 +147,24 @@ public class FAViewer<S extends State> {
         return panel;
     }
 
-    {
-    }
-
     private class FAVisualizationViewer<S extends State>
             extends VisualizationViewer<S, TransitionEdge<String, S>> {
         private FAVisualizationViewer<S> viewer;
-        private Graph graph;
+        private AutomatonGraph graph;
         private boolean showEdgeLabel;
         private boolean showVertexLabel;
         private double vertexSize;
         private Font font;
+        private S currentState;
+        private S acceptingState;
+        private S rejectingState;
+        private static final String TEXT_HTML = "text/html";
+        private static final String TEXT_PLAIN = "text/plain";
 
         public FAVisualizationViewer(Layout<S, TransitionEdge<String, S>> layout,
                                      Dimension dimension) {
             super(layout, dimension);
-            graph = layout.getGraph();
+            graph = (AutomatonGraph) layout.getGraph();
             init();
         }
 
@@ -141,6 +178,9 @@ public class FAViewer<S extends State> {
             setVertexFunction();
             setControlFunction();
             setLayoutFunction();
+            if (!(((S) graph.getVertices().iterator().next()).getOwner() instanceof DFA)) {
+                FAControlPanel.setEnabled(false);
+            }
         }
 
         // set vertex function
@@ -181,10 +221,20 @@ public class FAViewer<S extends State> {
                     new Transformer<S, Paint>() {
                         @Override
                         public Paint transform(S s) {
-                            if (s.isFinalState())
-                                return new Color(160, 160, 255);
-                            else if (s.isInitialSate())
+                            if (s == currentState) {
+                                return Color.yellow;
+                            }
+                            if (s == acceptingState) {
+                                return Color.green;
+                            }
+                            if (s == rejectingState) {
+                                return Color.red;
+                            }
+                            if (s.isInitialSate()) {
                                 return new Color(100, 100, 255);
+                            } else if (s.isFinalState()) {
+                                //return new Color(160, 160, 255);
+                            }
                             return new Color(204, 204, 255);
                         }
                     });
@@ -193,13 +243,26 @@ public class FAViewer<S extends State> {
                     new Transformer<S, Shape>() {
                         @Override
                         public Shape transform(S s) {
-                            double x = -vertexSize;
+                            double x = -2 * vertexSize;
                             double y = -vertexSize;
-                            double w = 2 * vertexSize;
+                            double w = 4 * vertexSize;
                             double h = 2 * vertexSize;
                             return new Ellipse2D.Double(x, y, w, h);
                         }
                     });
+
+            getRenderContext().setVertexStrokeTransformer(
+                    new Transformer<S, Stroke>() {
+                        @Override
+                        public Stroke transform(S s) {
+                            if (s.isFinalState()) {
+                                return new BasicStroke(3);
+                            } else {
+                                return new BasicStroke(0);
+                            }
+                        }
+                    }
+            );
 
             getRenderer().getVertexLabelRenderer().setPosition(CNTR);
         }
@@ -263,19 +326,33 @@ public class FAViewer<S extends State> {
             });
         }
 
+//        private String toHtml(String yield) {
+//            StringBuilder buffer = new StringBuilder();
+//            buffer.append("" //
+//                    + "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\""
+//                    + " \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n"
+//                    + "<html xmlns=\"http://www.w3.org/1999/xhtml\" >\n"
+//                    + "<head>\n"
+//                    + "    <title></title>\n"
+//                    + "</head>\n" + "<body>\n");
+//            buffer.append(yield);
+//            buffer.append("</body>\n" + "</html>\n");
+//            return buffer.toString();
+//        }
+
         private void setControlFunction() {
             setPickSupport(new ShapePickSupport<S, TransitionEdge<String, S>>(this));
             //setToolTipText(graph.toString());
             final ModalGraphMouse gm = new DefaultModalGraphMouse<S, TransitionEdge<String, S>>();
             setGraphMouse(gm);
-            operactionMode.addItemListener(new ItemListener() {
+            operactionModeBox.addItemListener(new ItemListener() {
                 ModalGraphMouse.Mode picking = ModalGraphMouse.Mode.PICKING;
                 ModalGraphMouse.Mode transforming = ModalGraphMouse.Mode.TRANSFORMING;
                 ModalGraphMouse.Mode annotating = ModalGraphMouse.Mode.ANNOTATING;
 
                 @Override
                 public void itemStateChanged(ItemEvent e) {
-                    String mode = operactionMode.getSelectedItem().toString();
+                    String mode = operactionModeBox.getSelectedItem().toString();
                     if ("PICKING".equals(mode)) {
                         gm.setMode(picking);
                     } else if ("TRANSFORMING".equals(mode)) {
@@ -285,6 +362,142 @@ public class FAViewer<S extends State> {
                     }
                 }
             });
+
+            cleanButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String type = inputPane.getContentType();
+                    if (type.equals(TEXT_HTML)) {
+                        inputPane.setContentType(TEXT_PLAIN);
+                    }
+                    inputPane.setText("");
+                    inputPane.setEditable(true);
+                    runButton.setEnabled(true);
+                    currentState = null;
+                    acceptingState = null;
+                    rejectingState = null;
+                    viewer.repaint();
+                }
+            });
+
+            runButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            dynamicAccept();
+                        }
+                    }.start();
+                }
+            });
+        }
+
+        private void dynamicAccept() {
+            final FiniteAutomaton<String, S> fa =
+                    ((S) graph.getVertices().iterator().next()).getOwner();
+            Set<String> symbols = fa.getSymbols();
+            if (!(fa instanceof DFA)) {
+                JOptionPane.showMessageDialog(null,
+                        "Sorry, the finite aotumaton is not a DFA",
+                        "error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            runButton.setEnabled(false);
+            cleanButton.setEnabled(true);
+
+            String inputText = inputPane.getText();
+            Scanner scan = new Scanner(inputText);
+            scan.useDelimiter("\\|");
+
+            inputPane.setEditable(false);
+            inputPane.setContentType(TEXT_HTML);
+
+            // parse input symbols
+            final ArrayList<String> list = new ArrayList<String>();
+            while (scan.hasNext()) {
+                String next = scan.next();
+                if (symbols.contains(next)) {
+                    list.add(next);
+                } else {
+                    String content = list.toString().
+                            replaceAll("\\[| ", "").replaceAll(",|\\]", "\\|")
+                            + "<font color='red'>" + next + "</font>";
+                    // String text = toHtml(content);
+                    inputPane.setText(content);
+                    JOptionPane.showMessageDialog(null,
+                            String.format("found a unknown symbol '%s'", next),
+                            "error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
+
+            S lastState;
+            DFAState initial = (DFAState) fa.getInitialState();
+            currentState = (S) initial;
+            viewer.repaint();
+
+            for (int i = 0; i < list.size(); i++) {
+                String s = list.get(i);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+                lastState = currentState;
+                currentState = (S) (((DFAState) currentState).shift(s));
+                if (currentState == null) {
+                    rejectingState = lastState;
+                    inputPane.setText(listToHtml(list, i, false));
+                    break;
+                }
+                final String text = listToHtml(list, i, currentState == null);
+                new Thread() {
+                    public void run() {
+                        inputPane.setText(text);
+                        viewer.repaint();
+                    }
+                }.start();
+            }
+
+            if (currentState != null && currentState.isFinalState()) {
+                acceptingState = currentState;
+                currentState = null;
+                viewer.repaint();
+            } else if (currentState != null && !currentState.isFinalState()) {
+                rejectingState = currentState;
+                currentState = null;
+                viewer.repaint();
+            } else {
+                viewer.repaint();
+            }
+
+        }
+
+
+        private String listToHtml(ArrayList<String> list, int index, boolean error) {
+            StringBuilder buffer = new StringBuilder();
+            for (int i = 0; i < index; i++) {
+                buffer.append(list.get(i)).append("|");
+            }
+            if (error) {
+                buffer.append("<font color='red'>")
+                        .append(list.get(index))
+                        .append("</font>|");
+            } else {
+                buffer.append("<font color='blue'>")
+                        .append(list.get(index))
+                        .append("</font>|");
+            }
+            for (int i = index + 1; i < list.size() - 1; i++) {
+                buffer.append(list.get(i)).append("|");
+            }
+            if (index != list.size() - 1)
+                buffer.append(list.get(list.size() - 1));
+
+            return buffer.toString();
         }
     }
 
