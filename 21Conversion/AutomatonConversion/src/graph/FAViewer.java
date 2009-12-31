@@ -47,7 +47,11 @@ public class FAViewer<S extends State> {
     private JPanel graphControlPanel;
     private JPanel FAControlPanel;
     private JButton cleanButton;
-    private S vistingState;
+    private AutomatonGraph graph;
+
+    public AutomatonGraph getGraph() {
+        return graph;
+    }
 
     private JComponent _createViewer(FiniteAutomaton<String, S> automaton, String epsilon) {
 
@@ -150,7 +154,6 @@ public class FAViewer<S extends State> {
     private class FAVisualizationViewer<S extends State>
             extends VisualizationViewer<S, TransitionEdge<String, S>> {
         private FAVisualizationViewer<S> viewer;
-        private AutomatonGraph graph;
         private boolean showEdgeLabel;
         private boolean showVertexLabel;
         private double vertexSize;
@@ -179,7 +182,9 @@ public class FAViewer<S extends State> {
             setControlFunction();
             setLayoutFunction();
             if (!(((S) graph.getVertices().iterator().next()).getOwner() instanceof DFA)) {
-                FAControlPanel.setEnabled(false);
+                runButton.setEnabled(false);
+                cleanButton.setEnabled(false);
+                inputPane.setEnabled(false);
             }
         }
 
@@ -453,7 +458,7 @@ public class FAViewer<S extends State> {
                     inputPane.setText(listToHtml(list, i, false));
                     break;
                 }
-                final String text = listToHtml(list, i, currentState == null);
+                final String text = listToHtml(list, i, false);
                 new Thread() {
                     public void run() {
                         inputPane.setText(text);
