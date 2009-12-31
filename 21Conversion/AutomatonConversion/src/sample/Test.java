@@ -65,10 +65,12 @@ public class Test {
 //
         try {
             UIManager.setLookAndFeel(new NimbusLookAndFeel());
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
-        JComponent component = FAViewer.createViewer(nfa, "epsilon");
+
+        DFA newDfa = nfa.toDFA();
+        JComponent component = FAViewer.createViewer(dfa, "epsilon");
         JFrame frame = new JFrame("Simple Graph Viewer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(component);

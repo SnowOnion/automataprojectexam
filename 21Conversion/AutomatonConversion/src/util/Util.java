@@ -84,7 +84,7 @@ public class Util {
         try {
             loggerFile.getParentFile().mkdirs();
             loggerFile.createNewFile();
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
         try {
             defaultFileHandler = new FileHandler(loggerPath);

@@ -46,6 +46,9 @@
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
     <file url="file://$PROJECT_DIR$/readme.txt" charset="GBK" />
   </component>
+  <component name="EntryPointsManager">
+    <entry_points version="2.0" />
+  </component>
   <component name="IdProvider" IDEtalkID="A7110F04DD6A5BB23B91FAE1C71CEBB4" />
   <component name="InspectionProjectProfileManager">
     <option name="PROJECT_PROFILE" value="Project Default" />
@@ -216,6 +219,7 @@
         <default-constraints vsize-policy="6" hsize-policy="0" anchor="0" fill="2" />
       </item>
     </group>
+    <group name="MyComponent" />
   </component>
   <component name="ProjectDetails">
     <option name="projectName" value="21Conversion" />
@@ -269,15 +273,19 @@
   </component>
   <component name="UMLDiagramComponent">
     <diagram name="automaton">
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="automaton.Automaton" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="automaton.DFA" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="automaton.FAState" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="automaton.FiniteAutomaton" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="automaton.NFA" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="automaton.State" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="automaton.StateEnum" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="automaton.UnconvertableException" />
-      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="sample.Main" />
+      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="sample.Test" />
+      <command command-class="de.frag.umlplugin.uml.command.AddUsingClassesCommand" psi-class="sample.Test" />
+      <command command-class="de.frag.umlplugin.uml.command.AddUsedClassesCommand" psi-class="sample.Test" />
+      <command command-class="de.frag.umlplugin.uml.command.AddExtendingClassesCommand" psi-class="sample.Test" />
+      <command command-class="de.frag.umlplugin.uml.command.AddExtendedClassesCommand" psi-class="sample.Test" />
+      <command command-class="de.frag.umlplugin.uml.command.AddFieldClassesCommand" psi-class="sample.Test" />
+      <command command-class="de.frag.umlplugin.uml.command.AddDependentClassesCommand" psi-class="automaton.io.xml.DefaultXMLAutomatonWriter" />
+      <command command-class="de.frag.umlplugin.uml.command.AddDependentClassesCommand" psi-class="automaton.io.xml.XMLAutomatonWriter" />
+      <command command-class="de.frag.umlplugin.uml.command.AddDependentClassesCommand" psi-class="graph.FAViewer" />
+      <command command-class="de.frag.umlplugin.uml.command.AddDependentClassesCommand" psi-class="graph.FAViewer.FAVisualizationViewer" />
+      <command command-class="de.frag.umlplugin.uml.command.AddDependentClassesCommand" psi-class="automaton.FiniteAutomaton" />
+      <command command-class="de.frag.umlplugin.uml.command.AddDependentClassesCommand" psi-class="automaton.FiniteAutomaton" />
+      <command command-class="de.frag.umlplugin.uml.command.AddDependentClassesCommand" psi-class="automaton.DFA" />
       <compartment-visibility />
     </diagram>
   </component>

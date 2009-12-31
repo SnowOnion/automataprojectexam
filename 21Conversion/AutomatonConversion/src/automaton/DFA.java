@@ -33,22 +33,16 @@ public class DFA<C extends Comparable<C>> extends FiniteAutomaton<C, DFAState> {
     @Override
     public boolean accept(List<C> symbols) {
         DFAState state = initialState;
-//        try {
         for (C symbol : symbols) {
             state = state.shift(symbol);
             if (state == null)
                 return false;
         }
         return state.isFinalState();
-//        } catch (UnconvertableException e) {
-//            //e.printStackTrace();
-//            return false;
-//        }
     }
 
     @Override
     public boolean isEmpty() {
-        //TODO: make sure this method works with loops
         // bfs search
         List<DFAState> dfaStates = new ArrayList<DFAState>();
         Set<DFAState> visitedStates = new HashSet<DFAState>();

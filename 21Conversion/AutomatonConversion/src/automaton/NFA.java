@@ -146,8 +146,7 @@ public class NFA<C extends Comparable<C>> extends FiniteAutomaton<C, NFAState> {
 
     @Override
     public AutomatonGraph<C, NFAState> toJUNGraph(C epsilon) {
-        AutomatonGraph<C, NFAState> graph
-                = new AutomatonGraph<C, NFAState>();
+        AutomatonGraph<C, NFAState> graph = new AutomatonGraph<C, NFAState>();
         for (NFAState state : getStates()) {
             graph.addVertex(state);
             Set<TransitionEdge<C, NFAState>> edges = state.constructEdges(epsilon);
