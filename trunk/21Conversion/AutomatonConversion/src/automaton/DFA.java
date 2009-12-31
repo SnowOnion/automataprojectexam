@@ -108,7 +108,7 @@ public class DFA<C extends Comparable<C>> extends FiniteAutomaton<C, DFAState> {
         AutomatonGraph<C, DFAState> graph
                 = new AutomatonGraph<C, DFAState>();
         for (DFAState state : getStates()) {
-            graph.addVertex(state);
+            //graph.addVertex(state);
             Set<TransitionEdge<C, DFAState>> edges = state.constructEdges();
             for (TransitionEdge<C, DFAState> edge : edges) {
                 graph.addEdge(edge, edge.getFrom(), edge.getTo(), EdgeType.DIRECTED);
