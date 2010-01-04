@@ -7,7 +7,64 @@
     <option name="BUILD_JARS_ON_MAKE" value="false" />
   </component>
   <component name="CodeStyleSettingsManager">
-    <option name="PER_PROJECT_SETTINGS" />
+    <option name="PER_PROJECT_SETTINGS">
+      <value>
+        <ADDITIONAL_INDENT_OPTIONS fileType="groovy">
+          <option name="INDENT_SIZE" value="2" />
+          <option name="CONTINUATION_INDENT_SIZE" value="8" />
+          <option name="TAB_SIZE" value="4" />
+          <option name="USE_TAB_CHARACTER" value="false" />
+          <option name="SMART_TABS" value="false" />
+          <option name="LABEL_INDENT_SIZE" value="0" />
+          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+        </ADDITIONAL_INDENT_OPTIONS>
+        <ADDITIONAL_INDENT_OPTIONS fileType="gsp">
+          <option name="INDENT_SIZE" value="2" />
+          <option name="CONTINUATION_INDENT_SIZE" value="8" />
+          <option name="TAB_SIZE" value="4" />
+          <option name="USE_TAB_CHARACTER" value="false" />
+          <option name="SMART_TABS" value="false" />
+          <option name="LABEL_INDENT_SIZE" value="0" />
+          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+        </ADDITIONAL_INDENT_OPTIONS>
+        <ADDITIONAL_INDENT_OPTIONS fileType="java">
+          <option name="INDENT_SIZE" value="4" />
+          <option name="CONTINUATION_INDENT_SIZE" value="8" />
+          <option name="TAB_SIZE" value="4" />
+          <option name="USE_TAB_CHARACTER" value="false" />
+          <option name="SMART_TABS" value="false" />
+          <option name="LABEL_INDENT_SIZE" value="0" />
+          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+        </ADDITIONAL_INDENT_OPTIONS>
+        <ADDITIONAL_INDENT_OPTIONS fileType="js">
+          <option name="INDENT_SIZE" value="4" />
+          <option name="CONTINUATION_INDENT_SIZE" value="8" />
+          <option name="TAB_SIZE" value="4" />
+          <option name="USE_TAB_CHARACTER" value="false" />
+          <option name="SMART_TABS" value="false" />
+          <option name="LABEL_INDENT_SIZE" value="0" />
+          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+        </ADDITIONAL_INDENT_OPTIONS>
+        <ADDITIONAL_INDENT_OPTIONS fileType="jsp">
+          <option name="INDENT_SIZE" value="4" />
+          <option name="CONTINUATION_INDENT_SIZE" value="8" />
+          <option name="TAB_SIZE" value="4" />
+          <option name="USE_TAB_CHARACTER" value="false" />
+          <option name="SMART_TABS" value="false" />
+          <option name="LABEL_INDENT_SIZE" value="0" />
+          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+        </ADDITIONAL_INDENT_OPTIONS>
+        <ADDITIONAL_INDENT_OPTIONS fileType="xml">
+          <option name="INDENT_SIZE" value="4" />
+          <option name="CONTINUATION_INDENT_SIZE" value="8" />
+          <option name="TAB_SIZE" value="4" />
+          <option name="USE_TAB_CHARACTER" value="false" />
+          <option name="SMART_TABS" value="false" />
+          <option name="LABEL_INDENT_SIZE" value="0" />
+          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+        </ADDITIONAL_INDENT_OPTIONS>
+      </value>
+    </option>
     <option name="USE_PER_PROJECT_SETTINGS" value="false" />
   </component>
   <component name="CompilerConfiguration">
@@ -30,8 +87,16 @@
       <entry name="?*.ftl" />
     </wildcardResourcePatterns>
   </component>
-  <component name="CopyrightManager" default="">
-    <module2copyright />
+  <component name="CopyrightManager" default="myCopyright">
+    <copyright>
+      <option name="notice" value="Copyright (c) &amp;#36;today.year. &#10;Author by HUANGCD. &#10;All right reserved." />
+      <option name="keyword" value="Copyright" />
+      <option name="myName" value="myCopyright" />
+      <option name="myLocal" value="true" />
+    </copyright>
+    <module2copyright>
+      <element module="All" copyright="myCopyright" />
+    </module2copyright>
   </component>
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
@@ -281,33 +346,69 @@
       <command command-class="de.frag.umlplugin.uml.command.AddFieldClassesCommand" psi-class="sample.Test" />
       <command command-class="de.frag.umlplugin.uml.command.AddDependentClassesCommand" psi-class="automaton.io.xml.DefaultXMLAutomatonWriter" />
       <command command-class="de.frag.umlplugin.uml.command.AddDependentClassesCommand" psi-class="automaton.io.xml.XMLAutomatonWriter" />
-      <command command-class="de.frag.umlplugin.uml.command.AddDependentClassesCommand" psi-class="graph.FAViewer" />
-      <command command-class="de.frag.umlplugin.uml.command.AddDependentClassesCommand" psi-class="graph.FAViewer.FAVisualizationViewer" />
+      <command command-class="de.frag.umlplugin.uml.command.AddDependentClassesCommand" psi-class="ui.FAViewer" />
+      <command command-class="de.frag.umlplugin.uml.command.AddDependentClassesCommand" psi-class="ui.FAViewer.FAVisualizationViewer" />
       <command command-class="de.frag.umlplugin.uml.command.AddDependentClassesCommand" psi-class="automaton.FiniteAutomaton" />
       <command command-class="de.frag.umlplugin.uml.command.AddDependentClassesCommand" psi-class="automaton.FiniteAutomaton" />
       <command command-class="de.frag.umlplugin.uml.command.AddDependentClassesCommand" psi-class="automaton.DFA" />
+      <command command-class="de.frag.umlplugin.uml.command.RemoveClassCommand" psi-class="ui.Main" />
+      <command command-class="de.frag.umlplugin.uml.command.RemoveClassCommand" psi-class="automaton.FiniteAutomaton" />
+      <command command-class="de.frag.umlplugin.uml.command.RemoveClassCommand" psi-class="automaton.io.xml.XMLAutomatonWriter" />
+      <command command-class="de.frag.umlplugin.uml.command.RemoveClassCommand" psi-class="automaton.io.xml.DefaultXMLAutomatonWriter" />
+      <command command-class="de.frag.umlplugin.uml.command.RemoveClassCommand" psi-class="automaton.DFA" />
+      <command command-class="de.frag.umlplugin.uml.command.RemoveClassCommand" psi-class="sample.Test" />
+      <command command-class="de.frag.umlplugin.uml.command.RemoveClassCommand" psi-class="util.Util" />
+      <command command-class="de.frag.umlplugin.uml.command.RemoveClassCommand" psi-class="automaton.State" />
+      <command command-class="de.frag.umlplugin.uml.command.RemoveClassCommand" psi-class="automaton.NFAState" />
+      <command command-class="de.frag.umlplugin.uml.command.RemoveClassCommand" psi-class="automaton.io.xml.XMLAutomatonReader" />
+      <command command-class="de.frag.umlplugin.uml.command.RemoveClassCommand" psi-class="automaton.StateType" />
+      <command command-class="de.frag.umlplugin.uml.command.RemoveClassCommand" psi-class="automaton.io.xml.DefaultXMLAutomatonReader" />
+      <command command-class="de.frag.umlplugin.uml.command.RemoveClassCommand" psi-class="automaton.NFA" />
+      <command command-class="de.frag.umlplugin.uml.command.RemoveClassCommand" psi-class="graph.AutomatonGraph" />
+      <command command-class="de.frag.umlplugin.uml.command.RemoveClassCommand" psi-class="ui.FAViewer.FAVisualizationViewer" />
+      <command command-class="de.frag.umlplugin.uml.command.RemoveClassCommand" psi-class="automaton.DFAState" />
+      <command command-class="de.frag.umlplugin.uml.command.RemoveClassCommand" psi-class="graph.TransitionEdge" />
+      <command command-class="de.frag.umlplugin.uml.command.RemoveClassCommand" psi-class="ui.FAViewer" />
+      <command command-class="de.frag.umlplugin.uml.command.AddClassCommand" psi-class="automaton.FiniteAutomaton" />
+      <command command-class="de.frag.umlplugin.uml.command.AddExtendingClassesCommand" psi-class="automaton.FiniteAutomaton" />
+      <command command-class="de.frag.umlplugin.uml.command.AddExtendedClassesCommand" psi-class="automaton.FiniteAutomaton" />
+      <command command-class="de.frag.umlplugin.uml.command.AddUsingClassesCommand" psi-class="automaton.FiniteAutomaton" />
+      <command command-class="de.frag.umlplugin.uml.command.AddUsingClassesCommand" psi-class="automaton.DFA" />
+      <command command-class="de.frag.umlplugin.uml.command.RemoveClassCommand" psi-class="sample.Test" />
+      <command command-class="de.frag.umlplugin.uml.command.AddUsingClassesCommand" psi-class="automaton.NFA" />
+      <command command-class="de.frag.umlplugin.uml.command.RemoveClassCommand" psi-class="sample.Test" />
+      <command command-class="de.frag.umlplugin.uml.command.AddFieldClassesCommand" psi-class="automaton.io.xml.DefaultXMLAutomatonWriter" />
+      <command command-class="de.frag.umlplugin.uml.command.AddExtendedClassesCommand" psi-class="automaton.io.xml.DefaultXMLAutomatonWriter" />
+      <command command-class="de.frag.umlplugin.uml.command.ConnectClassesCommand" />
       <compartment-visibility />
     </diagram>
   </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="svn" />
   </component>
+  <component name="WebServicesPlugin" addRequiredLibraries="true" />
   <component name="libraryTable">
     <library name="dom4j">
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/lib/dom4j.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/jaxen.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="jung">
       <CLASSES>
-        <root url="file://$PROJECT_DIR$/lib/jung2" />
+        <root url="jar://$PROJECT_DIR$/lib/jung2/collections-generic-4.01.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/jung2/jung-visualization-2.0.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/jung2/jung-algorithms-2.0.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/jung2/jung-graph-impl-2.0.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/jung2/jung-api-2.0.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/jung2/concurrent-1.3.4.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/jung2/stax-api-1.0.1.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/jung2/colt-1.2.0.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/jung2/wstx-asl-3.2.6.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
-      <jarDirectory url="file://$PROJECT_DIR$/lib/jung2" recursive="false" />
     </library>
   </component>
   <component name="uidesigner-configuration">

@@ -4,7 +4,8 @@ import automaton.FiniteAutomaton;
 import automaton.NFA;
 import automaton.io.xml.DefaultXMLAutomatonReader;
 import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
-import graph.FAViewer;
+import static ui.FAViewer.createViewer;
+import static util.Util.getLogger;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -15,25 +16,44 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Create by: huangcd
  * Date: 2009-12-31
  * Time: 11:44:32
  */
+@SuppressWarnings({"unchecked"})
 public class Main {
+    private final static Logger log;
+
+    static {
+        log = getLogger(Main.class);
+    }
+
     private JTabbedPane FAViewsTab;
     private JPanel mainPanel;
     private JButton xmlButton;
     private JPanel controlPanel;
     private JPopupMenu popMenu;
-    private JMenuItem toDFAItem;
     private ArrayList<FiniteAutomaton> faLists;
 
     public Main() {
+        try {
+            init();
+        } catch (Throwable t) {
+            log.log(Level.SEVERE, "", t);
+            JOptionPane.showMessageDialog($$$getRootComponent$$$(),
+                    "error occurs, read the log file for detail",
+                    "", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void init() {
         faLists = new ArrayList<FiniteAutomaton>();
         popMenu = new JPopupMenu();
-        toDFAItem = new JMenuItem("to DFA");
+        JMenuItem toDFAItem = new JMenuItem("to DFA");
         toDFAItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -78,18 +98,18 @@ public class Main {
                     }
                 });
 
-                File selectedFile = null;
+                File selectedFile;
                 int result = chooser.showOpenDialog(null);
                 if (result == 0) {
                     selectedFile = chooser.getSelectedFile();
+                    openFiniteAutomaton(selectedFile);
                 }
-                openFiniteAutomaton(selectedFile);
             }
         });
     }
 
     private void addFiniteAutomaton(FiniteAutomaton fa) {
-        JComponent component = FAViewer.createViewer(fa, "epsilon");
+        JComponent component = createViewer(fa, "epsilon");
         FAViewsTab.add(fa.getName(), component);
         FAViewsTab.setSelectedComponent(component);
         faLists.add(fa);
@@ -102,7 +122,13 @@ public class Main {
             fa = reader.readFiniteAutomaton(file);
 
         } catch (Exception e1) {
-            e1.printStackTrace();
+            JOptionPane.showMessageDialog($$$getRootComponent$$$(),
+                    new StringBuilder()
+                            .append("error occurs while reading file:").append(file)
+                            .append("\nplease make sure the correctness of the file")
+                            .toString(),
+                    "error", JOptionPane.ERROR_MESSAGE);
+            log.log(Level.SEVERE, "error occurs while reading file:" + file, e1);
         }
         addFiniteAutomaton(fa);
     }
@@ -117,13 +143,12 @@ public class Main {
         frame.add(new Main().$$$getRootComponent$$$());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        Dimension appSize = new Dimension(900, 800);
+        Dimension appSize = new Dimension(900, 750);
         Point location = new Point(
                 (screenSize.width - appSize.width) / 2,
                 (screenSize.height - appSize.height) / 2);
         frame.setSize(appSize);
         frame.setLocation(location);
-        //frame.pack();
         frame.setVisible(true);
     }
 

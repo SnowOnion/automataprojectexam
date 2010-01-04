@@ -5,7 +5,7 @@ import automaton.NFA;
 import automaton.io.xml.DefaultXMLAutomatonReader;
 import automaton.io.xml.DefaultXMLAutomatonWriter;
 import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
-import graph.FAViewer;
+import ui.FAViewer;
 import util.Util;
 
 import javax.swing.*;
@@ -31,38 +31,38 @@ public class Test {
         DefaultXMLAutomatonWriter writer = new DefaultXMLAutomatonWriter();
         writer.write(dfa, new File(path + "outDFA.xml"));
 
-//        System.out.println(writer.createDocument(dfa).asXML());
-//        input.add("Neg");
-//        input.add("s3");
-//        input.add("Dot");
-//        input.add("s1");
-//        System.out.println("dfa.accept(Neg s3 Dot s1) = " + dfa.accept(input));
-//        System.out.println("dfa.isEmpty() = " + dfa.isEmpty());
-//        System.out.println("dfa.isInfinite() = " + dfa.isInfinite());
+        //System.out.println(writer.createDocument(dfa).asXML());
+        input.add("Neg");
+        input.add("s3");
+        input.add("Dot");
+        input.add("s1");
+        System.out.println("dfa.accept(Neg s3 Dot s1) = " + dfa.accept(input));
+        System.out.println("dfa.isEmpty() = " + dfa.isEmpty());
+        System.out.println("dfa.isInfinite() = " + dfa.isInfinite());
 
 
         String nfaFile = path + "aComplexNFA.xml";
         NFA nfa = reader.readNFA(new File(nfaFile));
         writer.write(nfa, new File(path + "outNFA.xml"));
 
-//        System.out.println("nfa = " + nfa);
-//        System.out.println("nfa.toDFA() = " + nfa.toDFA());
-//        input.clear();
-//        input.add("a");
-//        input.add("b");
-//        input.add("c");
-//
-//        System.out.println("nfa.accept(abc) = " + nfa.accept(input));
-//
-//        input.clear();
-//        input.add("b");
-//        input.add("b");
-//        input.add("c");
-//        System.out.println("nfa.accept(bbc) = " + nfa.accept(input));
-//
-//        System.out.println("nfa.isEmpty() = " + nfa.isEmpty());        
-//        System.out.println("nfa.isInfinite() = " + nfa.isInfinite());
-//
+        System.out.println("nfa = " + nfa);
+        System.out.println("nfa.toDFA() = " + nfa.toDFA());
+        input.clear();
+        input.add("a");
+        input.add("b");
+        input.add("c");
+
+        System.out.println("nfa.accept(abc) = " + nfa.accept(input));
+
+        input.clear();
+        input.add("b");
+        input.add("b");
+        input.add("c");
+        System.out.println("nfa.accept(bbc) = " + nfa.accept(input));
+
+        System.out.println("nfa.isEmpty() = " + nfa.isEmpty());
+        System.out.println("nfa.isInfinite() = " + nfa.isInfinite());
+
         try {
             UIManager.setLookAndFeel(new NimbusLookAndFeel());
         } catch (Exception ignored) {
@@ -70,7 +70,7 @@ public class Test {
         }
 
         DFA newDfa = nfa.toDFA();
-        JComponent component = FAViewer.createViewer(dfa, "epsilon");
+        JComponent component = FAViewer.createViewer(newDfa, "epsilon");
         JFrame frame = new JFrame("Simple Graph Viewer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(component);

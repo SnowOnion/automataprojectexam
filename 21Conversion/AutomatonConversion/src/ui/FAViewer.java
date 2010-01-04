@@ -1,4 +1,4 @@
-package graph;
+package ui;
 
 import automaton.DFA;
 import automaton.DFAState;
@@ -15,6 +15,8 @@ import edu.uci.ics.jung.visualization.layout.LayoutTransition;
 import edu.uci.ics.jung.visualization.picking.ShapePickSupport;
 import static edu.uci.ics.jung.visualization.renderers.Renderer.VertexLabel.Position.CNTR;
 import edu.uci.ics.jung.visualization.util.Animator;
+import graph.AutomatonGraph;
+import graph.TransitionEdge;
 import org.apache.commons.collections15.Transformer;
 
 import javax.swing.*;
@@ -25,6 +27,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -49,9 +52,11 @@ public class FAViewer<S extends State> {
     private JButton cleanButton;
     private AutomatonGraph graph;
 
-    public AutomatonGraph getGraph() {
-        return graph;
-    }
+// --Commented out by Inspection START (09-12-31 下午1:18):
+//    public AutomatonGraph getGraph() {
+//        return graph;
+//    }
+// --Commented out by Inspection STOP (09-12-31 下午1:18)
 
     private JComponent _createViewer(FiniteAutomaton<String, S> automaton, String epsilon) {
 
@@ -118,19 +123,22 @@ public class FAViewer<S extends State> {
         graphControlPanel.add(edgeBox);
         verticesBox = new JCheckBox();
         verticesBox.setSelected(true);
-        verticesBox.setText("Show Vertices");
-        verticesBox.setToolTipText("display vertices label");
+        this.$$$loadButtonText$$$(verticesBox, ResourceBundle.getBundle("aotumaton").getString("ShowVertex"));
+        verticesBox.setToolTipText(ResourceBundle.getBundle("aotumaton").getString("ShowVertexTip"));
         graphControlPanel.add(verticesBox);
         FAControlPanel = new JPanel();
         FAControlPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        FAControlPanel.setEnabled(false);
         controlPanel.add(FAControlPanel, BorderLayout.SOUTH);
         FAControlPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), null));
+        final JScrollPane scrollPane1 = new JScrollPane();
+        FAControlPanel.add(scrollPane1);
         inputPane = new JEditorPane();
         inputPane.setFont(new Font("Comic Sans MS", inputPane.getFont().getStyle(), 15));
         inputPane.setMinimumSize(new Dimension(240, 30));
         inputPane.setPreferredSize(new Dimension(240, 30));
         inputPane.setToolTipText("symbols should be separated by '|'");
-        FAControlPanel.add(inputPane);
+        scrollPane1.setViewportView(inputPane);
         runButton = new JButton();
         runButton.setText("run");
         FAControlPanel.add(runButton);
@@ -142,6 +150,33 @@ public class FAViewer<S extends State> {
         graphViewer.setLayout(new BorderLayout(0, 0));
         panel.add(graphViewer, BorderLayout.CENTER);
         graphViewer.setBorder(BorderFactory.createTitledBorder("AutomatonViewer"));
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    private void $$$loadButtonText$$$(AbstractButton component, String text) {
+        StringBuffer result = new StringBuffer();
+        boolean haveMnemonic = false;
+        char mnemonic = '\0';
+        int mnemonicIndex = -1;
+        for (int i = 0; i < text.length(); i++) {
+            if (text.charAt(i) == '&') {
+                i++;
+                if (i == text.length()) break;
+                if (!haveMnemonic && text.charAt(i) != '&') {
+                    haveMnemonic = true;
+                    mnemonic = text.charAt(i);
+                    mnemonicIndex = result.length();
+                }
+            }
+            result.append(text.charAt(i));
+        }
+        component.setText(result.toString());
+        if (haveMnemonic) {
+            component.setMnemonic(mnemonic);
+            component.setDisplayedMnemonicIndex(mnemonicIndex);
+        }
     }
 
     /**
@@ -351,9 +386,9 @@ public class FAViewer<S extends State> {
             final ModalGraphMouse gm = new DefaultModalGraphMouse<S, TransitionEdge<String, S>>();
             setGraphMouse(gm);
             operactionModeBox.addItemListener(new ItemListener() {
-                ModalGraphMouse.Mode picking = ModalGraphMouse.Mode.PICKING;
-                ModalGraphMouse.Mode transforming = ModalGraphMouse.Mode.TRANSFORMING;
-                ModalGraphMouse.Mode annotating = ModalGraphMouse.Mode.ANNOTATING;
+                final ModalGraphMouse.Mode picking = ModalGraphMouse.Mode.PICKING;
+                final ModalGraphMouse.Mode transforming = ModalGraphMouse.Mode.TRANSFORMING;
+                final ModalGraphMouse.Mode annotating = ModalGraphMouse.Mode.ANNOTATING;
 
                 @Override
                 public void itemStateChanged(ItemEvent e) {
@@ -505,5 +540,4 @@ public class FAViewer<S extends State> {
             return buffer.toString();
         }
     }
-
 }
