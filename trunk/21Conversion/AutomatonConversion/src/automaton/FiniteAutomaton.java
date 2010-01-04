@@ -19,12 +19,12 @@ public abstract class FiniteAutomaton<C extends Comparable<C>, S extends State> 
         log = Util.getLogger(FiniteAutomaton.class);
     }
 
-    protected String name;
-    protected Set<C> symbols;
-    protected Set<S> states;
-    protected Set<S> finalStates;
-    protected S initialState;
-    protected Map<String, S> stateMap;
+    private String name;
+    private final Set<C> symbols;
+    private final Set<S> states;
+    private final Set<S> finalStates;
+    S initialState;
+    private final Map<String, S> stateMap;
 
     {
         symbols = new TreeSet<C>();
@@ -54,7 +54,7 @@ public abstract class FiniteAutomaton<C extends Comparable<C>, S extends State> 
         return result;
     }
 
-    protected boolean removeState(S state) {
+    boolean removeState(S state) {
         boolean result = true;
         if (state.isInitialSate()) {
             log.log(Level.WARNING, "no initial state for the current automaton", this);
@@ -103,7 +103,7 @@ public abstract class FiniteAutomaton<C extends Comparable<C>, S extends State> 
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 

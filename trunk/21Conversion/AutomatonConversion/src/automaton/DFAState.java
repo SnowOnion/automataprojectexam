@@ -14,9 +14,9 @@ import java.util.logging.Logger;
  */
 @SuppressWarnings({"JavaDoc", "unchecked"})
 public class DFAState<C extends Comparable<C>> implements State {
-    private static Logger log;
-    private FiniteAutomaton owner;
-    private String stateID;
+    private static final Logger log;
+    private final FiniteAutomaton owner;
+    private final String stateID;
     private Set<StateType> stateTypes;
     private Map<C, DFAState> transitionMap;
 
@@ -35,7 +35,7 @@ public class DFAState<C extends Comparable<C>> implements State {
         this.owner = owner;
     }
 
-    protected DFAState(String stateID, Set<StateType> types, FiniteAutomaton owner) {
+    DFAState(String stateID, Set<StateType> types, FiniteAutomaton owner) {
         this.stateID = stateID;
         this.stateTypes.addAll(types);
         this.owner = owner;

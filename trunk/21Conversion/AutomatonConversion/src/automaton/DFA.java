@@ -78,7 +78,6 @@ public class DFA<C extends Comparable<C>> extends FiniteAutomaton<C, DFAState> {
                              Set<DFAState> loopStartStates) {
         visitingStates.add(state);
 
-
         Collection<DFAState> states = state.getAllShiftableState();
         for (DFAState toState : states) {
             if (visitingStates.contains(toState)) {

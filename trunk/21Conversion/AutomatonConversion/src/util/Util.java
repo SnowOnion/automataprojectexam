@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2009.
+ * Author by HUANGCD.
+ * All right reserved.
+ */
+
 package util;
 
 import java.io.File;
@@ -111,19 +117,21 @@ public class Util {
         return home;
     }
 
-    public static String textToUnicode(String text) {
-        StringBuilder buffer = new StringBuilder();
-        for (char c : text.toCharArray()) {
-            String s = Integer.toHexString(c);
-            if (s.length() == 1)
-                buffer.append("\\u000").append(s);
-            else if (s.length() == 2)
-                buffer.append("\\u00").append(s);
-            else if (s.length() == 3)
-                buffer.append("\\u0").append(s);
-            else
-                buffer.append("\\u").append(s);
-        }
-        return buffer.toString();
-    }
+// --Commented out by Inspection START (09-12-31 下午1:18):
+//    public static String textToUnicode(String text) {
+//        StringBuilder buffer = new StringBuilder();
+//        for (char c : text.toCharArray()) {
+//            String s = Integer.toHexString(c);
+//            if (s.length() == 1)
+//                buffer.append("\\u000").append(s);
+//            else if (s.length() == 2)
+//                buffer.append("\\u00").append(s);
+//            else if (s.length() == 3)
+//                buffer.append("\\u0").append(s);
+//            else
+//                buffer.append("\\u").append(s);
+//        }
+//        return buffer.toString();
+//    }
+// --Commented out by Inspection STOP (09-12-31 下午1:18)
 }

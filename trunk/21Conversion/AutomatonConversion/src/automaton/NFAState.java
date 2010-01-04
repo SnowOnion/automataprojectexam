@@ -14,9 +14,9 @@ import java.util.logging.Logger;
  */
 @SuppressWarnings({"JavaDoc", "unchecked"})
 public class NFAState<C extends Comparable<C>> implements State {
-    private static Logger log;
-    private FiniteAutomaton owner;
-    private String stateID;
+    private static final Logger log;
+    private final FiniteAutomaton owner;
+    private final String stateID;
     private Set<StateType> stateTypes;
     private Map<C, Set<NFAState>> transitionMap;
 

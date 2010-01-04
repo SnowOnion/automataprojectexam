@@ -13,7 +13,7 @@ import java.util.TreeSet;
  * Time: 15:46:46
  */
 public class TransitionEdge<C extends Comparable<C>, S extends State> {
-    private static Map<String, TransitionEdge> map;
+    private static final Map<String, TransitionEdge> map;
 
     static {
         map = new HashMap<String, TransitionEdge>();
