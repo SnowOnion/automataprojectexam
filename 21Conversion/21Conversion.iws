@@ -20,19 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AutomatonConversion/src/ui/Main.java" afterPath="$PROJECT_DIR$/AutomatonConversion/src/ui/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/21Conversion.ipr" afterPath="$PROJECT_DIR$/21Conversion.ipr" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AutomatonConversion/src/aotumaton.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/21Conversion.iws" afterPath="$PROJECT_DIR$/21Conversion.iws" />
-      <change type="MOVED" beforePath="D:\document\CourseAndInfomation\形式语言\project\project\21Conversion\AutomatonConversion\src\graph\FAViewer.form" afterPath="$PROJECT_DIR$/AutomatonConversion/src/ui/FAViewer.form" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AutomatonConversion/src/util/Util.java" afterPath="$PROJECT_DIR$/AutomatonConversion/src/util/Util.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AutomatonConversion/src/automaton/NFAState.java" afterPath="$PROJECT_DIR$/AutomatonConversion/src/automaton/NFAState.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AutomatonConversion/src/automaton/FiniteAutomaton.java" afterPath="$PROJECT_DIR$/AutomatonConversion/src/automaton/FiniteAutomaton.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AutomatonConversion/src/graph/TransitionEdge.java" afterPath="$PROJECT_DIR$/AutomatonConversion/src/graph/TransitionEdge.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AutomatonConversion/src/sample/Test.java" afterPath="$PROJECT_DIR$/AutomatonConversion/src/sample/Test.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AutomatonConversion/src/automaton/DFAState.java" afterPath="$PROJECT_DIR$/AutomatonConversion/src/automaton/DFAState.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AutomatonConversion/src/automaton/DFA.java" afterPath="$PROJECT_DIR$/AutomatonConversion/src/automaton/DFA.java" />
-      <change type="MOVED" beforePath="D:\document\CourseAndInfomation\形式语言\project\project\21Conversion\AutomatonConversion\src\graph\FAViewer.java" afterPath="$PROJECT_DIR$/AutomatonConversion/src/ui/FAViewer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AutomatonConversion/AutomatonConversion.iml" afterPath="$PROJECT_DIR$/AutomatonConversion/AutomatonConversion.iml" />
     </list>
     <ignored path="21Conversion.iws" />
     <ignored path=".idea/workspace.xml" />
