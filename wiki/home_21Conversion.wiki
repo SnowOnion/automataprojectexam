@@ -2,6 +2,9 @@
 
 [mailto:huangcd.thu@gmail.com 黄崇迪] 2009210940
 
+= 重要 =
+项目已经基本完成，具体情况参考[http://automataprojectexam.googlecode.com/svn/trunk/21Conversion/doc/%e8%af%b4%e6%98%8e%e6%96%87%e6%a1%a3.pdf 项目说明文档]
+
 = 开发环境 =
   * Windows Vista^TM^ Home Premuim
   * IntelliJ IDEA 8.1.4
