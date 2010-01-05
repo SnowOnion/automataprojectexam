@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cn.tsinghua.mse.automatondesigner.ui;
+package cn.tsinghua.mse.automatondesigner.graphicsobj;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
@@ -25,6 +25,15 @@ public class Circle_State implements IPaint {
 	private State m_State;
 	private Point centre;
 	private Point originalCentre;
+	private Text_ItemLable lable;
+
+	public Text_ItemLable getLable() {
+		return lable;
+	}
+
+	public void setLable(Text_ItemLable lable) {
+		this.lable = lable;
+	}
 
 	public Point getOriginalCentre() {
 		return originalCentre;
@@ -103,7 +112,11 @@ public class Circle_State implements IPaint {
 		if ((m_State.getM_type()&AutomatonConst.STATE_FINAL_TYPE)!= 0){
 			paintFSAddition(gc, statue==SystemConstant.IMAGE_TYPE_SELECTED);
 		}
-		gc.drawString(m_State.getM_Name(), centre.x-6, centre.y-6, true);
+		if (lable == null){
+			lable = new Text_ItemLable(this);
+		}
+		lable.paint(gc, statue);
+		//gc.drawString(m_State.getM_Name(), centre.x-6, centre.y-6, true);
 		// if (type == IMAGE_TYPE_SELECTED)
 		// gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_RED));
 		// else if (type == IMAGE_TYPE_COMMON)
@@ -161,6 +174,11 @@ public class Circle_State implements IPaint {
 	public void updateOriginalLocation() {
 		originalCentre.x = centre.x;
 		originalCentre.y = centre.y;
+	}
+
+	@Override
+	public Point getLableAnchor() {
+		return centre;
 	}
 
 }

@@ -2,6 +2,9 @@ package cn.tsinghua.mse.automatondesigner.main;
 
 import java.awt.Rectangle;
 
+import org.eclipse.jface.action.ExternalActionManager;
+import org.eclipse.jface.action.ExternalActionManager.IBindingManagerCallback;
+import org.eclipse.jface.bindings.IBindingManagerListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.application.ActionBarAdvisor;

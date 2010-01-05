@@ -1,5 +1,7 @@
 package cn.tsinghua.mse.automatondesigner.ui;
 
+import java.util.ArrayList;
+
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;

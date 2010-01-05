@@ -8,6 +8,9 @@ import org.eclipse.swt.SWT;
 import automatondesigner.SystemConstant;
 import cn.tsinghua.mse.automatondesigner.dataobject.Automaton;
 import cn.tsinghua.mse.automatondesigner.dataobject.AutomatonConst;
+import cn.tsinghua.mse.automatondesigner.graphicsobj.Canvas_Automaton;
+import cn.tsinghua.mse.automatondesigner.graphicsobj.Circle_State;
+
 import org.eclipse.swt.graphics.Point;
 import com.swtdesigner.ResourceManager;
 import org.eclipse.swt.events.SelectionAdapter;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cn.tsinghua.mse.automatondesigner.ui;
+package cn.tsinghua.mse.automatondesigner.graphicsobj;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -34,9 +34,22 @@ public class Polyline_Trans implements IPaint {
 	
 	private ArrayList<Point> Oranal_PolyLine = null;
 	private ArrayList<Integer> selectedPointIdx = null;
+	
+	private Point lableAnchor;
+	
+	private Text_ItemLable lable;
+
+	public Text_ItemLable getLable() {
+		return lable;
+	}
+
+	public void setLable(Text_ItemLable lable) {
+		this.lable = lable;
+	}
 
 	public Polyline_Trans() {
 		transFunc = null;
+		lableAnchor = null;
 		polyLine = new ArrayList<Point>();
 		Oranal_PolyLine = new ArrayList<Point>();
 		selectedPointIdx = new ArrayList<Integer>();
@@ -68,9 +81,16 @@ public class Polyline_Trans implements IPaint {
 			gc.setForeground(gc.getDevice().getSystemColor(SWT.COLOR_BLACK));
 		}
 		if (polyLine == null || polyLine.size() == 0) {
-			gc.drawLine(beginCircle.getCentre().x, beginCircle.getCentre().y,
+			if (beginCircle.equals(endCircle)){
+				gc.drawOval(beginCircle.getCentre().x - 15, beginCircle
+						.getCentre().y - 36, 30, 30);
+				paintk(gc, beginCircle.getCentre().x-20, beginCircle.getCentre().y-20, endCircle.getCentre().x, endCircle.getCentre().y, false);
+			}
+			else{
+				gc.drawLine(beginCircle.getCentre().x, beginCircle.getCentre().y,
 					endCircle.getCentre().x, endCircle.getCentre().y);
-			paintk(gc, beginCircle.getCentre().x, beginCircle.getCentre().y, endCircle.getCentre().x, endCircle.getCentre().y);
+				paintk(gc, beginCircle.getCentre().x, beginCircle.getCentre().y, endCircle.getCentre().x, endCircle.getCentre().y, true);
+			}
 		} else {
 			gc.drawLine(beginCircle.getCentre().x, beginCircle.getCentre().y,
 					polyLine.get(0).x, polyLine.get(0).y);
@@ -80,37 +100,69 @@ public class Polyline_Trans implements IPaint {
 			gc.drawPolyline(CommonTool.pointArrayToIntArray(polyLine));
 			paintk(gc, polyLine.get(polyLine.size() - 1).x, polyLine
 					.get(polyLine.size() - 1).y, endCircle.getCentre().x,
-					endCircle.getCentre().y);
+					endCircle.getCentre().y, true);
 			if (statue == SystemConstant.IMAGE_TYPE_SELECTED){
 				for(Point p : polyLine){
 					gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_WHITE));
-					gc.fillRoundRectangle(p.x-4, p.y-4, 8, 8, 2, 2);
-					gc.drawRoundRectangle(p.x-4, p.y-4, 8, 8, 2, 2);
+					gc.fillOval(p.x-4, p.y-4, 8, 8);
+					gc.drawOval(p.x-4, p.y-4, 8, 8);
 				}
 			}
 			else if (selectedPointIdx != null && selectedPointIdx.size() > 0){
 				for(int i : selectedPointIdx){
 					Point p = polyLine.get(i);
 					gc.setBackground(gc.getDevice().getSystemColor(SWT.COLOR_WHITE));
-					gc.fillRoundRectangle(p.x-4, p.y-4, 8, 8, 2, 2);
+					gc.fillOval(p.x-4, p.y-4, 8, 8);   //RoundRectangle(p.x-4, p.y-4, 8, 8, 2, 2);
 					gc.setForeground(gc.getDevice().getSystemColor(SWT.COLOR_RED));
-					gc.drawRoundRectangle(p.x-4, p.y-4, 8, 8, 2, 2);
+					gc.drawOval(p.x-4, p.y-4, 8, 8);
 				}
 			}
 		}
-		drawLabe(gc, statue);
+		if (lable == null){
+			lable = new Text_ItemLable(this);
+		}
+		lable.paint(gc, statue);
+		//drawLabe(gc, statue);
 	}
 	
-	private void drawLabe(GC gc, byte statue){
+//	private void drawLabe(GC gc, byte statue){
+//		ArrayList<Point> ps = new ArrayList<Point>();
+//		ps.add(beginCircle.getCentre());
+//		ps.addAll(polyLine);
+//		ps.add(endCircle.getCentre());
+//		int num = ps.size()/2;
+//		gc.drawText(transFunc.getStrCondition(), (ps.get(num).x+ps.get(num-1).x)/2, (ps.get(num).y+ps.get(num-1).y)/2, true);
+//	}
+	
+	public void updateLableAnchor(){
+		if (beginCircle.equals(endCircle) && polyLine.size() == 0){
+			if (lableAnchor == null){
+				lableAnchor = new Point(beginCircle.getCentre().x, beginCircle.getCentre().y-36);
+			}else{
+				lableAnchor.x = beginCircle.getCentre().x;
+				lableAnchor.y = beginCircle.getCentre().y-36;
+			}
+			return;
+		}
 		ArrayList<Point> ps = new ArrayList<Point>();
 		ps.add(beginCircle.getCentre());
 		ps.addAll(polyLine);
 		ps.add(endCircle.getCentre());
 		int num = ps.size()/2;
-		gc.drawText(transFunc.getStrCondition(), (ps.get(num).x+ps.get(num-1).x)/2, (ps.get(num).y+ps.get(num-1).y)/2, true);
+		if (lableAnchor == null){
+			lableAnchor = new Point((ps.get(num).x+ps.get(num-1).x)/2, (ps.get(num).y+ps.get(num-1).y)/2);
+		}else{
+			lableAnchor.x = (ps.get(num).x+ps.get(num-1).x)/2;
+			lableAnchor.y = (ps.get(num).y+ps.get(num-1).y)/2;
+		}
+	}
+	
+	public void addPntToPolyline(Point p){
+		this.getPolyLine().add(p);
+		this.Oranal_PolyLine.add(new Point(p.x, p.y));
 	}
 
-	private void paintk(GC g, int x1, int y1, int x2, int y2) {
+	private void paintk(GC g, int x1, int y1, int x2, int y2, boolean drawline) {
 		double H = 8; // 箭头高度
 		double L = 4; // 底边的一半
 		int x3 = 0;
@@ -141,7 +193,8 @@ public class Polyline_Trans implements IPaint {
 		y4 = Y4.intValue();
 		// g.setColor(SWT.COLOR_WHITE);
 		// 画线
-		g.drawLine(x1, y1, x2, y2);
+		if (drawline)
+			g.drawLine(x1, y1, x2, y2);
 		// 画箭头的一半
 		g.drawLine(x2, y2, x3, y3);
 		// 画箭头的另一半
@@ -164,8 +217,20 @@ public class Polyline_Trans implements IPaint {
 		return mathstr;
 	}
 	
+	/**
+	 * 检查某点是否在多边折线上。
+	 * @param p 要检查的点
+	 * @return 是否在折线上
+	 */
 	public boolean isOnThePolyline(Point p){
 		ArrayList<Point> ps = new ArrayList<Point>();
+		if (beginCircle.equals(endCircle) && polyLine.size() == 0){
+			double dist = Point2D.distance(beginCircle.getCentre().x, beginCircle.getCentre().y-6-15, p.x, p.y);
+			if (Math.abs(dist-SystemConstant.DEFAULTRADIUS+5) <= 2){
+				return true;
+			}
+			return false;
+		}
 		ps.add(beginCircle.getCentre());
 		ps.addAll(polyLine);
 		ps.add(endCircle.getCentre());
@@ -205,7 +270,17 @@ public class Polyline_Trans implements IPaint {
 		}
 	}
 	
+	/**
+	 * 为折线增加折点
+	 * @param p 要增加折点的位置坐标点。
+	 */
 	public void addKneePoint(Point p){
+		if (beginCircle.equals(endCircle) && polyLine.size() == 0){
+			polyLine.add(0, p);
+			Oranal_PolyLine.add(0, new Point(p.x, p.y));
+			//updateLableAnchor();
+			return;
+		}
 		ArrayList<Point> ps = new ArrayList<Point>();
 		ps.add(beginCircle.getCentre());
 		ps.addAll(polyLine);
@@ -219,6 +294,7 @@ public class Polyline_Trans implements IPaint {
 			if (d1 + d2 <= totalDistance + 2){
 				polyLine.add(i, p);
 				Oranal_PolyLine.add(i, new Point(p.x, p.y));
+				updateLableAnchor();
 				return;
 			}
 		}
@@ -232,6 +308,7 @@ public class Polyline_Trans implements IPaint {
 			polyLine.get(i).x = Oranal_PolyLine.get(i).x + XDist;
 			polyLine.get(i).y = Oranal_PolyLine.get(i).y + YDist;
 		}
+		//updateLableAnchor();
 	}
 	
 	public void moveSelectedPnts(int XDist, int YDist){
@@ -242,6 +319,7 @@ public class Polyline_Trans implements IPaint {
 			polyLine.get(i).x = Oranal_PolyLine.get(i).x + XDist;
 			polyLine.get(i).y = Oranal_PolyLine.get(i).y + YDist;
 		}
+		//updateLableAnchor();
 	}
 	
 	public boolean isSelected(Point p){
@@ -265,6 +343,7 @@ public class Polyline_Trans implements IPaint {
 		int idx = polyLine.indexOf(p);
 		polyLine.remove(idx);
 		Oranal_PolyLine.remove(idx);
+		//updateLableAnchor();
 	}
 
 	public void addSelectedPntIdx(Point p, boolean removeifexist){
@@ -313,6 +392,7 @@ public class Polyline_Trans implements IPaint {
 
 	public void setPolyLine(ArrayList<Point> polyLine) {
 		this.polyLine = polyLine;
+		this.Oranal_PolyLine = CommonTool.PointsClone(polyLine);
 	}
 
 	public boolean removeSelectedPtn() {
@@ -324,6 +404,14 @@ public class Polyline_Trans implements IPaint {
 		}
 		selectedPointIdx.clear();
 		return true;
+	}
+
+	@Override
+	public Point getLableAnchor() {
+		if (lableAnchor == null){
+			updateLableAnchor();
+		}
+		return lableAnchor;
 	}
 
 }

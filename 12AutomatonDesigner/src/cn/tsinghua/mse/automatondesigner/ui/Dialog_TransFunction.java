@@ -1,5 +1,7 @@
 package cn.tsinghua.mse.automatondesigner.ui;
 
+import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.internal.win32.DLLVERSIONINFO;
@@ -9,8 +11,12 @@ import org.eclipse.swt.widgets.Shell;
 
 import automatondesigner.SystemConstant;
 import cn.tsinghua.mse.automatondesigner.dataobject.Automaton;
+import cn.tsinghua.mse.automatondesigner.dataobject.AutomatonConst;
 import cn.tsinghua.mse.automatondesigner.dataobject.TransCondition;
 import cn.tsinghua.mse.automatondesigner.dataobject.TransFunction;
+import cn.tsinghua.mse.automatondesigner.graphicsobj.Canvas_Automaton;
+import cn.tsinghua.mse.automatondesigner.graphicsobj.Circle_State;
+import cn.tsinghua.mse.automatondesigner.graphicsobj.Polyline_Trans;
 
 import com.swtdesigner.ResourceManager;
 import org.eclipse.swt.widgets.Group;
@@ -45,7 +51,7 @@ public class Dialog_TransFunction extends Dialog {
 	
 	private List list_TransCondition;
 	private final FormToolkit formToolkit = new FormToolkit(Display.getDefault());
-	
+
 	public Automaton getAutomaton(){
 		return canvas.getM_mainView().getM_Automaton();
 	}
@@ -101,39 +107,51 @@ public class Dialog_TransFunction extends Dialog {
         label_2.setText("转移条件：");
         
         Button button_3 = new Button(group, SWT.NONE);
+        button_3.setImage(ResourceManager.getPluginImage("AutomatonDesigner", "icons/modify.png"));
         button_3.addSelectionListener(new SelectionAdapter() {
         	@Override
         	public void widgetSelected(SelectionEvent e) {
         		doShowTransManager();
         	}
         });
-        button_3.setBounds(191, 221, 72, 22);
+        button_3.setBounds(179, 221, 84, 22);
         button_3.setText("修改");
         
         Button button = new Button(shell, SWT.NONE);
+        button.setImage(ResourceManager.getPluginImage("AutomatonDesigner", "icons/save16.gif"));
         button.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseUp(MouseEvent e) {
         		doSave();
         	}
         });
-        button.setBounds(56, 274, 72, 22);
+        button.setBounds(56, 274, 79, 22);
         button.setText("保存");
         
         Button button_1 = new Button(shell, SWT.NONE);
+        button_1.setImage(ResourceManager.getPluginImage("AutomatonDesigner", "icons/close.png"));
         button_1.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseUp(MouseEvent e) {
         		doCancle();
         	}
         });
-        button_1.setBounds(173, 274, 72, 22);
+        button_1.setBounds(173, 274, 79, 22);
         button_1.setText("取消");
 	}
 	
 	protected void doShowTransManager() {
-		Dialog_TransConManager dlg = new Dialog_TransConManager(shell, this, SWT.NONE);
-		dlg.open();
+		if (getAutomaton().getM_Type() == AutomatonConst.AUTOMATON_TYPE_PDA){
+			Dialog_PDATransConManager dlg = new Dialog_PDATransConManager(shell, this, SWT.NONE);
+			dlg.open();
+			list_TransCondition.removeAll();
+			for (TransCondition tc : getTransfunction().getM_TransCondition()){
+				list_TransCondition.add(tc.toString());
+			}
+		}else{
+			Dialog_TransConManager dlg = new Dialog_TransConManager(shell, this, SWT.NONE);
+			dlg.open();
+		}
 	}
 
 	private String[] getAllStateNames(){
@@ -186,11 +204,14 @@ public class Dialog_TransFunction extends Dialog {
 		polyline.setEndCircle(end);
 		polyline.getTransFunc().setM_BeginState(begin.getM_State());
 		polyline.getTransFunc().setM_EndState(end.getM_State());
-		polyline.getTransFunc().getM_TransCondition().clear();
-		for (String s :list_TransCondition.getItems()){
-			polyline.getTransFunc().getM_TransCondition().add(new TransCondition(s));
+		if (getAutomaton().getM_Type() == AutomatonConst.AUTOMATON_TYPE_PDA){
+			
+		}else{
+			polyline.getTransFunc().getM_TransCondition().clear();
+			for (String s :list_TransCondition.getItems()){
+				polyline.getTransFunc().getM_TransCondition().add(new TransCondition(s));
+			}
 		}
-		
 		result = SystemConstant.DIALOG_RESULT_SAVE;
 		this.shell.close();
 	}

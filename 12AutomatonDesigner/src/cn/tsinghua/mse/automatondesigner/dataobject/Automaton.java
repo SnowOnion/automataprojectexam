@@ -31,6 +31,12 @@ public class Automaton {
 	 * 自动机类型，使用字符串表示
 	 */
 	protected byte m_Type;
+	
+	/**
+	 * 自动机名称
+	 */
+	protected String m_Name;
+
 
 	/**
 	 * 默认构造函数
@@ -41,15 +47,17 @@ public class Automaton {
 		m_transFunctions = new ArrayList<TransFunction>();
 		m_StartState = null;
 		m_Type = AutomatonConst.AUTOMATON_TYPE_NFA;
+		m_Name = "";
 	}
 
 	public Automaton(ArrayList<State> states, ArrayList<String> inputs,
-			ArrayList<TransFunction> funcs, State start, byte type) {
+			ArrayList<TransFunction> funcs, State start, byte type, String name) {
 		m_States = states;
 		m_InputSymbols = inputs;
 		m_transFunctions = funcs;
 		m_StartState = start;
 		m_Type = type;
+		m_Name = name;
 	}
 
 	/**
@@ -122,6 +130,15 @@ public class Automaton {
 		return true;
 	}
 
+	public State getStateByName(String name){
+		for (State s : m_States) {
+			if (s.getM_Name().equals(name)) {
+				return s;
+			}
+		}
+		return null;
+	}
+	
 	public String getNextNameIdx(String prefix) {
 		int result = 0;
 		for (State s : m_States) {
@@ -139,6 +156,24 @@ public class Automaton {
 			}
 		}
 		return prefix + result;
+	}
+	
+	/**
+	 * 整理输入输入字母表符号
+	 * @param needclear 整理之前是否需要清除原输入字母表
+	 * @return 整理后的输入字母表的引用
+	 */
+	public ArrayList<String> clearUpInputSymbol(boolean needclear){
+		if (needclear){
+			m_InputSymbols.clear();
+		}
+		for (TransFunction func : m_transFunctions){
+			for (TransCondition cond : func.getM_TransCondition()){
+				if (!m_InputSymbols.contains(cond.getM_InputSymbol()))
+					m_InputSymbols.add(cond.getM_InputSymbol());
+			}
+		}
+		return m_InputSymbols;
 	}
 
 	// /**
@@ -221,6 +256,18 @@ public class Automaton {
 		return m_transFunctions.remove(transFunction);
 	}
 
+	public String getStrType(){
+		return SystemConstant.AUTOMATONTYPES[getM_Type()];
+	}
+	
+	public void setTypeByStr(String type){
+		for (byte i = 0; i < SystemConstant.AUTOMATONTYPES.length; i++){
+			if (SystemConstant.AUTOMATONTYPES[i].equals(type)){
+				this.setM_Type(i);
+			}
+		}
+	}
+	
 	public ArrayList<State> getM_States() {
 		return m_States;
 	}
@@ -259,5 +306,19 @@ public class Automaton {
 
 	public void setM_Type(byte mType) {
 		m_Type = mType;
+	}
+
+	public String getM_Name() {
+		return m_Name;
+	}
+
+	public void setM_Name(String mName) {
+		m_Name = mName;
+	}
+	
+	public String getStartStateName(){
+		if (m_StartState != null)
+			return m_StartState.getM_Name();
+		return "";
 	}
 }

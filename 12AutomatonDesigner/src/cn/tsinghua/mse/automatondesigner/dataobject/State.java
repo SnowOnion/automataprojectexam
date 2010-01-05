@@ -40,4 +40,17 @@ public class State {
 	public void setM_type(byte mType) {
 		m_type = mType;
 	}
+	
+//	public String getStrType(){
+//		return AutomatonConst.STATE_TYPES[getM_type()];
+//	}
+//	
+//	public void setTypeByStr(String stateType){
+//		for (byte i = 0; i < AutomatonConst.STATE_TYPES.length; i++){
+//			if (stateType.equals(AutomatonConst.STATE_TYPES[i])){
+//				this.setM_type(i);
+//			}
+//		}
+//		this.setM_type(AutomatonConst.STATE_COMMON_TYPE);
+//	}
 }
