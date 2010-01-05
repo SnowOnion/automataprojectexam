@@ -17,7 +17,7 @@ public class TransFunction {
 	 */
 	private State m_EndState;
 	/**
-	 * 转移状态
+	 * 转移条件
 	 */
 	private ArrayList<TransCondition> m_TransCondition;
 
@@ -88,5 +88,15 @@ public class TransFunction {
 			result += m_TransCondition.get(idx).toString();
 		}
 		return result;
+	}
+	
+	public boolean addTransCondition(TransCondition condition){
+		for (TransCondition c : m_TransCondition){
+			if (c.toString().equals(condition.toString())){
+				return false;
+			}
+		}
+		m_TransCondition.add(condition);
+		return true;
 	}
 }

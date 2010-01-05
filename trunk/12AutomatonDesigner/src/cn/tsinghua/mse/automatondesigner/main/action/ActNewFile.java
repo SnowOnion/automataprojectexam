@@ -7,7 +7,10 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 
-import cn.tsinghua.mse.automatondesigner.ui.Dialog_NewAutomaton;
+import cn.tsinghua.mse.automatondesigner.dataobject.Automaton;
+import cn.tsinghua.mse.automatondesigner.ui.EditorInputer_Automaton;
+import cn.tsinghua.mse.automatondesigner.ui.Dialog_AutomatonProperty;
+import cn.tsinghua.mse.automatondesigner.ui.Editor_Main;
 import cn.tsinghua.mse.automatondesigner.ui.View_Main;
 
 public class ActNewFile extends Action {
@@ -21,11 +24,16 @@ public class ActNewFile extends Action {
 	public void run() {
 		if(window != null) {	
 			try {
-				Dialog_NewAutomaton dlg = new Dialog_NewAutomaton(window.getShell(), SWT.NONE);
-				dlg.open();
-				View_Main tempView = (View_Main)window.getActivePage().showView(View_Main.ID, Integer.toString(View_Main.INSTANCENUM), IWorkbenchPage.VIEW_ACTIVATE);
+				Dialog_AutomatonProperty dlg = new Dialog_AutomatonProperty(window.getShell(), SWT.NONE, null);
+				Automaton auto = dlg.open();
+				if (auto == null){
+					return;
+				}
+				Editor_Main tempView = (Editor_Main)window.getActivePage().openEditor(new EditorInputer_Automaton(dlg.getAutomatonName()), Editor_Main.ID, true);
 				tempView.setMainWindow(window);
-			} catch (PartInitException e) {
+				tempView.setM_Automaton(auto);
+				tempView.setAutomatonPrefix(dlg.getPrefixStr());
+			} catch (Exception e) {
 				MessageDialog.openError(window.getShell(), "´íÎó", "´ò¿ªÊÓÍ¼Ê§°Ü£¡");
 			}
 		}

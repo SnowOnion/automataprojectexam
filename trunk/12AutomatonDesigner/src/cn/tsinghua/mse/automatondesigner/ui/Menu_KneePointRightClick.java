@@ -5,6 +5,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.SWT;
+
+import cn.tsinghua.mse.automatondesigner.graphicsobj.Canvas_Automaton;
+
 import com.swtdesigner.ResourceManager;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;

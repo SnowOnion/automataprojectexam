@@ -1,8 +1,12 @@
 automatondesigner
 cn.tsinghua.mse.automatondesigner.dataobject
+cn.tsinghua.mse.automatondesigner.exception
+cn.tsinghua.mse.automatondesigner.exporttoxml
+cn.tsinghua.mse.automatondesigner.graphicsobj
 cn.tsinghua.mse.automatondesigner.interfaces
 cn.tsinghua.mse.automatondesigner.main
 cn.tsinghua.mse.automatondesigner.main.action
 cn.tsinghua.mse.automatondesigner.tools
 cn.tsinghua.mse.automatondesigner.ui
+cn.tsinghua.mse.automatondesigner.wizards
 com.swtdesigner
