@@ -1,5 +1,7 @@
 #summary Group 27: A Simple Conversion Tool of NFA and DFA.
 
+<wiki:toc max_depth="2" />
+
 == Important ==
 
 *Deadline for Alpha Version: <font color="red">Jan 9, 2010</font> !*
