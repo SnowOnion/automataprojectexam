@@ -2,9 +2,21 @@
 
 <wiki:toc max_depth="2" />
 
+= Overview =
+
 == Important ==
 
 *Deadline for Alpha Version: <font color="red">Jan 9, 2010</font> !*
+
+== Task Objective ==
+
+所选题目为*NFA/DFA的转换工具
+
+具体要求如下：
+   # 用Java编写，保证可扩展性。
+   # 检查某个字符串是否被指定的自动机接受。
+   # 判断语言是否为空，是否为无穷。
+   # 实现NFA到DFA的相互转换。 
 
 == Team Member ==
 
@@ -18,6 +30,14 @@
   * Implement the core program;
   * ...
 
+= Using the PSP0 Process =
+
+== References == 
+
+  * _PSP(sm): A Self-Improvement Process for Software Engineers_, Watts S. Humphrey, Addison-Wesley Professional, 2005. Chapter 2.
+
+= Other Issues =
+
 == Useful Links ==
 
   * [http://code.google.com/p/support/wiki/WikiSyntax WikiSyntax]
@@ -26,5 +46,3 @@
   * [http://rw4.cs.uni-sb.de/projects/ganimal/GANIFA/page16_e.htm Algorithm Page 1] _Unread_
   * [http://www.algorithm-code.com/wiki/Converts_NFA_to_DFA Algorithm Page 2] _Unread_
   * [http://www.cs.pitt.edu/~mock/cs1622/lectures/lecture05.pdf Algorithm Page 3] _Unread_
-
-== Known Issues == 
