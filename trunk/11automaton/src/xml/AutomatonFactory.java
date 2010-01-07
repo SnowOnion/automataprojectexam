@@ -11,9 +11,11 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 
+import automaton.Automaton;
+
+
 import exception.NoStateFoundException;
 
-import automaton.Automaton;
 /**************************************************************\
  * This class used Factory Design pattern to implements the creation
  * of the Automaton with the document parsed by XML.

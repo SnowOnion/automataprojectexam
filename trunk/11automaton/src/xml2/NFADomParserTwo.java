@@ -6,12 +6,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
 import automaton.Automaton;
 import automaton.AutomatonNFA;
 import automaton.Nail;
 import automaton.State;
 import automaton.Transition;
 import automaton.TransitionNFA;
+
 import exception.NoStateFoundException;
 
 public class NFADomParserTwo extends DomParserParentTwo{

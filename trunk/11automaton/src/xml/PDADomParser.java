@@ -5,13 +5,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import automaton.*;
+
 import exception.NoStateFoundException;
-import automaton.Automaton;
-import automaton.AutomatonPDA;
-import automaton.State;
-import automaton.Transition;
-import automaton.TransitionPDA;
-import automaton.TransitionPDACondition;
 
 public class PDADomParser extends DomParserParent {
 	

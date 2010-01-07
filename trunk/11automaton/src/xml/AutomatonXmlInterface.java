@@ -4,8 +4,10 @@ import java.io.File;
 
 import org.w3c.dom.Document;
 
-import exception.NoStateFoundException;
 import automaton.Automaton;
+
+
+import exception.NoStateFoundException;
 /****************************************************************
  * This Interface defines the operation with the XML files.
  * @author Administrator
