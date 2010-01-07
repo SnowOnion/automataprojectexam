@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="automatonmodeling.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="RCP Perspective"
+            class="automatonmodeling.Perspective"
+            id="AutomatonModeling.perspective">
+      </perspective>
+   </extension>
+ <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="gui.ui.DiagramEditor"
+            contributorClass="gui.actions.DiagramActionBarContributor"
+            default="false"
+            icon="icons/alt_window_16.gif"
+            id="gui.ui.DiagramEditor"
+            name="Diagram Editor"/>
+   </extension>
+</plugin>
