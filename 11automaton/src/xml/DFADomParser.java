@@ -5,12 +5,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import automaton.*;
+
 import exception.NoStateFoundException;
-import automaton.Automaton;
-import automaton.AutomatonDFA;
-import automaton.State;
-import automaton.Transition;
-import automaton.TransitionDFA;
 /**********************************************************
  * This Class Use org.w3c.dom to parse the XML files 
  * which implements the AutomatonXmlInterface.
