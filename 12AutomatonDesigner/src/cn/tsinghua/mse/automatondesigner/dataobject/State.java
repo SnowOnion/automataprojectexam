@@ -41,6 +41,11 @@ public class State {
 		m_type = mType;
 	}
 	
+	@Override
+	public String toString() {
+		return m_Name;
+	}
+	
 //	public String getStrType(){
 //		return AutomatonConst.STATE_TYPES[getM_type()];
 //	}
