@@ -32,7 +32,7 @@ public class AutomatonPDA extends Automaton {
 	public String getInitialStackSymbol() {
 		return initialStackSymbol;
 	}
-	
+
 	public void setInitialStackSymbol(String initialStackSymbol) {
 		this.initialStackSymbol = initialStackSymbol;
 	}
@@ -45,5 +45,8 @@ public class AutomatonPDA extends Automaton {
 		this.stackSymbols = stackSymbols;
 	}
 
-	
+	public boolean hasStackSymbol(String stackSymbol) {
+		return stackSymbols.indexOf(stackSymbol) != -1;
+	}
+
 }

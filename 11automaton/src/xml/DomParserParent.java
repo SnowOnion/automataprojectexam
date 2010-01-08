@@ -22,6 +22,7 @@ import org.w3c.dom.NodeList;
 
 import automaton.Automaton;
 import automaton.AutomatonConstant;
+import automaton.AutomatonXmlInterface;
 import automaton.State;
 
 import exception.NoStateFoundException;

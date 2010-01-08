@@ -1,14 +1,22 @@
 package automaton;
 
+import org.eclipse.draw2d.geometry.Point;
+
 public class Nail {
 	private int nailX;
 	private int nailY;
-	
-	public Nail(int nailX,int nailY){
+
+	public Nail(Point p) {
+		nailX = p.x;
+		nailY = p.y;
+	}
+
+	public Nail(int nailX, int nailY) {
 		this.nailX = nailX;
 		this.nailY = nailY;
 	}
-	public Nail(String nailX,String nailY){
+
+	public Nail(String nailX, String nailY) {
 		this.nailX = Integer.parseInt(nailX);
 		this.nailY = Integer.parseInt(nailY);
 	}

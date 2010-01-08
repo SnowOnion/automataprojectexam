@@ -1,51 +1,79 @@
 package automaton;
 
+import gui.help.AutomatonException;
+import gui.help.AutomatonType;
+
 import java.util.HashSet;
 import java.util.List;
 
-
-public class Transition {
+public abstract class Transition {
 	protected State fromState;
 	protected State toState;
 	@SuppressWarnings("unchecked")
 	protected List transitionConditions;
-	protected HashSet <Nail> nails;
-	
-	public Transition(){
+	protected HashSet<Nail> nails;
 
+	public Transition() {
+		nails = new HashSet<Nail>();
 	}
-	public Transition(Transition transition){
+
+	public Transition(Transition transition) {
 		this.fromState = transition.getFromState();
 		this.toState = transition.getToState();
 	}
-	
-	public State getFromState(){
+
+	public State getFromState() {
 		return fromState;
 	}
-	public State getToState(){
+
+	public State getToState() {
 		return this.toState;
 	}
-	public String toString(){
+
+	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("fromState:"+fromState+"\n");
-		builder.append("transition condition number:"+transitionConditions.size()+"\n");
-		builder.append("toState"+toState+"\n");
+		builder.append("fromState:" + fromState + "\n");
+		builder.append("transition condition number:"
+				+ transitionConditions.size() + "\n");
+		builder.append("toState" + toState + "\n");
 		return builder.toString();
 	}
-	
+
+	public static Transition getTransitionOfType(AutomatonType type) {
+		Transition transition = null;
+		if (type == AutomatonType.NFA) {
+			transition = new TransitionNFA();
+		} else if (type == AutomatonType.DFA)
+			transition = new TransitionDFA();
+		else
+			transition = new TransitionPDA();
+		return transition;
+	}
+
+	public abstract void setConditionsFromRawString(Automaton automaton,
+			String condstr) throws Exception;
+
+	protected abstract boolean checkCondition(String cond);
+
+	public abstract void addCondition(Automaton automata, String cond)
+			throws AutomatonException;
+
 	/******************************************************
 	 * The location operation for GUI
 	 * 
 	 */
-	public boolean addNail(Nail nail){
+	public boolean addNail(Nail nail) {
 		return nails.add(nail);
 	}
-	public boolean removeNail(Nail nail){
+
+	public boolean removeNail(Nail nail) {
 		return nails.remove(nail);
 	}
+
 	public HashSet<Nail> getNails() {
 		return nails;
 	}
+
 	public void setNails(HashSet<Nail> nails) {
 		this.nails = nails;
 	}

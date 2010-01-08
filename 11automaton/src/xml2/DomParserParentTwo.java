@@ -23,10 +23,10 @@ import org.w3c.dom.NodeList;
 
 import automaton.Automaton;
 import automaton.AutomatonConstant;
+import automaton.AutomatonXmlInterface;
 import automaton.Nail;
 import automaton.State;
 
-import xml.AutomatonXmlInterface;
 import exception.NoStateFoundException;
 
 public class DomParserParentTwo implements AutomatonXmlInterface{
