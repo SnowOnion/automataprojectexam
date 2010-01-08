@@ -1,14 +1,17 @@
 package gui.model;
 
+import gui.help.AutomatonType;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ContentsModel extends AbstractModel {
-	private int newest_id=0;
+	private int newest_id = 0;
 	@SuppressWarnings("unchecked")
 	private List children = new ArrayList();
 	private List<AbstractConnectionModel> connections = new ArrayList<AbstractConnectionModel>();
 	private StateModel initialState = null;
+	private AutomatonType type;
 
 	public static final String P_CHILDREN = "_children";
 
@@ -16,8 +19,8 @@ public class ContentsModel extends AbstractModel {
 	public void addChild(Object child) {
 		children.add(child);
 		firePropertyChange(P_CHILDREN, null, null);
-		((StateModel)child).setText("p"+newest_id);
-		newest_id ++;
+		((StateModel) child).setText("p" + newest_id);
+		newest_id++;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -75,5 +78,17 @@ public class ContentsModel extends AbstractModel {
 
 	public int getNewest_id() {
 		return newest_id;
+	}
+
+	public AutomatonType getType() {
+		return type;
+	}
+
+	public void setType(AutomatonType type) {
+		this.type = type;
+	}
+
+	public List<AbstractConnectionModel> getConnections() {
+		return connections;
 	}
 }

@@ -194,6 +194,14 @@ public class StateModel extends AbstractModel {
 		return targetConnectionList;
 	}
 
+	public boolean isInitial() {
+		return isInitial == 1;
+	}
+
+	public boolean isAccept() {
+		return isAccept == 1;
+	}
+
 }
 
 class MyComparator implements Comparator {

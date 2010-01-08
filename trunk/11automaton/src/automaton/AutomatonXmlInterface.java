@@ -1,10 +1,9 @@
-package xml;
+package automaton;
 
 import java.io.File;
 
 import org.w3c.dom.Document;
 
-import automaton.Automaton;
 
 
 import exception.NoStateFoundException;
