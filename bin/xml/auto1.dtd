@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<!ELEMENT Automatas (DFA | NFA | PDA)*>
+	<!ELEMENT DFA (States, InputSymbols, TranFuncs, StartQ, FinalStates)>
+	<!ELEMENT NFA (States, InputSymbols, TranFuncs, StartQ, FinalStates)>
+	<!ELEMENT PDA (States, InputSymbols, PStackAlphabets, PTranFuncs, StartQ, PStartS, PFinalStates)>
+	<!ELEMENT States (state+)>
+	<!ELEMENT InputSymbols (symbol*)>
+	<!ELEMENT TranFuncs (Tranfunc*)>
+	<!ELEMENT PTranFuncs (PTranfunc*)>
+	<!ELEMENT StartQ (state)>
+	<!ELEMENT FinalStates (state+)>
+	<!ELEMENT PFinalStates (state*)>
+	<!ELEMENT PStackAlphabets (PStackAlphabet*)>
+	<!ELEMENT PStartS (PStackAlphabet)>
+	<!ELEMENT Tranfunc (state,symbol,state)>
+	<!ELEMENT PTranfunc (state,symbol,state,PStackAlphabet,PushString)>	
+	<!ELEMENT PushString (PStackAlphabet*)>
+	<!ELEMENT state (#PCDATA)>
+	<!ELEMENT symbol (#PCDATA)>
+	<!ELEMENT PStackAlphabet (#PCDATA)>
+	<!ATTLIST DFA name CDATA "">
+	<!ATTLIST NFA name CDATA "">
+	<!ATTLIST PDA name CDATA "">
