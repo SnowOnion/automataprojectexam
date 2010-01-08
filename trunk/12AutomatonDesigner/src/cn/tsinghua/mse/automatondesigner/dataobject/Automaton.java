@@ -2,6 +2,8 @@ package cn.tsinghua.mse.automatondesigner.dataobject;
 
 import java.util.ArrayList;
 
+import org.eclipse.swt.internal.ole.win32.FUNCDESC;
+
 import automatondesigner.SystemConstant;
 
 /**
@@ -158,6 +160,13 @@ public class Automaton {
 		return prefix + result;
 	}
 	
+	public void setInitStateFirst(){
+		if (m_StartState != null){
+			m_States.remove(m_StartState);
+			m_States.add(0, m_StartState);
+		}
+	}
+	
 	/**
 	 * 整理输入输入字母表符号
 	 * @param needclear 整理之前是否需要清除原输入字母表
@@ -174,6 +183,42 @@ public class Automaton {
 			}
 		}
 		return m_InputSymbols;
+	}
+	
+	/**
+	 * 获取从某状态出发的所有转移函数，也可以从结果中提取所能到达的状态集合
+	 * @param startState 转移函数的开始符号
+	 * @return 以输入参数为开始符号的转移函数
+	 */
+	public ArrayList<TransFunction> getRelativeTrans(State startState){
+		ArrayList<TransFunction> result = new ArrayList<TransFunction>();
+		for(TransFunction func : m_transFunctions){
+			if (func.getM_BeginState().equals(startState)){
+				if (!result.contains(func))
+					result.add(func);
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * 获取从某状态出发的以某个输入符号为输入的所有转移函数所到达的状态集合
+	 * @param startState 转移函数的开始符号
+	 * @param input 输入符号
+	 * @return 以输入参数为开始符号、输入符号所能到达的状态集合
+	 */
+	public ArrayList<State> getToStates(State startState, String input){
+		ArrayList<State> result = new ArrayList<State>();
+		for(TransFunction func : m_transFunctions){
+			if (func.getM_BeginState().equals(startState)){
+				for (TransCondition cond : func.getM_TransCondition()){
+					if (cond.getM_InputSymbol().equals(input)){
+						result.add(func.getM_EndState());
+					}
+				}
+			}
+		}
+		return result;
 	}
 
 	// /**

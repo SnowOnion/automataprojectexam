@@ -33,7 +33,7 @@ public class Menu_AutomatonRightClick extends Composite {
 								.getM_InputSymbols(),
 						Dialog_SymbolsManager.DIALOG_INPUTYMBOLS);
 				int result = dlg.open();
-				if (result == SystemConstant.DIALOG_RESULT_SAVE){
+				if (result == SystemConstant.DIALOG_RESULT_SAVE) {
 					parent.getM_mainView().setDirty(true);
 				}
 			}
@@ -49,11 +49,12 @@ public class Menu_AutomatonRightClick extends Composite {
 				public void widgetSelected(SelectionEvent e) {
 					Dialog_SymbolsManager dlg = new Dialog_SymbolsManager(
 							parent.getShell(), parent.getM_mainView()
-									.getM_Automaton(), ((PushdownAutomaton)parent.getM_mainView()
+									.getM_Automaton(),
+							((PushdownAutomaton) parent.getM_mainView()
 									.getM_Automaton()).getM_StackSymbols(),
 							Dialog_SymbolsManager.DIALOG_STACKYMBOLS);
 					int result = dlg.open();
-					if (result == SystemConstant.DIALOG_RESULT_SAVE){
+					if (result == SystemConstant.DIALOG_RESULT_SAVE) {
 						parent.getM_mainView().setDirty(true);
 					}
 				}
@@ -61,6 +62,20 @@ public class Menu_AutomatonRightClick extends Composite {
 			menuItem_1.setImage(ResourceManager.getPluginImage(
 					"AutomatonDesigner", "icons/stacks.png"));
 			menuItem_1.setText("\u5806\u6808\u7B26\u53F7\u7BA1\u7406");
+		} else {
+			MenuItem menuItem_2 = new MenuItem(menu, SWT.NONE);
+			menuItem_2.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					Dialog_TransTable dlg = new Dialog_TransTable(parent
+							.getShell(), parent.getM_mainView()
+							.getM_Automaton());
+					dlg.open();
+				}
+			});
+			menuItem_2.setImage(ResourceManager.getPluginImage(
+					"AutomatonDesigner", "icons/autocode.png"));
+			menuItem_2.setText("\u72B6\u6001\u8F6C\u79FB\u8868");
 		}
 	}
 
