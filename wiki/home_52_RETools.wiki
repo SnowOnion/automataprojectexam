@@ -3,12 +3,54 @@
 
 = Introduction =
 
+完成进度：字符串--表达式树--NFA--DFA
+
+支持的模式格式：闭包（？、*、+），任意字符（.）,|、[]、()，终结符包括0-9、a-z、A-Z
 
 
+输入格式举例：
+P83 3.4.3	（书中的模式）         (0+1)*1(0+1)+(0+1)*1(0+1)(0+1)   
+	        （本程序的对应写法）   (0|1)*1(0|1)|(0|1)*1(0|1)(0|1)
+                                	[01]*1[01]|[01]*1[01][01]
+
+接口见detais的demo
 
 = Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+
+demo.java
+
+package cn.edu.thss.retool;
+
+public class Demo {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String patternString;
+		Pattern pattern;
+		InputSequence inputs;
+		patternString = "I(ve.?ry)+happy";//"[521]*";//"10*[12]|ab+[bc]?|011(12*|abc)+z";
+		String input = "Iveryveryveryhappy";
+		inputs = new InputSequence(input);
+		
+		pattern = new Pattern(patternString);
+		
+		System.out.println("The model of the DFA!");
+		pattern.PrintPattern();
+		
+		Matcher matcher = pattern.CreateMatcher(inputs);
+		if(matcher.Matches())
+		{
+			System.out.println("match!");
+			System.out.println("Pattern String: " + patternString);
+			System.out.println("Matched String: " + matcher.GetInputs());
+		}
+		else
+			System.out.println("No match");
+		
+	}
+
+}
