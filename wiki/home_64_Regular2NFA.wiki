@@ -1,4 +1,4 @@
-#summary 64组：Regular2NFA 的转换工具 李燕 周磊
+#summary 64组：Regular2NFA 的转换工具 周磊
 
 = 项目信息 =
 
