@@ -5,6 +5,8 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.TreeSet;
 
+import javax.print.attribute.standard.Finishings;
+
 public class RE {
 	//store the symbols of RE, for examples a,b,0,1
 	private Set<Character> symbols = new HashSet<Character>();
@@ -30,9 +32,19 @@ public class RE {
 	public RE(String re) {
 		super();
 		this.re = re;
-		reAfterProcess = changeToFormalFormat(re);
 		
-		char[] reArr = reAfterProcess.toCharArray();
+		char[] reArr = re.toCharArray();
+		for(int i = 0; i < re.length(); i++){
+			if(reArr[i] == '(' || reArr[i] == ')' || reArr[i] == '*' 
+				|| reArr[i] == '+' || reArr[i] == '&')
+				operators.add(Character.valueOf(reArr[i]));
+			else
+				symbols.add(Character.valueOf(reArr[i]));
+		}
+		
+		reAfterProcess = changeToFormalFormat(re);
+	
+		reArr = reAfterProcess.toCharArray();
 		for(int i = 0; i < reAfterProcess.length(); i++){
 			if(reArr[i] == '(' || reArr[i] == ')' || reArr[i] == '*' 
 				|| reArr[i] == '+' || reArr[i] == '&')
@@ -40,10 +52,24 @@ public class RE {
 			else
 				symbols.add(Character.valueOf(reArr[i]));
 		}
+		
 		reToAutomaton = new REtoAutomaton(reAfterProcess);
 		nfa = reToAutomaton.getNfa();
 	}
 	
+	public RE union(RE re){
+		return (new RE("(" + this.re + ")+" + "(" + re.re + ")"));
+	}
+	
+	public RE connect(RE re){
+		return (new RE("(" + this.re + ")&" + "(" + re.re + ")"));
+	}
+	
+	public RE star(){
+		return (new RE("(" + this.re + ")*"));
+	}
+	
+
 	public boolean acceptString(String s){
 		return nfa.acceptString(s);
 	} 
@@ -66,35 +92,26 @@ public class RE {
 	
 	//implementions of finding  the indexes of connectOperators added 
 	public void changeProcess(String s){
-		//eliminate the operators "()"
-		int index = s.indexOf('(');
-		if(index > 0){
-			if(s.charAt(index - 1) != ')' 
-				&& s.charAt(index - 1) != '+')
-				connectOperatorsIndex.add(Integer.valueOf(index));
-			String s1 = s.substring(0, index);
-			changeProcess(s1);
-			
-			int indexRightParenthesis = findOppositeParenthesis(s, index);
-			if(indexRightParenthesis + 1 < s.length()){
-				if(s.charAt(indexRightParenthesis + 1) != '(' 
-					&& s.charAt(indexRightParenthesis + 1) != '+'
-						&& s.charAt(indexRightParenthesis + 1) != '*')
-					connectOperatorsIndex.add(Integer.valueOf(indexRightParenthesis + 1));
-				
-				String s2 = s.substring(indexRightParenthesis + 1, s.length());
-				changeProcess(s2);
-			}
-		}
 		//add the connectOperators
 		char[] reArr = re.toCharArray();
 		for(int i = 0; i < s.length() - 1; i++){
 			if(symbols.contains(Character.valueOf(reArr[i]))
 					&& symbols.contains(Character.valueOf(reArr[i + 1])))
 				connectOperatorsIndex.add(Integer.valueOf(i + 1));
-			else if(Character.valueOf(reArr[i]) == '*')
+			else if(Character.valueOf(reArr[i]) == '*' && 
+					symbols.contains(Character.valueOf(reArr[i + 1])))
+				connectOperatorsIndex.add(Integer.valueOf(i + 1));
+			else if(Character.valueOf(reArr[i]) == ')' && 
+					Character.valueOf(reArr[i + 1]) == '(')
+				connectOperatorsIndex.add(Integer.valueOf(i + 1));
+			else if(symbols.contains(Character.valueOf(reArr[i]))
+					&& Character.valueOf(reArr[i + 1]) == '(')
+				connectOperatorsIndex.add(Integer.valueOf(i + 1));
+			else if(symbols.contains(Character.valueOf(reArr[i + 1]))
+					&& Character.valueOf(reArr[i]) == ')')
 				connectOperatorsIndex.add(Integer.valueOf(i + 1));
 		}
+		
 	} 
 	
 	//find the match right-parenthesis of the left-parenthesis in s
@@ -114,11 +131,6 @@ public class RE {
 			}
 		}
 		return -1;
-	}
-	public static void main(String[] args){
-		String  s  = "a*b(c+d)";
-		RE re = new RE(s);
-		System.out.println(re.getOperators());
 	}
 	
 	//Below is the settings and gettings of the member variables

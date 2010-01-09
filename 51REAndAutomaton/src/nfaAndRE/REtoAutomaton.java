@@ -1,5 +1,7 @@
 package nfaAndRE;
 
+import java.util.Stack;
+
 public class REtoAutomaton {
 	private String re = new String();              //regular expression
 	private NFA nfa = new NFA();    //NFA
@@ -54,7 +56,7 @@ public class REtoAutomaton {
 		
 		//find the first "+" in the s, then recurse of the two part
 		int index = s.indexOf('+');
-		if(index > -1){
+		while(index > -1){
 			String s1 = s.substring(0, index);
 			String s2 = s.substring(index + 1, s.length());
 			char[] s1Arr = s1.toCharArray();
@@ -69,12 +71,16 @@ public class REtoAutomaton {
 			if(leftParenthesis == rightParenthesis){
 				reToAutomatonPro(s1, beginStateId, endStateId);
 				reToAutomatonPro(s2, beginStateId, endStateId);
-			}			
+				return;
+			}
+			else{
+				index = s.indexOf('+', index + 1);
+			}
 		}
 		
 		//find the first "&" in the s, then recurse of the two part
 		index = s.indexOf('&');
-		if(index > -1){
+		while(index > -1){
 			String s1 = s.substring(0, index);
 			String s2 = s.substring(index + 1, s.length());
 			char[] s1Arr = s1.toCharArray();
@@ -91,13 +97,16 @@ public class REtoAutomaton {
 				nfa.addState(middleStateId);
 				reToAutomatonPro(s1, beginStateId, middleStateId);
 				reToAutomatonPro(s2, middleStateId, endStateId);
+				return;
 			}
-			
+			else{
+				index = s.indexOf('&', index + 1);
+			}
 		}
 		
 		//find the first "*" in the s, then recurse of the two part
 		index = s.indexOf('*');
-		if(index > -1){
+		while(index > -1){
 			String s1 = s.substring(0, index);
 			char[] s1Arr = s1.toCharArray();
 			int leftParenthesis = 0; 
@@ -111,6 +120,10 @@ public class REtoAutomaton {
 			if(leftParenthesis == rightParenthesis){
 				reToAutomatonPro(s1, beginStateId, beginStateId);
 				nfa.addTransfer(beginStateId, Automata.EPSILON, endStateId);
+				return;
+			}
+			else{
+				index = s.indexOf('*', index + 1);
 			}
 		}
 		
@@ -118,9 +131,31 @@ public class REtoAutomaton {
 		index = s.indexOf('(');
 		if(index > -1){
 			if(index == 0){
-				s = s.substring(1, s.length() - 1);
-				reToAutomatonPro(s, beginStateId, endStateId);
+				int ind = findOppositeParenthesis(s, index);
+				if(ind == s.length() - 1){
+					s = s.substring(1, findOppositeParenthesis(s, index));
+					reToAutomatonPro(s, beginStateId, endStateId);
+				}	
 			}
 		}
+	}
+	
+	//find the match right-parenthesis of the left-parenthesis in s
+	//the parameter index is the index of the left-parenthesis in s
+	public int findOppositeParenthesis(String s, int index){
+		Stack<Character> stack = new Stack<Character>();
+		stack.add(s.charAt(index));
+		for(int i = index + 1; i < s.length(); i++){
+			char ch = s.charAt(i);
+			if(ch == '(')
+				stack.push('(');
+			else if(ch == ')'){
+				if(stack.size() == 1)
+					return i;
+				else
+					stack.pop();
+			}
+		}
+		return -1;
 	}
 }
