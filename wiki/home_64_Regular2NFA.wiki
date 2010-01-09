@@ -7,7 +7,6 @@
 
 = 小组成员 =
 ||姓名||学号||邮箱||
-||李 燕||2009220680||lyautomata@gmail.com||
 ||周 磊||2009220673||stephen.lei.zhou@gmail.com||
 
 = 项目内容 =
