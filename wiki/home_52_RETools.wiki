@@ -1,4 +1,4 @@
-#summary 52 正则表达式工具.
+#summary 52 正则表达式工具——胡浩、李凤翔、邓双.
 #labels Featured,Phase-Implementation,Phase-Support
 
 = Introduction =
