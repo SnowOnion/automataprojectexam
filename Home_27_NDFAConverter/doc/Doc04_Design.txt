@@ -1,0 +1,95 @@
+[Home_27_NDFAConverter] Doc04 Design
+
+0. Based on Doc01_ReqList.txt
+
+1. ReqList & Design 
+
+  r.1.1.1 Describe the FA structure. (DTD file is already available.)
+  d.1.1.1 
+  	class FA{
+  		String name;
+  		HashMap<State> states;
+  		HashMap<char> symbols;
+  		ArrayList<Transition> transitions;
+  		int startState
+  		ArrayList<int> finalStates;
+  		boolean isDFA;
+  	}
+  	class State{
+  		String name;
+  		Set<State> subStates;
+  	}
+  	class Transition{
+  		int preState;
+  		int symbol;
+  		int nextState;
+  	}
+  	const char NIL_SYMBOL '^';
+  
+  r.1.3.1 Parse FA xml files which accord with DTD file.
+  d.1.3.1 
+  	Just use DOM included in JDK.
+  
+  r.1.3.2 Determine the FA whether it is legal.
+  d.1.3.2
+  	1.3.2.1 Is the state list not null?
+  	1.3.2.2 Is the start state exist & in state list?
+  	1.3.2.3 Are all final states in state list or the final state list is null?
+  	1.3.2.4 Add NIL_SYMBOL into symbol list.
+  	1.3.2.5 Are all symbols in transitions in symbol list?
+  	1.3.2.6 Are all states in transitions in state list? 
+  
+  r.1.6 Determine the "Language" whether it is null.
+  d.1.6 
+  	Convert NFA to DFA, get the closure of start state. Does the closure contain one of final states?
+  
+  r.1.7 Determine the "Language" whether it is infinity.
+  d.1.7
+  	Convert NFA to DFA, do the getting closure process of every state. Is there any state that put in repeatedly?
+  
+  r.1.8 Convert a NFA to a DFA.
+  d.1.8
+  	Steps:
+  	1.8.1 New a FA 
+  	1.8.2 Get e-closure of every old state as a new state, add to the new FA's state list
+  	1.8.3 Copy the symbol list to the new FA
+  	1.8.4 Choose e-closure state of the old FA's start state as the start state of the new FA
+  	1.8.5 Start from the start state, get the next state of every subState via every symbol
+  	1.8.6 Combine them to a new state, if there are any final states, set it as a final state 
+  	1.8.7 Add a transition and add into the state list if it does not contain it 
+  	
+  r.1.9 Describe the "String" structure.
+  d.1.9
+  	Use the ArrayList<char> in java.
+  	
+  r.1.10 Check a "String" whether it can be accepted by a specified FA.
+  d.1.10
+  	Steps:
+  	1.10.0 Init current state by start state
+  	1.10.1 Read a char by order
+  	1.10.2 Is the char in symbol list? if not, return false; else, 1.10.3
+  	1.10.3 Get the next state via this char, set current state as the next one
+  	1.10.4 Is this char the last char in the string? if not, 1.10.1; else, 1.10.5
+  	1.10.5 Is current state one of final states? if not, return false; else, return true.
+  	
+2. User Interface
+
+  2.1 Console
+  	2.1.1 input a FA file path
+  	2.1.2 if the FA is legal, output the FA structure; else input a new file
+  	2.1.3 get a menu as below:
+  		1. output its DFA
+  		2. check the language properties
+  		3. check a string
+  		4. quit
+  	2.1.4 if the user select 3, then output:
+  		please input your string:
+  	2.1.5 output the string checking result.(Accept/Reject)
+  	
+  2.2 the output FA format
+  	States: {name of all states}
+  	Symbols: {symbols}
+  	Start State: start state
+  	Final States: {final states}
+  	Transitions: 
+  	pre_state --'symbol'--> next_state

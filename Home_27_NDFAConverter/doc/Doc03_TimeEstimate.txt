@@ -1,0 +1,21 @@
+[Home_27_NDFAConverter] Doc03 Time Estimate
+
+1. Plan - 3.0 hrs
+
+  Including list requirement and time estimate.
+  
+2. Design - 5.0 hrs
+
+3. Env. Setup - 2.0 hrs
+
+4. Coding - 4.0 hrs
+
+5. Compile - 1.0 hrs
+
+6. Test - 3.0 hrs
+
+  Including bug finding and fixing.
+
+7. Summary - 2.0 hrs
+
+8. Total: 20 hrs.
