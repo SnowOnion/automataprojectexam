@@ -4,8 +4,13 @@
 
 = Overview =
 
-== Important ==
+== News ==
 
+*Home_27_NDFAConverter <font color="red">Version 0.9</font> has been released. *Src has been checked into svn.<br/>
+*Features: *
+  * A console program and a menu for interaction
+  * Input a FA by a xml file, DTD file is from _Project 12AutomataModeling_.
+  * All basic objectives are finished.
 *Deadline for Alpha Version: <font color="red">Jan 9, 2010</font> !*
 
 == Task Objective ==
