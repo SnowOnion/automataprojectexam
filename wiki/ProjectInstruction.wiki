@@ -14,7 +14,7 @@
 ||组号||研究题目||组员姓名（学号）||邮件列表||
 ||11||1, 自动机的建模工具||马晟(2009212623)、郭鑫(2009212624)、王玥(2009212560)||williamma.wm@gmail.com, gheart123@gmail.com, pipituliuliu@gmail.com||
 ||12||1,自动机的建模工具||纪军伟、李标、张渊||jijw09@gmail.com,beyondboylibiao@gmail.com,zhangwei273.gmail.com||
-||12||1,自动机的建模工具||贾伟昊、赵小卓、娄剑||jiaweihao1987@gmail.com(很抱歉，之前我已经上传了代码到SVN，使用的是12的组号，并且在Wiki中说明，请上面小组找我协调下，谢谢！)||
+||13||1,自动机的建模工具||贾伟昊、赵小卓、娄剑||jiaweihao1987@gmail.com(由于最初沟通问题，源代码目录名称为12AutomatonDesigner)||
 ||21||2, NFA/DFA的转换工具||黄崇迪(2009210940)||huangcd.thu@gmail.com||
 ||22||2, NFA/DFA的转换工具||李大鹏(2009220652)||lidapeng365@gmail.com||
 ||23||2, NFA/DFA的转换工具||李守勤(2009220700)||lishouqin@gmail.com||
