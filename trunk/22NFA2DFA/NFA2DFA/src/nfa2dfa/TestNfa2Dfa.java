@@ -10,6 +10,25 @@ package nfa2dfa;
  * @author admin
  */
 public class TestNfa2Dfa {
+    public static void InitalizeEmptyLanguageDfa(NFA nfa)
+    {
+        nfa.setStartStatus("q0");
+        nfa.getAllStatus().add("q2");
+        nfa.getAllStatus().add("q3");
+        nfa.getAllFinalStatus().add("q4");
+        nfa.getAllFinalStatus().add("q5");
+
+        nfa.getAllSymbols().add("a");
+        nfa.getAllSymbols().add("b");
+
+        nfa.getAllTransactions().add(new NfaTranstraction("q0", "q2",
+            new String[]{NFA.EmptySymbol, "a"}));
+        nfa.getAllTransactions().add(new NfaTranstraction("q3", "q2",
+            new String[]{NFA.EmptySymbol, "b"}));
+        nfa.getAllTransactions().add(new NfaTranstraction("q4", "q5",
+            new String[]{"a"}));
+    }
+
     public static void InitializeTestNfa(NFA nfa)
     {
         nfa.setStartStatus("q0");
