@@ -1,0 +1,1 @@
+java -jar NFA2DFA.jar
