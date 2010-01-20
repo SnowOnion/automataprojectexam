@@ -49,6 +49,12 @@ public class Main {
         TestAcceptable(dfa, "^&", false);
         TestAcceptable(dfa, "1912.%", false);
         TestAcceptable(dfa, "-1912.%", false);
+
+        System.out.println("Dfa empty Test case 1 :" + (dfa.IsEmptyLanguage() ? "Failed" : "Passed"));
+
+        NFA emptyDfa = new NFA();
+        TestNfa2Dfa.InitalizeEmptyLanguageDfa(emptyDfa);
+        System.out.println("Dfa empty Test case 2 :" + (emptyDfa.IsEmptyLanguage() ? "Passed" : "Failed"));
     }
 
     private static void TestAcceptable(NFA dfa, String testString, boolean expected)

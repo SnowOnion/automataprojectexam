@@ -25,6 +25,47 @@ public class NFA {
     private ArrayList<String> _allFinalStatus = new ArrayList<String>();
     private ArrayList<NfaTranstraction> _allTransactions = new ArrayList<NfaTranstraction>();
 
+    public boolean IsEmptyLanguage()
+    {
+        ArrayList<String> checkedStatus = new ArrayList<String>();
+        ArrayList<NfaTranstraction> checkedTransactions = new ArrayList<NfaTranstraction>();
+        ArrayList<String> toCheckStatus = new ArrayList<String>();
+        toCheckStatus.add(_startStatus);
+        while (!toCheckStatus.isEmpty())
+        {
+            String currStatus = toCheckStatus.get(0);
+            toCheckStatus.remove(0);
+            if (!checkedStatus.contains(currStatus))
+            {
+                checkedStatus.add(currStatus);
+            }
+
+            for (NfaTranstraction trans : _allTransactions)
+            {
+                if (trans.getStartStatus().equals(currStatus) &&
+                        !checkedStatus.contains(trans.getEndStatus()))
+                {
+                    if (_allFinalStatus.contains(trans.getEndStatus()))
+                    {
+                        return false;
+                    }
+                    
+                    if (!toCheckStatus.contains(trans.getEndStatus()))
+                    {
+                        toCheckStatus.add(trans.getEndStatus());
+                    }
+
+                    if (!checkedTransactions.contains(trans))
+                    {
+                        checkedTransactions.add(trans);
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
     public boolean IsAccept(String testString)
     {
         String currStatus = _startStatus;
