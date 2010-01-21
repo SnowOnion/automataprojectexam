@@ -8,9 +8,18 @@ import java.util.LinkedList;
  * 
  */
 public class RE {
-	private char operationChar=' ';//父节点存放的关系字符
-	private String reString="";//正则表达式串
-	private LinkedList<RE> res =new LinkedList<RE>(); //父节点的子树
+	/**
+	 * 父节点存放的关系字符
+	 */
+	private char operationChar=' ';
+	/**
+	 * 正则表达式串
+	 */
+	private String reString="";
+	/**
+	 * 父节点的子树
+	 */
+	private LinkedList<RE> res =new LinkedList<RE>(); 
 	
 	public void setReString(String reString) {
 		this.reString = reString;

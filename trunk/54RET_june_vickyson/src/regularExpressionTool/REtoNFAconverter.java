@@ -5,6 +5,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import Automata.Automata;
+import Automata.NFA;
+import Automata.State;
+import Automata.Transition;
+import GUI.MainForm;
+
 /**
  * 正则表达式到NFA的转换器
  * @author 刘军娥、卫松  2009-12-26
@@ -19,7 +25,7 @@ public class REtoNFAconverter {
 	 * @param re 正则表达式
 	 * @param s  待检测的字符串
 	 */
-	REtoNFAconverter(RE re,String s){
+	public REtoNFAconverter(RE re,String s){
 		this.setRe(re);
 		this.setS(s);	
 	}
@@ -81,7 +87,7 @@ public class REtoNFAconverter {
 			nfa.setSymbols(symbols);
 			
 			/*NFA的状态转移函数*/
-			System.out.println("输出状态转移函数:");
+			System.out.println("转换完毕！\n\n输出状态转移函数:");
 			List<Transition> transfers = new LinkedList<Transition>();
 			for (int i=0;i<MainForm.stateIDnumber;i++) {
 				for (Character character : symbols) {
@@ -120,7 +126,7 @@ public class REtoNFAconverter {
 		MainForm.stateIDnumber=stateID;
 		Transition tran=new Transition(startState,re.getReString(),endState);
 		startState.addTransfer(re.getReString(), tran);
-//		System.out.println(startState.getStateId()+"\t"+re.getReString()+"\t"+endState.getStateId());
+		System.out.println(startState.getStateId()+"\t"+re.getReString()+"\t"+endState.getStateId());
 		nfa.addState(startState);
 		nfa.addState(endState);
 			
@@ -136,10 +142,10 @@ public class REtoNFAconverter {
 				if(convert(re.getRes().get(i),nfa,MainForm.stateIDnumber,stateArray[i][0],stateArray[i][1])){
 					Transition tranOR1=new Transition(startState,String.valueOf(Automata.EPSILON),stateArray[i][0]);
 					startState.addTransfer(String.valueOf(Automata.EPSILON), tranOR1);
-//					System.out.println(startState.getStateId()+"\t"+String.valueOf(Automata.EPSILON)+"\t"+stateArray[i][0].getStateId());
+					System.out.println(startState.getStateId()+"\t"+String.valueOf(Automata.EPSILON)+"\t"+stateArray[i][0].getStateId());
 					Transition tranOR2=new Transition(stateArray[i][1],String.valueOf(Automata.EPSILON),endState);
 					stateArray[i][1].addTransfer(String.valueOf(Automata.EPSILON), tranOR2);
-//					System.out.println(stateArray[i][1].getStateId()+"\t"+String.valueOf(Automata.EPSILON)+"\t"+endState.getStateId());
+					System.out.println(stateArray[i][1].getStateId()+"\t"+String.valueOf(Automata.EPSILON)+"\t"+endState.getStateId());
 				}
 				else{
 					MainForm.stateIDnumber=0;
@@ -161,7 +167,7 @@ public class REtoNFAconverter {
 					if(i>0){
 						Transition tranAND=new Transition(statesArray[i-1][1],String.valueOf(Automata.EPSILON),statesArray[i][0]);
 						statesArray[i-1][1].addTransfer(String.valueOf(Automata.EPSILON), tranAND);
-//						System.out.println(statesArray[i-1][1].getStateId()+"\t"+String.valueOf(Automata.EPSILON)+"\t"+statesArray[i][0].getStateId());
+						System.out.println(statesArray[i-1][1].getStateId()+"\t"+String.valueOf(Automata.EPSILON)+"\t"+statesArray[i][0].getStateId());
 					}
 				}
 				else{
@@ -172,10 +178,10 @@ public class REtoNFAconverter {
 			}
 			Transition tranFirst=new Transition(startState, String.valueOf(Automata.EPSILON), statesArray[0][0]);
 			startState.addTransfer(String.valueOf(Automata.EPSILON), tranFirst);
-//			System.out.println(startState.getStateId()+"\t"+String.valueOf(Automata.EPSILON)+"\t"+statesArray[0][0].getStateId());
+			System.out.println(startState.getStateId()+"\t"+String.valueOf(Automata.EPSILON)+"\t"+statesArray[0][0].getStateId());
 			Transition tranSecond=new Transition(statesArray[re.getRes().size()-1][1], String.valueOf(Automata.EPSILON),endState);
 			statesArray[re.getRes().size()-1][1].addTransfer(String.valueOf(Automata.EPSILON), tranSecond);
-//			System.out.println(statesArray[re.getRes().size()-1][1].getStateId()+"\t"+String.valueOf(Automata.EPSILON)+"\t"+endState.getStateId());
+			System.out.println(statesArray[re.getRes().size()-1][1].getStateId()+"\t"+String.valueOf(Automata.EPSILON)+"\t"+endState.getStateId());
 		}
 		/*处理“*”号*/
 		else if(re.getOperationChar()=='*'){
@@ -184,16 +190,16 @@ public class REtoNFAconverter {
 			if(convert(re.getRes().get(0),nfa,MainForm.stateIDnumber,startState3,endState3)){
 				Transition tranStar1=new Transition(endState3,String.valueOf(Automata.EPSILON),startState3);
 				endState3.addTransfer(String.valueOf(Automata.EPSILON), tranStar1);
-//				System.out.println(endState3.getStateId()+"\t"+String.valueOf(Automata.EPSILON)+"\t"+startState3.getStateId());
+				System.out.println(endState3.getStateId()+"\t"+String.valueOf(Automata.EPSILON)+"\t"+startState3.getStateId());
 				Transition tranStar2=new Transition(startState,String.valueOf(Automata.EPSILON),endState);
 				startState.addTransfer(String.valueOf(Automata.EPSILON), tranStar2);
-//				System.out.println(startState.getStateId()+"\t"+String.valueOf(Automata.EPSILON)+"\t"+endState.getStateId());
+				System.out.println(startState.getStateId()+"\t"+String.valueOf(Automata.EPSILON)+"\t"+endState.getStateId());
 				Transition tranStar3=new Transition(startState, String.valueOf(Automata.EPSILON), startState3);
 				startState.addTransfer(String.valueOf(Automata.EPSILON), tranStar3);
-//				System.out.println(startState.getStateId()+"\t"+String.valueOf(Automata.EPSILON)+"\t"+startState3.getStateId());
+				System.out.println(startState.getStateId()+"\t"+String.valueOf(Automata.EPSILON)+"\t"+startState3.getStateId());
 				Transition tranStar4=new Transition(endState3, String.valueOf(Automata.EPSILON), endState);
 				endState3.addTransfer(String.valueOf(Automata.EPSILON), tranStar4);
-//				System.out.println(endState3.getStateId()+"\t"+String.valueOf(Automata.EPSILON)+"\t"+endState.getStateId());
+				System.out.println(endState3.getStateId()+"\t"+String.valueOf(Automata.EPSILON)+"\t"+endState.getStateId());
 			}
 			else{
 				MainForm.stateIDnumber=0;

@@ -1,5 +1,8 @@
 package regularExpressionTool;
 
+import Automata.NFA;
+import GUI.MainForm;
+
 /**
  * ²âÊÔÀà
  * @author Áõ¾ü¶ğ¡¢ÎÀËÉ  2009-12-26
