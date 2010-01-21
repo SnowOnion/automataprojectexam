@@ -35,6 +35,7 @@ public class DefaultXMLAutomatonWriter implements XMLAutomatonWriter {
             FileWriter writer = new FileWriter(file);
             writer.write(str);
             writer.flush();
+            writer.close();
             return true;
         } catch (IOException e) {
             log.log(Level.SEVERE, "error occurs:", e);
