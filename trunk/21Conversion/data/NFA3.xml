@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FiniteAutomaton SYSTEM "FA.dtd">
+<FiniteAutomaton type="NFA" name="graph 2_19">
+    <States>
+        <State stateID="q0">
+            <StateTypes>
+                <StateType type="COMMON"/>
+            </StateTypes>
+        </State>
+        <State stateID="q1">
+            <StateTypes>
+                <StateType type="COMMON"/>
+            </StateTypes>
+        </State>
+        <State stateID="q2">
+            <StateTypes>
+                <StateType type="COMMON"/>
+            </StateTypes>
+        </State>
+        <State stateID="q3">
+            <StateTypes>
+                <StateType type="COMMON"/>
+            </StateTypes>
+        </State>
+        <State stateID="q4">
+            <StateTypes>
+                <StateType type="FINAL"/>
+            </StateTypes>
+        </State>
+        <State stateID="q5">
+            <StateTypes>
+                <StateType type="COMMON"/>
+            </StateTypes>
+        </State>
+        <State stateID="q6">
+            <StateTypes>
+                <StateType type="COMMON"/>
+            </StateTypes>
+        </State>
+        <State stateID="q7">
+            <StateTypes>
+                <StateType type="COMMON"/>
+            </StateTypes>
+        </State>
+        <State stateID="q8">
+            <StateTypes>
+                <StateType type="FINAL"/>
+            </StateTypes>
+        </State>
+        <State stateID="q9">
+            <StateTypes>
+                <StateType type="INITIAL"/>
+            </StateTypes>
+        </State>
+    </States>
+    <InputSymbols>
+        <InputSymbol symbol="w"/>
+        <InputSymbol symbol="e"/>
+        <InputSymbol symbol="b"/>
+        <InputSymbol symbol="a"/>
+        <InputSymbol symbol="y"/>
+    </InputSymbols>
+    <Transitions>
+        <Transition>
+            <FromState stateID="q9"/>
+            <Conditions>
+                <Condition symbol="w"/>
+                <Condition symbol="e"/>
+                <Condition symbol="b"/>
+                <Condition symbol="a"/>
+                <Condition symbol="y"/>
+            </Conditions>
+            <ToStates>
+                <ToState stateID="q9"/>
+            </ToStates>
+        </Transition>
+        <Transition>
+            <FromState stateID="q9"/>
+            <ToStates>
+                <ToState stateID="q0"/>
+                <ToState stateID="q1"/>
+            </ToStates>
+        </Transition>
+        <Transition>
+            <FromState stateID="q1"/>
+            <Conditions>
+                <Condition symbol="w"/>
+            </Conditions>
+            <ToStates>
+                <ToState stateID="q2"/>
+            </ToStates>
+        </Transition>
+        <Transition>
+            <FromState stateID="q2"/>
+            <Conditions>
+                <Condition symbol="e"/>
+            </Conditions>
+            <ToStates>
+                <ToState stateID="q3"/>
+            </ToStates>
+        </Transition>
+        <Transition>
+            <FromState stateID="q3"/>
+            <Conditions>
+                <Condition symbol="b"/>
+            </Conditions>
+            <ToStates>
+                <ToState stateID="q4"/>
+            </ToStates>
+        </Transition>
+        <Transition>
+            <FromState stateID="q0"/>
+            <Conditions>
+                <Condition symbol="e"/>
+            </Conditions>
+            <ToStates>
+                <ToState stateID="q5"/>
+            </ToStates>
+        </Transition>
+        <Transition>
+            <FromState stateID="q5"/>
+            <Conditions>
+                <Condition symbol="b"/>
+            </Conditions>
+            <ToStates>
+                <ToState stateID="q6"/>
+            </ToStates>
+        </Transition>
+        <Transition>
+            <FromState stateID="q6"/>
+            <Conditions>
+                <Condition symbol="a"/>
+            </Conditions>
+            <ToStates>
+                <ToState stateID="q7"/>
+            </ToStates>
+        </Transition>
+        <Transition>
+            <FromState stateID="q7"/>
+            <Conditions>
+                <Condition symbol="y"/>
+            </Conditions>
+            <ToStates>
+                <ToState stateID="q8"/>
+            </ToStates>
+        </Transition>
+    </Transitions>
+</FiniteAutomaton>
