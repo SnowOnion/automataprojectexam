@@ -20,9 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AutomatonConversion/src/ui/Main.java" afterPath="$PROJECT_DIR$/AutomatonConversion/src/ui/Main.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/21Conversion.iws" afterPath="$PROJECT_DIR$/21Conversion.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AutomatonConversion/src/automaton/io/xml/DefaultXMLAutomatonWriter.java" afterPath="$PROJECT_DIR$/AutomatonConversion/src/automaton/io/xml/DefaultXMLAutomatonWriter.java" />
     </list>
     <ignored path="21Conversion.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -94,7 +92,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state line="117" column="36" selection-start="4033" selection-end="4033" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="imports" expanded="true" />
                 <marker date="1264041002195" expanded="false" signature="5697:6706" placeholder="UI Designer generated code" />
               </folding>
             </state>
@@ -143,13 +140,8 @@
       <file leaf-file-name="NFA3.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/data/NFA3.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="147" column="0" selection-start="4241" selection-end="4241" vertical-scroll-proportion="0.75195825">
-              <folding>
-                <element signature="tag#States#0;tag#FiniteAutomaton#0" expanded="false" />
-                <element signature="tag#Transition#0;tag#Transitions#0;tag#FiniteAutomaton#0" expanded="false" />
-                <element signature="tag#Transition#1;tag#Transitions#0;tag#FiniteAutomaton#0" expanded="false" />
-                <element signature="tag#Transition#2;tag#Transitions#0;tag#FiniteAutomaton#0" expanded="false" />
-              </folding>
+            <state line="142" column="37" selection-start="4135" selection-end="4135" vertical-scroll-proportion="0.6545454">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -158,9 +150,7 @@
         <entry file="file://$PROJECT_DIR$/AutomatonConversion/src/automaton/io/xml/DefaultXMLAutomatonWriter.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="37" column="27" selection-start="971" selection-end="971" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="method#createDocument#0;class#DefaultXMLAutomatonWriter#0" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -485,11 +475,11 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.24540901" />
     <property name="RunManagerConfig.showSettingsBeforeRunnig" value="false" />
-    <property name="MemberChooser.sorted" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="GenerateAntBuildDialog.generateSingleFile" value="false" />
-    <property name="last_opened_file_path" value="D:\document\CourseAndInfomation\形式语言\project\project\21Conversion\data" />
+    <property name="recentsLimit" value="5" />
+    <property name="MemberChooser.sorted" value="false" />
     <property name="GenerateAntBuildDialog.inclineRuntiemClasspath" value="true" />
+    <property name="last_opened_file_path" value="D:\document\CourseAndInfomation\形式语言\project\project\21Conversion\data" />
     <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="GenerateAntBuildDialog.enableUiFormCompile" value="true" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
@@ -560,8 +550,8 @@
       <method>
         <option name="AntTarget" value="false" />
         <option name="BuildArtifacts" value="false" />
-        <option name="FtpUpload" value="false" />
         <option name="Make" value="true" />
+        <option name="FtpUpload" value="false" />
       </method>
     </tempConfiguration>
     <configuration default="true" type="Remote" factoryName="Remote">
@@ -604,8 +594,8 @@
       <method>
         <option name="AntTarget" value="false" />
         <option name="BuildArtifacts" value="false" />
-        <option name="Make" value="false" />
         <option name="FtpUpload" value="false" />
+        <option name="Make" value="false" />
       </method>
     </configuration>
     <configuration default="true" type="Applet" factoryName="Applet">
@@ -627,8 +617,8 @@
       <method>
         <option name="AntTarget" value="false" />
         <option name="BuildArtifacts" value="false" />
-        <option name="Make" value="false" />
         <option name="FtpUpload" value="false" />
+        <option name="Make" value="false" />
       </method>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application" enabled="false" merge="false" sample_coverage="true" runner="emma">
@@ -651,8 +641,8 @@
       <method>
         <option name="AntTarget" value="false" />
         <option name="BuildArtifacts" value="false" />
-        <option name="FtpUpload" value="false" />
         <option name="Make" value="true" />
+        <option name="FtpUpload" value="false" />
       </method>
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit" enabled="false" merge="false" runner="emma">
@@ -676,8 +666,8 @@
       <method>
         <option name="AntTarget" value="false" />
         <option name="BuildArtifacts" value="false" />
-        <option name="Make" value="false" />
         <option name="FtpUpload" value="false" />
+        <option name="Make" value="false" />
       </method>
     </configuration>
     <configuration default="false" name="Test" type="Application" factoryName="Application" enabled="false" merge="false" sample_coverage="true" runner="emma">
@@ -733,8 +723,8 @@
       <method>
         <option name="AntTarget" value="false" />
         <option name="BuildArtifacts" value="false" />
-        <option name="FtpUpload" value="false" />
         <option name="Make" value="true" />
+        <option name="FtpUpload" value="false" />
       </method>
     </configuration>
     <list size="3">
@@ -749,7 +739,6 @@
   </component>
   <component name="ScopeViewComponent">
     <subPane subId="Problems" />
-    <subPane subId="Tests" />
     <subPane subId="Production">
       <PATH>
         <PATH_ELEMENT USER_OBJECT="Root">
@@ -784,6 +773,7 @@
         </PATH_ELEMENT>
       </PATH>
     </subPane>
+    <subPane subId="Tests" />
     <subPane subId="All">
       <PATH>
         <PATH_ELEMENT USER_OBJECT="Root">
@@ -859,9 +849,9 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2198697" sideWeight="0.6605505" order="2" side_tool="false" x="84" y="138" width="405" height="588" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874617" sideWeight="0.5" order="6" side_tool="false" />
-      <window_info id="Statistic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874617" sideWeight="0.0" order="7" side_tool="false" />
+      <window_info id="Statistic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6727829" sideWeight="0.0" order="7" side_tool="false" x="221" y="163" width="836" height="440" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16938111" sideWeight="0.6605505" order="3" side_tool="false" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.31651375" order="1" side_tool="false" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874617" sideWeight="0.5" order="1" side_tool="false" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39908257" sideWeight="0.5" order="3" side_tool="false" />
       <window_info id="Dataflow to this" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" />
@@ -871,11 +861,11 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874617" sideWeight="0.5" order="7" side_tool="false" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19788274" sideWeight="0.6605505" order="1" side_tool="false" />
       <window_info id="JProfiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25895765" sideWeight="0.6605505" order="0" side_tool="false" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25895765" sideWeight="0.31651375" order="0" side_tool="false" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" />
       <window_info id="Web Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874617" sideWeight="0.5" order="15" side_tool="false" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39908257" sideWeight="0.5" order="5" side_tool="false" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32874617" sideWeight="0.0" order="2" side_tool="false" x="26" y="277" width="1228" height="215" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874617" sideWeight="0.0" order="2" side_tool="false" x="26" y="277" width="1228" height="215" />
       <window_info id="Graphical Navigator" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.76384366" sideWeight="0.5" order="4" side_tool="false" x="282" y="57" width="716" height="654" />
       <window_info id="Regex" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32874617" sideWeight="0.5" order="16" side_tool="false" />
       <window_info id="Class Cloud" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.6880734" sideWeight="0.5" order="8" side_tool="false" />
@@ -1029,34 +1019,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AutomatonConversion/src/ui/Main.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AutomatonConversion/src/automaton/io/xml/DefaultXMLAutomatonWriter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="27" selection-start="971" selection-end="971" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="method#createDocument#0;class#DefaultXMLAutomatonWriter#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AutomatonConversion/src/automaton/io/xml/XMLAutomatonReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="17" selection-start="262" selection-end="262" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AutomatonConversion/src/automaton/io/xml/DefaultXMLAutomatonReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="149" column="40" selection-start="5954" selection-end="5954" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DFA[graph 2.18].xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="46" selection-start="361" selection-end="361" vertical-scroll-proportion="0.49608356">
@@ -1064,11 +1026,15 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/AutomatonConversion/src/ui/Main.form">
+      <provider selected="true" editor-type-id="ui-designer">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/AutomatonConversion/src/ui/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="117" column="36" selection-start="4033" selection-end="4033" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="imports" expanded="true" />
             <marker date="1264041002195" expanded="false" signature="5697:6706" placeholder="UI Designer generated code" />
           </folding>
         </state>
@@ -1105,15 +1071,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/AutomatonConversion/src/automaton/io/xml/DefaultXMLAutomatonWriter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="27" selection-start="971" selection-end="971" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AutomatonConversion/src/automaton/io/xml/XMLAutomatonReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="17" selection-start="262" selection-end="262" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AutomatonConversion/src/automaton/io/xml/DefaultXMLAutomatonReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="149" column="40" selection-start="5954" selection-end="5954" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/data/NFA3.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="147" column="0" selection-start="4241" selection-end="4241" vertical-scroll-proportion="0.75195825">
-          <folding>
-            <element signature="tag#States#0;tag#FiniteAutomaton#0" expanded="false" />
-            <element signature="tag#Transition#0;tag#Transitions#0;tag#FiniteAutomaton#0" expanded="false" />
-            <element signature="tag#Transition#1;tag#Transitions#0;tag#FiniteAutomaton#0" expanded="false" />
-            <element signature="tag#Transition#2;tag#Transitions#0;tag#FiniteAutomaton#0" expanded="false" />
-          </folding>
+        <state line="142" column="37" selection-start="4135" selection-end="4135" vertical-scroll-proportion="0.6545454">
+          <folding />
         </state>
       </provider>
     </entry>
