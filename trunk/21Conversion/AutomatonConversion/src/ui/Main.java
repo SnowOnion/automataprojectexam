@@ -2,7 +2,9 @@ package ui;
 
 import automaton.FiniteAutomaton;
 import automaton.NFA;
+import automaton.DFA;
 import automaton.io.xml.DefaultXMLAutomatonReader;
+import automaton.io.xml.DefaultXMLAutomatonWriter;
 import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
 import static ui.FAViewer.createViewer;
 import static util.Util.getLogger;
@@ -27,9 +29,11 @@ import java.util.logging.Logger;
 @SuppressWarnings({"unchecked"})
 public class Main {
     private final static Logger log;
+    private final static DefaultXMLAutomatonWriter writer;
 
     static {
         log = getLogger(Main.class);
+        writer = new DefaultXMLAutomatonWriter();
     }
 
     private JTabbedPane FAViewsTab;
@@ -58,7 +62,9 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int index = FAViewsTab.getSelectedIndex();
-                addFiniteAutomaton(((NFA) faLists.get(index)).toDFA());
+                DFA newDFA = ((NFA) faLists.get(index)).toDFA();
+                addFiniteAutomaton(newDFA);
+                writer.writeDFA(newDFA, new File(newDFA.getName() + ".xml"));
             }
         });
         popMenu.add(toDFAItem);
