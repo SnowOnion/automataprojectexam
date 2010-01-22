@@ -97,8 +97,10 @@ public class DFA extends Automaton {
 		Iterator<State> sit = states.iterator();
 		while (sit.hasNext()) {
 			State s = sit.next();
-			if (s != startState && s.fromStates().isEmpty())
+			if (s != startState && s.fromStates().isEmpty()) {
+				sit.remove();
 				removeState(s);
+			}
 		}
 		// Table used in merging
 		table = new char[size][size];
@@ -110,6 +112,8 @@ public class DFA extends Automaton {
 			int i = numOfState(finalsIter.next());
 			for (int j = 0; j < size; ++j) {
 				if (!finalStates.contains(j)) {
+					if (i == j)
+						continue;
 					if (i < j)
 						table[i][j] = 'X';
 					else
@@ -135,9 +139,9 @@ public class DFA extends Automaton {
 	 * @return true：本DFA的语言包含于t； false：本DFA的语言不包含于t。
 	 */
 	public boolean includedIn(DFA t) {
-		minimize();
-		t.minimize();
-		
+//		minimize();
+//		t.minimize();
+		queue = new LinkedList<Pair<Integer, Integer>>();
 		markDeadStates();
 		int[] map1 = new int[size];
 		for (int i = 0; i < size; ++i)
@@ -228,18 +232,20 @@ public class DFA extends Automaton {
 					continue;
 				Iterator<State> stateIter2 = trans2.fromStatesByCond(letter).iterator();
 				while (stateIter1.hasNext()) {	// reverse paths - may be multiple
-					int i = numOfState(stateIter1.next());
 					stateIter2 = trans2.fromStatesByCond(letter).iterator();
+					int i = numOfState(stateIter1.next());
 					while (stateIter2.hasNext()) {
 						int j = numOfState(stateIter2.next());
 						if (i > j) {
-							int temp = i;
-							i = j;
-							j = temp;
-						}
-						if (table[i][j] != 'X') {
-							table[i][j] = 'X';
-							queue.add(new Pair<Integer, Integer>(i, j));
+							if (table[j][i] != 'X') {
+								table[j][i] = 'X';
+								queue.add(new Pair<Integer, Integer>(j, i));
+							}
+						} else {
+							if (table[i][j] != 'X') {
+								table[i][j] = 'X';
+								queue.add(new Pair<Integer, Integer>(i, j));
+							}
 						}
 					}
 				}
