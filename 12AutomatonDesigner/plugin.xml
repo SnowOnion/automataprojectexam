@@ -64,8 +64,16 @@
                value="Automaton Designer">
          </property>
          <property
+               name="aboutImage"
+               value="icons/aasa64.png">
+         </property>
+         <property
+               name="aboutText"
+               value="欢迎使用Automaton Designer自动机建模工具！本建模工具由贾伟昊、赵小卓、娄剑共同开发。">
+         </property>
+         <property
                name="windowImages"
-               value="icons/new16.gif,icons/views.gif">
+               value="icons/aasa.png,icons/aasa32.png">
          </property>
       </product>
    </extension>
