@@ -47,9 +47,11 @@ public class AutomatonFactory {
 		dfa.setStartState(getStartStateName(root));
 		// Intermediate states
 		NodeList states = getCommonStateNodes(root);
-		for (int i = 0; i < states.getLength(); ++i) {
-			Element t = (Element) states.item(i);
-			dfa.addState(getStateName(t));
+		if (states != null) {
+			for (int i = 0; i < states.getLength(); ++i) {
+				Element t = (Element) states.item(i);
+				dfa.addState(getStateName(t));
+			}
 		}
 		// Final states
 		states = getFinalStateNodes(root);
@@ -84,6 +86,7 @@ public class AutomatonFactory {
 	}
 	private static NodeList getCommonStateNodes(Element root) {
 		Element e = (Element) root.getElementsByTagName("CommonStates").item(0);
+		if (e == null) return null;
 		return e.getElementsByTagName("State");
 	}
 	private static NodeList getFinalStateNodes(Element root) {
