@@ -5,6 +5,9 @@ import java.util.Iterator;
 
 public class InTransitions extends Transitions {
 	// Remove an exist transition
+	/* (non-Javadoc)
+	 * @see automata.Transitions#removeTransition(automata.Transition)
+	 */
 	@Override
 	public void removeTransition(Transition s) {
 		super.removeTransition(s);
