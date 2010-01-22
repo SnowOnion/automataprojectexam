@@ -11,8 +11,17 @@ import edu.cn.thss.qmy.ndfa.core.FA;
 import edu.cn.thss.qmy.ndfa.core.State;
 import edu.cn.thss.qmy.ndfa.core.Transition;
 
+/**
+ * @author Mengyue
+ * Read a xml file, parser it to FA structure.
+ */
 public class FAParser {
 
+	/**
+	 * A Naive method via DOM.
+	 * @param filePath
+	 * @return
+	 */
 	public static FA NaiveParser(String filePath){
 		
 		FA fa = new FA();

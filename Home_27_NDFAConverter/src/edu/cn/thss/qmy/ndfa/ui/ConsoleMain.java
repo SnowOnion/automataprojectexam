@@ -12,6 +12,10 @@ import edu.cn.thss.qmy.ndfa.core.State;
 import edu.cn.thss.qmy.ndfa.core.Transition;
 import edu.cn.thss.qmy.ndfa.util.FAParser;
 
+/**
+ * @author Mengyue
+ * Entrance by Console.
+ */
 public class ConsoleMain {
 
 	public static void main(String[] args) throws Exception {
