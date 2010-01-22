@@ -29,4 +29,40 @@
             id="gui.ui.DiagramEditor"
             name="Diagram Editor"/>
    </extension>
+ <extension
+       id="product"
+       point="org.eclipse.core.runtime.products">
+    <product
+          application="AutomatonModeling.application"
+          name="automatonproduct">
+       <property
+             name="appName"
+             value="automatonproduct">
+       </property>
+    </product>
+ </extension>
+ <extension
+       id="automatonproduct"
+       point="org.eclipse.core.runtime.products">
+    <product
+          application="AutomatonModeling.application"
+          name="automaton product">
+       <property
+             name="appName"
+             value="automaton product">
+       </property>
+    </product>
+ </extension>
+ <extension
+       id="product1"
+       point="org.eclipse.core.runtime.products">
+    <product
+          application="AutomatonModeling.application"
+          name="Automaton Product">
+       <property
+             name="appName"
+             value="Automaton Product">
+       </property>
+    </product>
+ </extension>
 </plugin>
