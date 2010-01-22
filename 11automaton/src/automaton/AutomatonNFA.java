@@ -9,9 +9,9 @@ package automaton;
  * 
  */
 public class AutomatonNFA extends Automaton {
-	public AutomatonNFA(){
+	public AutomatonNFA() {
+		super();
 		setAutomatonType(AutomatonConstant.AUTOMATONTYPES[2]);
 	}
-
 
 }

@@ -1,15 +1,7 @@
 package automaton;
 
 import exception.NoStateFoundException;
-import gui.help.AutomatonType;
-import gui.model.AbstractConnectionModel;
-import gui.model.AbstractModel;
-import gui.model.ContentsModel;
-import gui.model.StateModel;
-
 import java.io.File;
-import java.util.List;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -18,13 +10,9 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
-import org.eclipse.draw2d.Bendpoint;
 import org.w3c.dom.Document;
-
-import xml.DFADomParser;
-import xml.NFADomParser;
-import xml.PDADomParser;
+import xml2.NFADomParserTwo;
+import xml2.PDADomParserTwo;
 
 /**************************************************************
  * \ This class used Factory Design pattern to implements the creation of the
@@ -38,67 +26,10 @@ public class AutomatonFactory {
 	public static AutomatonFactory getInstance() {
 		if (af == null) {
 			af = new AutomatonFactory();
-			ddp = new DFADomParser();
-			ndp = new NFADomParser();
-			pdp = new PDADomParser();
+			ndp = new NFADomParserTwo();
+			pdp = new PDADomParserTwo();
 		}
 		return af;
-	}
-
-	/*********************************************************************
-	 * To be implmented.......... This method will create an Automaton Class
-	 * according to the parameter Model
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-	@SuppressWarnings("unchecked")
-	public static Automaton getAutomatonFromModel(AbstractModel model)
-			throws Exception {
-		Automaton automaton = null;
-		ContentsModel contents = null;
-		if (model instanceof ContentsModel)
-			contents = (ContentsModel) model;
-		else
-			throw new Exception();
-
-		AutomatonType type = contents.getType();
-		automaton = getAutomaton(type);
-
-		automaton.setAutomatonType(type.toString());
-		for (Object stateobj : contents.getChildren()) {
-			StateModel stateModel = (StateModel) stateobj;
-			State state = new State(stateModel.getText());
-			automaton.addState(state);
-			if (stateModel.isInitial())
-				automaton.setInitialState(state);
-			if (stateModel.isAccept())
-				state.setStateType(AutomatonConstant.STATETYPE_ACCEPTED);
-		}
-
-		for (AbstractConnectionModel conn : contents.getConnections()) {
-			Transition transition = Transition.getTransitionOfType(type);
-			transition.setConditionsFromRawString(automaton, conn
-					.getCondition());
-
-			List<Bendpoint> bendpoints = conn.getBendpoints();
-			for (Bendpoint bendpoint : bendpoints) {
-				transition.addNail(new Nail(bendpoint.getLocation()));
-			}
-		}
-
-		return automaton;
-	}
-
-	public static Automaton getAutomaton(AutomatonType type) {
-		Automaton automaton = null;
-		if (type == AutomatonType.NFA) {
-			automaton = new AutomatonNFA();
-		} else if (type == AutomatonType.DFA)
-			automaton = new AutomatonDFA();
-		else
-			automaton = new AutomatonPDA();
-		return automaton;
 	}
 
 	/*******************************************************************
@@ -136,13 +67,12 @@ public class AutomatonFactory {
 	public static Automaton getAutomatonFromDocument(Document doc)
 			throws NoStateFoundException {
 		String automatonType = doc.getDocumentElement().getNodeName();
-		if (automatonType.equals("DFA")) {
-			return ddp.getAutomatonFromNode(doc);
-		}
-		if (automatonType.equals("NFA")) {
+		if (automatonType.equals("NFA") || automatonType.equals("DFA")) {
+			ndp = new NFADomParserTwo();
 			return ndp.getAutomatonFromNode(doc);
 		}
 		if (automatonType.equals("PDA")) {
+			pdp = new PDADomParserTwo();
 			return pdp.getAutomatonFromNode(doc);
 		}
 		return null;
@@ -150,14 +80,14 @@ public class AutomatonFactory {
 
 	public static Document getDocumentFromAutomaton(Automaton automaton) {
 		String automatonType = automaton.getAutomatonType();
-		if (automatonType.equals("DFA")) {
-			return ddp.getDocumentFromAutomaton(automaton);
-		}
-		if (automatonType.equals("NFA")) {
+		if (automatonType.equals("NFA") || automatonType.equals("DFA")) {
+			ndp = new NFADomParserTwo();
 			return ndp.getDocumentFromAutomaton(automaton);
 		}
 		if (automatonType.equals("PDA")) {
+			pdp = new PDADomParserTwo();
 			return pdp.getDocumentFromAutomaton(automaton);
+			
 		}
 		return null;
 	}
@@ -169,10 +99,11 @@ public class AutomatonFactory {
 	 * @param file
 	 * @return
 	 */
-	public static void writeAutomatonToXml(Automaton automaton,File file){
+	public static void writeAutomatonToXml(Automaton automaton, File file) {
 		Document document = getDocumentFromAutomaton(automaton);
-		writeAutomatonToXml(document,file);
+		writeAutomatonToXml(document, file);
 	}
+
 	private static void writeAutomatonToXml(Document document, File file) {
 		try {
 			TransformerFactory transfactory = TransformerFactory.newInstance();
@@ -181,6 +112,7 @@ public class AutomatonFactory {
 			transformer.setOutputProperty("encoding", "UTF-8");
 			StreamResult result = new StreamResult(file);
 			transformer.transform(source, result);
+			
 		} catch (TransformerConfigurationException tce) {
 			tce.printStackTrace();
 		} catch (TransformerException te) {
@@ -189,7 +121,6 @@ public class AutomatonFactory {
 	}
 
 	private static AutomatonFactory af;
-	private static DFADomParser ddp;
-	private static NFADomParser ndp;
-	private static PDADomParser pdp;
+	private static NFADomParserTwo ndp;
+	private static PDADomParserTwo pdp;
 }

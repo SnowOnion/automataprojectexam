@@ -36,4 +36,7 @@ public class Nail {
 	public void setNailY(int nailY) {
 		this.nailY = nailY;
 	}
+	public String toString(){
+		return nailX+","+nailY;
+	}
 }

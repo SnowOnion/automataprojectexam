@@ -1,5 +1,6 @@
 package gui.ui;
 
+import gui.help.AutomatonType;
 import gui.model.AbstractConnectionModel;
 import gui.model.ContentsModel;
 import gui.model.StateModel;
@@ -7,14 +8,16 @@ import gui.model.TransitionModel;
 import gui.parts.PartFactory;
 import gui.parts.TreeEditPartFactory;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.EventObject;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.LightweightSystem;
 import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.Viewport;
+import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.draw2d.parts.ScrollableThumbnail;
 import org.eclipse.gef.ContextMenuProvider;
@@ -45,6 +48,7 @@ import org.eclipse.gef.ui.parts.GraphicalEditorWithPalette;
 import org.eclipse.gef.ui.parts.GraphicalViewerKeyHandler;
 import org.eclipse.gef.ui.parts.TreeViewer;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -61,17 +65,25 @@ import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
+import automaton.Automaton;
+import automaton.AutomatonFactory;
+import automaton.State;
 import automatonmodeling.Application;
+import automatonmodeling.ModelTransformer;
 
 public class DiagramEditor extends GraphicalEditorWithPalette {
 	public static final String ID = "gui.ui.DiagramEditor";
-	GraphicalViewer viewer;
-	ContentsModel parent;
+	private GraphicalViewer viewer;
+	private ContentsModel contents;
+	private String filepath;
+	public static boolean isNewFile=true;
+	private String name;
 
 	public DiagramEditor() {
 		setEditDomain(new DefaultEditDomain(this));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void configureGraphicalViewer() {
 		super.configureGraphicalViewer();
@@ -117,26 +129,32 @@ public class DiagramEditor extends GraphicalEditorWithPalette {
 
 	@Override
 	protected void initializeGraphicalViewer() {
-		parent = new ContentsModel();
+		//如果是新建的文件 
+		if (isNewFile){
+			contents = new ContentsModel();
+			StateModel child = new StateModel();
 
-		StateModel child = new StateModel();
-		StateModel child1 = new StateModel();
-		
-		AbstractConnectionModel transition = new AbstractConnectionModel();
-		transition.setSource(child);
-		transition.setTarget(child1);
-		transition.attachSource();
-		transition.attachTarget();
-
-		child.setConstraint(new Rectangle(80, 80, 50, 50));
-		child1.setConstraint(new Rectangle(150, 150, 50, 50));
-		//child.setColor(ColorConstants.orange);
-		parent.addChild(child);
-		parent.addChild(child1);
-		child.setParent(parent);
-		child1.setParent(parent);
-
-		viewer.setContents(parent);
+			child.setConstraint(new Rectangle(80, 80, 50, 50));
+			child.isInitial=1;
+			contents.setInitialState(child);
+			contents.addChild(child);
+			child.setParent(contents);
+		}
+		//如果是打开一个文件
+		else {
+			String path = ((DiagramEditorInput)this.getEditorInput()).getName();
+			try {
+				Automaton automaton = AutomatonFactory.getAutomatonFromXml(new File(path));
+				contents = ModelTransformer.getModelFromAutomaton(automaton);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		filepath = ((DiagramEditorInput)this.getEditorInput()).getPath().toString();
+		System.out.println("System file path:"+filepath);
+		viewer.setContents(contents);
 	}
 
 	@Override
@@ -194,6 +212,7 @@ public class DiagramEditor extends GraphicalEditorWithPalette {
 		return root;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void createActions() {
 		super.createActions();
 		ActionRegistry registry = getActionRegistry();
@@ -255,6 +274,7 @@ public class DiagramEditor extends GraphicalEditorWithPalette {
 			super(new TreeViewer());
 		}
 
+		@SuppressWarnings("deprecation")
 		public void init(IPageSite pageSite) {
 			super.init(pageSite);
 			ActionRegistry registry = getActionRegistry();
@@ -314,5 +334,33 @@ public class DiagramEditor extends GraphicalEditorWithPalette {
 			}
 			super.dispose();
 		}
+	}
+
+	public ContentsModel getContents() {
+		return contents;
+	}
+
+	public String getFilepath() {
+		return filepath;
+	}
+
+	public void setFilepath(String filepath) {
+		this.filepath = filepath;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public void setContentsType(String type) {
+		if (type.equals("DFA"))
+			this.contents.setType(AutomatonType.DFA);
+		else if (type.equals("NFA"))
+			this.contents.setType(AutomatonType.NFA);
+		else this.contents.setType(AutomatonType.PDA);
 	}
 }

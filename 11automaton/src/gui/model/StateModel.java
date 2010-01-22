@@ -13,8 +13,8 @@ import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 
 public class StateModel extends AbstractModel {
-	private String text = "p0";
-	private int isInitial = 0;
+	public String text="P0";
+	public int isInitial = 0;
 
 	private int isAccept = 0;
 

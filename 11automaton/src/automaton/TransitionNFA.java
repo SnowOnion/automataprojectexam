@@ -3,6 +3,7 @@ package automaton;
 import gui.help.AutomatonException;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class TransitionNFA extends Transition {
 
@@ -29,11 +30,12 @@ public class TransitionNFA extends Transition {
 	@Override
 	public void setConditionsFromRawString(Automaton automaton, String condstr)
 			throws AutomatonException {
-		String[] conditions = condstr.split(",");
-		for (String cond : conditions) {
-			if (checkCondition(cond))
+		StringTokenizer st = new StringTokenizer(condstr, ",");
+		while (st.hasMoreTokens()) {
+			String cond = st.nextToken();
+			if (!checkCondition(cond))
 				throw new AutomatonException("Wrong format of condition "
-						+ condstr);
+						+ cond);
 			addCondition(automaton, cond);
 		}
 	}
@@ -43,7 +45,7 @@ public class TransitionNFA extends Transition {
 	public void addCondition(Automaton automaton, String cond)
 			throws AutomatonException {
 		if (!checkCondition(cond))
-			throw new AutomatonException("Wrong format of condition");
+			throw new AutomatonException("Wrong format of condition " + cond);
 		transitionConditions.add(cond);
 		if (!automaton.hasInputSymbol(cond))
 			automaton.addInputSymbol(cond);

@@ -184,8 +184,16 @@ public class DomParserParent implements AutomatonXmlInterface {
 		byte stateTypeByte = state.getStateType();
 		stateType.setTextContent(AutomatonConstant.STATETYPES[stateTypeByte]);
 		
+		Element stateNail = doc.createElement("Nail");
+		Element nailX = doc.createElement("x");
+		Element nailY = doc.createElement("y");
+		nailX.setTextContent(String.valueOf(state.getStateNail().getNailX()));
+		nailY.setTextContent(String.valueOf(state.getStateNail().getNailY()));
+		stateNail.appendChild(nailX);
+		stateNail.appendChild(nailY);
 		stateElement.appendChild(stateId);
 		stateElement.appendChild(stateType);
+		stateElement.appendChild(stateNail);
 		return stateElement;
 	}
 
