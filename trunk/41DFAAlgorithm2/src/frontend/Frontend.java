@@ -49,15 +49,14 @@ public class Frontend {
 
 		System.out.println(d.equivalentTo(t));
 		*/
-		File file = new File("src\\XML1.xml");
+		File file = new File("src\\case1-1.xml");
 		DFA a = AutomatonFactory.getDFAFromXML(file);
 		System.out.println(a.toString());
-		file = new File("src\\XML2.xml");
+		file = new File("src\\case1-2.xml");
 		DFA b = AutomatonFactory.getDFAFromXML(file);
 		System.out.println(b.toString());
-		System.out.println(a.equivalentTo(b));
-		System.out.println(a.toString());
-		System.out.println(b.toString());
+		System.out.println("a is equivalent to b? " + a.equivalentTo(b));
+		System.out.println("a is included in b? " + a.includedIn(b));
 	}
 
 }
