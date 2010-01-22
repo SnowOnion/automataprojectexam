@@ -28,9 +28,14 @@ public class StateEditPart extends EditPartWithListener implements NodeEditPart 
 
 	@Override
 	protected IFigure createFigure() {
-		StateModel hm = new StateModel();
+		StateModel hm =(StateModel) this.getModel();
 		StateFigure state = new StateFigure();
 		state.setText(hm.getText());
+		state.setPosition(hm.getPosition());
+		if (hm.isInitial()){
+			state.changeType2Initial();
+			System.out.println(hm.getText()+" is initial");
+		}
 		return state;
 	}
 
@@ -66,7 +71,7 @@ public class StateEditPart extends EditPartWithListener implements NodeEditPart 
 			figure.setPosition((Point) event.getNewValue());
 			((StateModel) getModel()).getConstraint().setLocation(
 					(Point) event.getNewValue());
-			// ((StateModel)getModel()).setPos((StateModel)getModel())ition((Point)event.getNewValue());
+			System.out.println("position:"+((StateModel)getModel()).getPosition().x);
 		} else if (event.getPropertyName().equals(
 				StateModel.P_SOURCE_CONNECTION)) {
 			refreshSourceConnections();
@@ -75,6 +80,7 @@ public class StateEditPart extends EditPartWithListener implements NodeEditPart 
 			refreshTargetConnections();
 		} else if (event.getPropertyName().equals(StateModel.P_INITIAL)) {
 			StateFigure figure = (StateFigure) getFigure();
+			System.out.println("color yellow");
 			if (((Integer) event.getNewValue()).intValue() == 1)
 				figure.changeType2Initial();
 			else

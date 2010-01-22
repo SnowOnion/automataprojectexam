@@ -71,4 +71,16 @@ public class TransitionPDA extends Transition {
 	protected boolean checkCondition(String cond) {
 		return cond.equals("empty") || cond.length() == 1;
 	}
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
+		if(transitionConditions.isEmpty()){
+			sb.append("Transisiton is empty");
+		}else{
+			for(Object condition:transitionConditions){
+				sb.append((TransitionPDACondition) condition);
+			}
+		}
+		return sb.toString();
+	}
 }

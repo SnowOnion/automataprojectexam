@@ -11,7 +11,7 @@ public class ContentsModel extends AbstractModel {
 	private List children = new ArrayList();
 	private List<AbstractConnectionModel> connections = new ArrayList<AbstractConnectionModel>();
 	private StateModel initialState = null;
-	private AutomatonType type;
+	private AutomatonType type = AutomatonType.NFA;
 
 	public static final String P_CHILDREN = "_children";
 
@@ -19,7 +19,7 @@ public class ContentsModel extends AbstractModel {
 	public void addChild(Object child) {
 		children.add(child);
 		firePropertyChange(P_CHILDREN, null, null);
-		((StateModel) child).setText("p" + newest_id);
+		//((StateModel) child).setText("p" + newest_id);
 		newest_id++;
 	}
 
@@ -90,5 +90,14 @@ public class ContentsModel extends AbstractModel {
 
 	public List<AbstractConnectionModel> getConnections() {
 		return connections;
+	}
+	
+	public StateModel getChild(String text){
+		System.out.println("text:"+text);
+		for (int i=0;i<children.size();i++) {
+			if (((StateModel)children.get(i)).getText().equals(text))
+				return (StateModel)children.get(i);
+		}
+		return null;
 	}
 }

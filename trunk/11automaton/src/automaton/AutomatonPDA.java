@@ -16,6 +16,7 @@ public class AutomatonPDA extends Automaton {
 	private String initialStackSymbol;
 
 	public AutomatonPDA() {
+		super();
 		setAutomatonType(AutomatonConstant.AUTOMATONTYPES[3]);
 		stackSymbols = new ArrayList<String>();
 		initialStackSymbol = null;
@@ -48,5 +49,27 @@ public class AutomatonPDA extends Automaton {
 	public boolean hasStackSymbol(String stackSymbol) {
 		return stackSymbols.indexOf(stackSymbol) != -1;
 	}
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Type:" + automatonType + "\n");
+		sb.append("Symbols:");
+		for (String symbol : inputSymbolSet){
+			sb.append(symbol+" ");
+		}
+		sb.append("\n");
+		
+		sb.append("States:" + states.keySet());
+		if(initialState!=null){
+			sb.append("Initial State:" + initialState.getStateId() + "\n");
+		}else{
+			sb.append("Initial State: null \n");
+		}
+		sb.append("Transitions:");
+		for (Transition transition : transitions){
+			sb.append((TransitionPDA)transition+";");
+			
 
+		}
+		return sb.toString();
+	}
 }

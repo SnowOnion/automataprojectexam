@@ -92,12 +92,16 @@ public class DomParserParentTwo implements AutomatonXmlInterface{
 		return new State(stateName,stateType,nail);
 	}
 	protected HashSet <Nail> getTransitionNailsFromNodeList(NodeList nailsElement){
-		HashSet <Nail> nails = null;
+		HashSet <Nail> nails = new HashSet <Nail>();
 		if(nailsElement.getLength()>0){
-			nails = new HashSet <Nail>();
 			for(int i = 0;i<nailsElement.getLength();i++){
 				Element nailTemp = (Element)nailsElement.item(i);
-				nails.add(new Nail(nailTemp.getAttribute("x"),nailTemp.getAttribute("y")));
+				String x = nailTemp.getAttribute("x");
+				String y = nailTemp.getAttribute("y");
+				if(!x.equals("")&&!y.equals("")){
+					System.out.println("nail"+x+"|"+y);
+					nails.add(new Nail(x,y));
+				}
 			}
 		}
 		return nails;
@@ -194,8 +198,11 @@ public class DomParserParentTwo implements AutomatonXmlInterface{
 		byte stateTypeByte = state.getStateType();
 		stateType.setTextContent(AutomatonConstant.STATETYPES[stateTypeByte]);
 		
+		Element stateNail = getElementFromNail(state.getStateNail());
+		
 		stateElement.appendChild(stateId);
 		stateElement.appendChild(stateType);
+		stateElement.appendChild(stateNail);
 		return stateElement;
 	}
 
@@ -215,4 +222,16 @@ public class DomParserParentTwo implements AutomatonXmlInterface{
 		}
 		
 	}
+	
+	public Element getElementFromNail(Nail nail){
+		Element nailElement = doc.createElement("Nail");
+		nailElement.setAttribute("x", String.valueOf(nail.getNailX()));
+		nailElement.setAttribute("y", String.valueOf(nail.getNailY()));
+		return nailElement;
+	}
+	/*
+	public Nail getNailFromElement(Element nailElement){
+		
+	}
+	*/
 }

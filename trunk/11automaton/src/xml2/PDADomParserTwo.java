@@ -63,12 +63,11 @@ public class PDADomParserTwo extends DomParserParentTwo{
 		State fromState = null;
 		if(automaton.getStates().containsKey(fromStateId)){
 			fromState = automaton.getStates().get(fromStateId);
-				
 		}else{
-			throw new NoStateFoundException("fromState was not found in state list of the DFA");
+			throw new NoStateFoundException("fromState was not found in state list of the PDA");
 		}
 		ArrayList <TransitionPDACondition> conditions = new ArrayList<TransitionPDACondition>();
-		NodeList conditionNodes = ((Element) newTransition.getElementsByTagName("PDAConditions").item(0)).getElementsByTagName("DFACondition");
+		NodeList conditionNodes = newTransition.getElementsByTagName("PDAConditions");
 		for(int i = 0;i<conditionNodes.getLength();i++){
 			Node pdaCondition = conditionNodes.item(i);
 			conditions.add(getTransitionPDAConditionFromNode(pdaCondition));
@@ -79,7 +78,7 @@ public class PDADomParserTwo extends DomParserParentTwo{
 		if(automaton.getStates().containsKey(toStateId)){
 			toState = automaton.getStates().get(toStateId);
 		}else{
-			throw new NoStateFoundException("toState was not found in state list of the DFA");
+			throw new NoStateFoundException("toState was not found in state list of the PDA");
 		}
 		NodeList nailsElement = newTransition.getElementsByTagName("Nails");
 		HashSet <Nail> nails = getTransitionNailsFromNodeList(nailsElement);
@@ -160,10 +159,14 @@ public class PDADomParserTwo extends DomParserParentTwo{
 		}
 		Element toState = doc.createElement("ToState");
 		toState.setTextContent(transition.getToState().getStateId());
-		
+		Element nailsElement = doc.createElement("Nails");
+		for(Nail nail:transition.getNails()){
+			nailsElement.appendChild(getElementFromNail(nail));
+		}
 		transitionElement.appendChild(fromState);
 		transitionElement.appendChild(conditions);
 		transitionElement.appendChild(toState);
+		transitionElement.appendChild(nailsElement);
 		return transitionElement;
 	}
 	

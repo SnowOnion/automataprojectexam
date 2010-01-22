@@ -13,8 +13,34 @@ public class Automaton {
 	protected HashMap<String, State> states;
 	protected ArrayList<Transition> transitions;
 
+	public String toString() {
+		String text = "";
+		text += "Type:" + automatonType + "\n";
+		text += "Symbols:";
+		for (String symbol : inputSymbolSet)
+			text += symbol + " ";
+		text += "\n";
+		text += "States:" + states.keySet();
+		if(initialState!=null){
+			text += "Initial State:" + initialState.getStateId() + "\n";
+		}else{
+			text += "Initial State: null \n";
+		}
+		text += "Transitions:";
+		for (Transition transition : transitions){
+			text += transition.getFromState().getStateId() + " to "
+			+ transition.getToState().getStateId() + ";";
+			text += "nail number:"+transition.getNails().size();
+		}
+			
+		return text;
+	}
+
 	public Automaton() {
+		initialState = null;
+		inputSymbolSet = new ArrayList<String>();
 		states = new HashMap<String, State>();
+		transitions = new ArrayList<Transition>();
 	}
 
 	/***************************************************
@@ -159,24 +185,24 @@ public class Automaton {
 		this.transitions = transitions;
 	}
 
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("automaton name:" + automatonName + "\n");
-		builder.append("automaton Type:" + automatonType + "\n");
-		builder.append("inputSymbolSet:");
-		if (inputSymbolSet.size() == 0) {
-			builder.append("no elements\n");
-		} else {
-			for (int i = 0; i < inputSymbolSet.size(); i++) {
-				builder.append(inputSymbolSet.get(i) + ",");
-			}
-			builder.deleteCharAt(builder.length() - 1);
-			builder.append("\n");
-		}
-		builder.append("state number:" + states.size() + "\n");
-		builder.append("transition number:" + transitions.size() + "\n");
-		return builder.toString();
-	}
+	// public String toString() {
+	// StringBuilder builder = new StringBuilder();
+	// builder.append("automaton name:" + automatonName + "\n");
+	// builder.append("automaton Type:" + automatonType + "\n");
+	// builder.append("inputSymbolSet:");
+	// if (inputSymbolSet.size() == 0) {
+	// builder.append("no elements\n");
+	// } else {
+	// for (int i = 0; i < inputSymbolSet.size(); i++) {
+	// builder.append(inputSymbolSet.get(i) + ",");
+	// }
+	// builder.deleteCharAt(builder.length() - 1);
+	// builder.append("\n");
+	// }
+	// builder.append("state number:" + states.size() + "\n");
+	// builder.append("transition number:" + transitions.size() + "\n");
+	// return builder.toString();
+	// }
 
 	public boolean hasInputSymbol(String cond) {
 		return inputSymbolSet.contains(cond);
@@ -184,5 +210,9 @@ public class Automaton {
 
 	public void addInputSymbol(String cond) {
 		inputSymbolSet.add(cond);
+	}
+
+	public State getState(String state_id) {
+		return states.get(state_id);
 	}
 }

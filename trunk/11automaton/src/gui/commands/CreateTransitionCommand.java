@@ -49,6 +49,7 @@ public class CreateTransitionCommand extends Command {
 
 		}
 		contentsModel.addConnection(connection);
+		System.out.println("size:"+contentsModel.getConnections().size());
 	}
 
 	public void setConnection(Object model) {

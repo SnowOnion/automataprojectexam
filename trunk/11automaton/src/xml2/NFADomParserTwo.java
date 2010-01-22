@@ -63,11 +63,17 @@ public class NFADomParserTwo extends DomParserParentTwo{
 		}else{
 			throw new NoStateFoundException("toState was not found in state list of the DFA");
 		}
-		NodeList nailsElement = newTransition.getElementsByTagName("Nails");
-		HashSet <Nail> nails = getTransitionNailsFromNodeList(nailsElement);
 		
 		TransitionNFA result = new TransitionNFA(fromState,conditions,toState);
-		result.setNails(nails);
+		
+		NodeList nailsElements = newTransition.getElementsByTagName("Nails");
+		if(nailsElements.getLength()>0){
+			NodeList nailsElementList = ((Element)nailsElements.item(0)).getElementsByTagName("Nail");
+			
+			HashSet <Nail> nails = getTransitionNailsFromNodeList(nailsElementList);
+			result.setNails(nails);
+		}
+		
 		return  result;
 	}
 	
@@ -100,10 +106,15 @@ public class NFADomParserTwo extends DomParserParentTwo{
 		}
 		Element toState = doc.createElement("ToState");
 		toState.setTextContent(transition.getToState().getStateId());
+		Element nailsElement = doc.createElement("Nails");
+		for(Nail nail:transition.getNails()){
+			nailsElement.appendChild(getElementFromNail(nail));
+		}
 		
 		transitionElement.appendChild(fromState);
 		transitionElement.appendChild(conditions);
 		transitionElement.appendChild(toState);
+		transitionElement.appendChild(nailsElement);
 		return transitionElement;
 	}
 	private Document doc;

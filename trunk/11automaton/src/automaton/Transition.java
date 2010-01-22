@@ -32,10 +32,10 @@ public abstract class Transition {
 
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("fromState:" + fromState + "\n");
-		builder.append("transition condition number:"
+		builder.append("Transition:" + fromState + "to "+toState+"\n");
+		builder.append("Condition number:"
 				+ transitionConditions.size() + "\n");
-		builder.append("toState" + toState + "\n");
+		builder.append("nail number:"+nails.size()+"\n");
 		return builder.toString();
 	}
 
@@ -51,7 +51,7 @@ public abstract class Transition {
 	}
 
 	public abstract void setConditionsFromRawString(Automaton automaton,
-			String condstr) throws Exception;
+			String condstr) throws AutomatonException;
 
 	protected abstract boolean checkCondition(String cond);
 
@@ -76,5 +76,13 @@ public abstract class Transition {
 
 	public void setNails(HashSet<Nail> nails) {
 		this.nails = nails;
+	}
+
+	public void setFromState(State fromState) {
+		this.fromState = fromState;
+	}
+
+	public void setToState(State toState) {
+		this.toState = toState;
 	}
 }

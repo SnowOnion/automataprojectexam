@@ -1,6 +1,5 @@
-package gui.actions;
+ package gui.actions;
 
-import automatonmodeling.Application;
 import gui.ui.DiagramEditor;
 import gui.ui.DiagramEditorInput;
 
@@ -16,19 +15,19 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 public class DiagramAction extends Action implements ISelectionListener {
 	
 	private final IWorkbenchWindow window;
 	public final static String ID = "gef.step.diagram";
 	private IStructuredSelection select;
-	
+	private String name;
+	private String type;
 	
 	public DiagramAction(IWorkbenchWindow window){
 		this.window = window;
 		setId(ID);
-		setText("&Diagram");
+		setText("&Open File");
 		setToolTipText("Draw the GEF diagram");
 //		setImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(Application.PLUGIN_ID,"icons/online.gif"));
 		window.getSelectionService().addSelectionListener(this);
@@ -37,8 +36,11 @@ public class DiagramAction extends Action implements ISelectionListener {
 	public void dispose(){
 		window.getSelectionService().removeSelectionListener(this);
 	}
+	
 	public void run(){
 		String path= openFileDialog();
+		DiagramEditor.isNewFile=false;
+		name = "";
 		if(path != null){
 			IEditorInput input = new DiagramEditorInput(new Path(path));
 			IWorkbenchPage page = window.getActivePage();
@@ -52,7 +54,7 @@ public class DiagramAction extends Action implements ISelectionListener {
 	private String openFileDialog(){
 		FileDialog dialog = new FileDialog(window.getShell(),SWT.OPEN);
 		dialog.setText("get нд╪Ч");
-		dialog.setFilterExtensions(new String[]{"*.diagram"});
+		dialog.setFilterExtensions(new String[]{"*.xml"});
 		return dialog.open();
 	}
 

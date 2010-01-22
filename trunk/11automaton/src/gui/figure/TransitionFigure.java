@@ -17,8 +17,6 @@ public class TransitionFigure extends PolylineConnection {
 		this.label = new Label();
 		setConnectionRouter(new BendpointConnectionRouter());
 		this.setTargetDecoration(new PolygonDecoration());
-		//label.setText("0,1");
-		//label.setOpaque(true);
 		this.add(label, new MidpointOffsetLocator(this, 0));
 		label.addMouseListener(new MouseListener() {
 
