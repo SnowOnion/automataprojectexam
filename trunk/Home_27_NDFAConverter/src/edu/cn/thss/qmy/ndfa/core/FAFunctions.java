@@ -6,8 +6,18 @@ import java.util.Set;
 
 import edu.cn.thss.qmy.ndfa.util.Globals;
 
+/**
+ * @author Carrot
+ * Main functions of FA.
+ */
 public class FAFunctions {
 	
+	/**
+	 * Can a string be accepted by a FA.
+	 * @param fa
+	 * @param chars
+	 * @return
+	 */
 	public static String canAccepted(FA fa, char[] chars){
 		String path = "";
 		FA dfa = FAFunctions.EnsureDFA(fa);
@@ -32,6 +42,11 @@ public class FAFunctions {
 		return path;
 	}
 
+	/**
+	 * Is the FA null.
+	 * @param fa
+	 * @return
+	 */
 	public static boolean isLanguageNull(FA fa){
 		FA dfa = FAFunctions.EnsureDFA(fa);
 		Set<Integer> calced = new HashSet<Integer>();
@@ -58,6 +73,11 @@ public class FAFunctions {
 		return true;
 	}
 	
+	/**
+	 * Is the FA infinite.
+	 * @param fa
+	 * @return
+	 */
 	public static boolean isLanguageInfinite(FA fa){
 		FA dfa = FAFunctions.EnsureDFA(fa);
 		Set<Integer> calced = new HashSet<Integer>();
@@ -80,6 +100,11 @@ public class FAFunctions {
 		return false;
 	}
 	
+	/**
+	 * If a FA is NFA, convert it to DFA.
+	 * @param fa
+	 * @return
+	 */
 	public static FA EnsureDFA(FA fa){
 		FA dfa = null;
 		fa.setIsDFA();
@@ -91,6 +116,11 @@ public class FAFunctions {
 		return dfa;
 	}
 	
+	/**
+	 * Convert a NFA to DFA.
+	 * @param nfa
+	 * @return
+	 */
 	public static FA NFA2DFA(FA nfa){
 		FA dfa = new FA();
 

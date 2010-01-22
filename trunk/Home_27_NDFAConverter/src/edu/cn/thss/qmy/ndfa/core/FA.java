@@ -7,6 +7,10 @@ import java.util.Set;
 
 import edu.cn.thss.qmy.ndfa.util.Globals;
 
+/**
+ * @author Mengyue
+ * The FA Structure.
+ */
 public class FA {
 
 	private String name;
