@@ -65,6 +65,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	private IAction saveAllAction;
 	private Action InputManageAction;
 	private Action StackManageAction;
+	private Action UndoAction;
+	private Action ReduAction;
 
 	public ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
 		super(configurer);
@@ -87,9 +89,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		register(saveAction);
 
 		aboutAction = ActionFactory.ABOUT.create(window);
-		aboutAction.setImageDescriptor(ResourceManager
-				.getPluginImageDescriptor("AutomatonDesigner",
-						"icons/file16.png"));
+		aboutAction.setToolTipText("\u5173\u4E8E...");
+		aboutAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor("AutomatonDesigner", "icons/aasa.png"));
 		aboutAction.setText("关于...");
 		register(aboutAction);
 
@@ -245,7 +246,9 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		};
 		InputManageAction
 				.setId("cn.tsinghua.mse.automatondesigner.InputManageAction");
-		InputManageAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor("AutomatonDesigner", "icons/inputs.png"));
+		InputManageAction.setImageDescriptor(ResourceManager
+				.getPluginImageDescriptor("AutomatonDesigner",
+						"icons/inputs.png"));
 		register(InputManageAction);
 
 		StackManageAction = new Action("\u5806\u6808\u7B26\u53F7\u7BA1\u7406") {
@@ -255,18 +258,18 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 				if (currentView != null
 						&& currentView instanceof ICanvasContainer) {
 					ICanvasContainer canvasContext = (ICanvasContainer) currentView;
-					if (canvasContext.getM_Automaton().getM_Type() == AutomatonConst.AUTOMATON_TYPE_PDA){
+					if (canvasContext.getM_Automaton().getM_Type() == AutomatonConst.AUTOMATON_TYPE_PDA) {
 						Dialog_SymbolsManager dlg = new Dialog_SymbolsManager(
 								Display.getCurrent().getActiveShell(),
-								canvasContext.getM_Automaton(), ((PushdownAutomaton)canvasContext
+								canvasContext.getM_Automaton(),
+								((PushdownAutomaton) canvasContext
 										.getM_Automaton()).getM_StackSymbols(),
 								Dialog_SymbolsManager.DIALOG_STACKYMBOLS);
 						dlg.open();
-					}
-					else{
+					} else {
 						MessageDialog.openError(mainWindow.getShell(), "错误",
-						"只有下推自动机才可以进行堆栈符号管理！");
-				return;
+								"只有下推自动机才可以进行堆栈符号管理！");
+						return;
 					}
 				} else {
 					MessageDialog.openError(mainWindow.getShell(), "错误",
@@ -277,9 +280,50 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		};
 		StackManageAction
 				.setId("cn.tsinghua.mse.automatondesigner.StackManageAction");
-		StackManageAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor("AutomatonDesigner", "icons/stacks.png"));
+		StackManageAction.setImageDescriptor(ResourceManager
+				.getPluginImageDescriptor("AutomatonDesigner",
+						"icons/stacks.png"));
 		register(StackManageAction);
+		
+		UndoAction = new Action("\u64A4\u9500") {
+			public void run(){
+				doUndo();
+			}
+		};
+		UndoAction.setId("cn.tsinghua.mse.automatondesigner.UndoAction");
+		UndoAction.setToolTipText("\u64A4\u9500");
+		UndoAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor("AutomatonDesigner", "icons/undo16.gif"));
+		register(UndoAction);
 
+		ReduAction = new Action("\u91CD\u505A") {
+			public void run(){
+				doRedo();
+			}
+		};
+		ReduAction.setId("cn.tsinghua.mse.automatondesigner.ReduAction");
+		ReduAction.setToolTipText("\u91CD\u505A");
+		ReduAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor("AutomatonDesigner", "icons/redo16.gif"));
+		register(ReduAction);
+	}
+
+	protected void doRedo() {
+		IWorkbenchPart currentView = mainWindow.getActivePage().getActivePart();
+		if (currentView != null && currentView instanceof ICanvasContainer) {
+			((ICanvasContainer) currentView).doRedo();
+		} else {
+			MessageDialog.openError(mainWindow.getShell(), "错误",
+					"请选中可供导出的自动机模型再进行本操作！");
+		}
+	}
+
+	protected void doUndo() {
+		IWorkbenchPart currentView = mainWindow.getActivePage().getActivePart();
+		if (currentView != null && currentView instanceof ICanvasContainer) {
+			((ICanvasContainer) currentView).doUndo();
+		} else {
+			MessageDialog.openError(mainWindow.getShell(), "错误",
+					"请选中可供导出的自动机模型再进行本操作！");
+		}
 	}
 
 	protected void doOpen() {
@@ -385,6 +429,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 				"cn.tsinghua.mse.automatondesigner.editmenu");
 		editMenuManager.setVisible(true);
 		menuBar.add(editMenuManager);
+		//editMenuManager.add(UndoAction);
+		//editMenuManager.add(ReduAction);
 		editMenuManager.add(deleteAction);
 		editMenuManager.add(new Separator());
 		editMenuManager.add(leftAlignAction);
@@ -392,7 +438,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		editMenuManager.add(topAlignAction);
 		editMenuManager.add(bottomAlignAction);
 
-		MenuManager viewMenuManager = new MenuManager("管理",
+		MenuManager viewMenuManager = new MenuManager("管理视图",
 				"cn.tsinghua.mse.automatondesigner.viewmenu");
 		viewMenuManager.setVisible(true);
 		menuBar.add(viewMenuManager);
@@ -408,7 +454,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 				"cn.tsinghua.mse.automatondesigner.helpmenu");
 		helpMenuManager.setVisible(true);
 		menuBar.add(helpMenuManager);
-		helpMenuManager.add(helpContentsAction);
+		//helpMenuManager.add(helpContentsAction);
 		helpMenuManager.add(aboutAction);
 	}
 
@@ -422,6 +468,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		toolbar.add(saveAction);
 		toolbar.add(saveAllAction);
 		toolbar.add(new Separator());
+		//toolbar.add(UndoAction);
+		//toolbar.add(ReduAction);
 		toolbar.add(deleteAction);
 		toolbar.add(new Separator());
 		toolbar.add(leftAlignAction);

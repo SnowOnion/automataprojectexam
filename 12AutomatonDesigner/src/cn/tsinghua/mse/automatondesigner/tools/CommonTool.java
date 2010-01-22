@@ -19,6 +19,11 @@ public class CommonTool {
 	private static final int PRF_CLIENT = 0x00000004;
 	private static final int PRF_ERASEBKGND = 0x00000008;
 
+	/**
+	 * 获取组件的图像对象
+	 * @param control 组件
+	 * @return 图像对象
+	 */
 	public static Image makeShotImage(Control control) {
 		int width = control.getBounds().width;
 		int height = control.getBounds().height;
@@ -33,6 +38,11 @@ public class CommonTool {
 		return null;
 	}
 
+	/**
+	 * 将ArrayList形式的点集合转化成数组形式，其中偶数位置为x坐标，奇数位置为y坐标
+	 * @param ps ArrayList形式的点集合
+	 * @return 数组形式的点集合
+	 */
 	public static int[] pointArrayToIntArray(ArrayList<Point> ps) {
 		int[] result = new int[ps.size() * 2];
 		for (int i = 0; i < ps.size(); i++) {
@@ -42,6 +52,11 @@ public class CommonTool {
 		return result;
 	}
 
+	/**
+	 * 对点集进行深度拷贝
+	 * @param ps 待拷贝的点集合
+	 * @return 拷贝后的新点集合
+	 */
 	public static ArrayList<Point> PointsClone(ArrayList<Point> ps) {
 		ArrayList<Point> result = new ArrayList<Point>();
 		for (Point p : ps) {
@@ -50,6 +65,11 @@ public class CommonTool {
 		return result;
 	}
 
+	/**
+	 * 获取自动机的状态转移表表示形式
+	 * @param automaton 自动机
+	 * @return 状态转移表
+	 */
 	public static String[][] getTrancTable(Automaton automaton) {
 		if (automaton == null) {
 			return null;

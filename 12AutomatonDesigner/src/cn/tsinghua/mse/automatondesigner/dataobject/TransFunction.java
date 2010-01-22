@@ -27,11 +27,21 @@ public class TransFunction {
 		setM_TransCondition(inputs);
 	}
 	
+	/**
+	 * 添加输入符号
+	 * @param input 要添加的输入符号
+	 */
 	public void addInputSymbol(TransCondition input){
 		if (!m_TransCondition.contains(input)){
 			m_TransCondition.add(input);
 		}
 	}
+	
+	/**
+	 * 移除输入符号
+	 * @param input 要移除的输入符号
+	 * @return 是否移除成功
+	 */
 	public boolean removeInputSymbol(TransCondition input){
 		if (m_TransCondition.contains(input)){
 			m_TransCondition.remove(input);
@@ -40,6 +50,10 @@ public class TransFunction {
 		return false;
 	}
 	
+	/**
+	 * 移除某个转移状态
+	 * @param cond 待移除的转移状态
+	 */
 	public void removeCondition(Object cond){
 		if (cond instanceof String){
 			for (int i = m_TransCondition.size()-1; i >= 0; i--){
@@ -50,22 +64,48 @@ public class TransFunction {
 		}
 	}
 	
+	/**
+	 * 获取转移函数的开始状态
+	 * @return 转移函数的开始状态
+	 */
 	public State getM_BeginState() {
 		return m_BeginState;
 	}
+	/**
+	 * 设置转移函数的开始状态
+	 * @param mBeginState 转移函数的开始状态
+	 */
 	public void setM_BeginState(State mBeginState) {
 		m_BeginState = mBeginState;
 	}
+	/**
+	 * 获取转移函数的结束状态
+	 * @return 转移函数的结束状态
+	 */
 	public State getM_EndState() {
 		return m_EndState;
 	}
+
+	/**
+	 * 设置转移函数的结束状态
+	 * @param mEndState 转移函数的结束状态
+	 */
 	public void setM_EndState(State mEndState) {
 		m_EndState = mEndState;
 	}	
+	
+	/**
+	 * 获取转移条件集合
+	 * @return 转移条件集合
+	 */
 	public ArrayList<TransCondition> getM_TransCondition() {
 		return m_TransCondition;
 	}
 
+	/**
+	 * 设置转移条件集合
+	 * @param mTransCondition 转移条件集合
+	 */
 	public void setM_TransCondition(ArrayList<TransCondition> mTransCondition) {
 		m_TransCondition = mTransCondition;
 	}
@@ -90,6 +130,11 @@ public class TransFunction {
 		return result;
 	}
 	
+	/**
+	 * 添加转移条件
+	 * @param condition 要添加的转移条件
+	 * @return 如果已经存在则添加失败返回false，否则返回true
+	 */
 	public boolean addTransCondition(TransCondition condition){
 		for (TransCondition c : m_TransCondition){
 			if (c.toString().equals(condition.toString())){

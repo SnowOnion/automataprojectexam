@@ -128,6 +128,10 @@ public class Dialog_SymbolsManager extends Dialog {
         			MessageDialog.openError(shell, "错误", "新加入的符号不能为空！");
         			return;
         		}
+        		if (text.getText().indexOf(",") != -1){
+        			MessageDialog.openWarning(shell, "警告", "符号中请不要包含逗号！");
+        			return;
+        		}
         		if (ListtoManage.contains(text.getText())){
         			MessageDialog.openError(shell, "错误", "新加入的符号已经存在！");
         			return;

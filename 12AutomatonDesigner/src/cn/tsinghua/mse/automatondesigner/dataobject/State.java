@@ -25,18 +25,34 @@ public class State {
 		this.m_type = type;
 	}
 
+	/**
+	 * 获取状态名称
+	 * @return 状态名称
+	 */
 	public String getM_Name() {
 		return m_Name;
 	}
 
+	/**
+	 * 设置状态名称
+	 * @param mName 状态名称
+	 */
 	public void setM_Name(String mName) {
 		m_Name = mName;
 	}
 	
+	/**
+	 * 获取状态类型
+	 * @return 状态类型
+	 */
 	public byte getM_type() {
 		return m_type;
 	}
 
+	/**
+	 * 设置状态类型
+	 * @param mType 状态类型
+	 */
 	public void setM_type(byte mType) {
 		m_type = mType;
 	}

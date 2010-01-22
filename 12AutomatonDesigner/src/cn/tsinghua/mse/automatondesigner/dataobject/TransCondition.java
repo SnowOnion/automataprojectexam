@@ -13,10 +13,18 @@ public class TransCondition {
 		setM_InputSymbol(input);
 	}
 
+	/**
+	 * 获取输入符号
+	 * @return 输入符号
+	 */
 	public String getM_InputSymbol() {
 		return m_InputSymbol;
 	}
 
+	/**
+	 * 设置输入符号
+	 * @param mInputSymbol 输入符号
+	 */
 	public void setM_InputSymbol(String mInputSymbol) {
 		m_InputSymbol = mInputSymbol;
 	}

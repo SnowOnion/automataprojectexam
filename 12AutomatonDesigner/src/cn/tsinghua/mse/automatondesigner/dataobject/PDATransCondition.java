@@ -30,18 +30,34 @@ public class PDATransCondition extends TransCondition {
 		setM_NewStackSymbol(newStackTops);
 	}
 
+	/**
+	 * 获取转移前的栈顶符号。
+	 * @return 转移前的栈顶符号
+	 */
 	public String getM_OldStackSymbol() {
 		return m_OldStackSymbol;
 	}
 
+	/**
+	 * 设置转移前的栈顶符号
+	 * @param mOldStackSymbol 转移前的栈顶符号
+	 */
 	public void setM_OldStackSymbol(String mOldStackSymbol) {
 		m_OldStackSymbol = mOldStackSymbol;
 	}
 
+	/**
+	 * 获取新栈顶符号集合
+	 * @return 新栈顶符号集合
+	 */
 	public ArrayList<String> getM_NewStackSymbol() {
 		return m_NewStackSymbol;
 	}
 
+	/**
+	 * 设置新栈顶符号集合
+	 * @param mNewStackSymbol 新栈顶符号集合
+	 */
 	public void setM_NewStackSymbol(ArrayList<String> mNewStackSymbol) {
 		m_NewStackSymbol = mNewStackSymbol;
 	}
@@ -49,17 +65,14 @@ public class PDATransCondition extends TransCondition {
 	@Override
 	public String toString(){
 		String result = m_InputSymbol + ", " + m_OldStackSymbol + "/";
+		int i = 0;
 		for (String s : m_NewStackSymbol){
+			if (0 != i){
+				result += ",";
+			}
 			result += s;
+			i++;
 		}
 		return result;
-	}
-	
-	public static void main(String[] args) {
-		ArrayList a = new ArrayList<String>();
-		a.add("Z0");
-		a.add("A");
-		PDATransCondition b = new PDATransCondition("a", "Z0", a);
-		System.out.println(b.toString());
 	}
 }

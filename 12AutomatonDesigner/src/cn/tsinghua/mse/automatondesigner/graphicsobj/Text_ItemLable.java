@@ -12,7 +12,7 @@ import automatondesigner.SystemConstant;
 import cn.tsinghua.mse.automatondesigner.interfaces.IPaint;
 
 /**
- * @author David
+ * 用于显示文字的标签
  * 
  */
 public class Text_ItemLable implements IPaint {
@@ -97,6 +97,12 @@ public class Text_ItemLable implements IPaint {
 		return pnt;
 	}
 
+	/**
+	 * 判断是否被选中
+	 * @param x 鼠标的x坐标
+	 * @param y 鼠标的y坐标
+	 * @return 是否选中
+	 */
 	public boolean isSelected(int x, int y) {
 		Point pnt = new Point(anchorPtn.x + differ.x, anchorPtn.y + differ.y);
 		if ((pnt.x + size.x) >= x && pnt.x <= x && (pnt.y + size.y) >= y
@@ -106,6 +112,11 @@ public class Text_ItemLable implements IPaint {
 		return false;
 	}
 
+	/**
+	 * 移动操作
+	 * @param XDist x距离
+	 * @param YDist y距离
+	 */
 	public void move(int XDist, int YDist) {
 		differ.x = orgianlDiffer.x + XDist;
 		differ.y = orgianlDiffer.y + YDist;

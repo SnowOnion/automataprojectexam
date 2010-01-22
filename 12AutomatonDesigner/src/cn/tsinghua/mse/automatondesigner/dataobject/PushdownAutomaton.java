@@ -28,6 +28,7 @@ public class PushdownAutomaton extends Automaton {
 		this.setM_Type(AutomatonConst.AUTOMATON_TYPE_PDA);
 	}
 
+	
 	public PushdownAutomaton(ArrayList<State> states, ArrayList<String> inputs,
 			ArrayList<TransFunction> funcs, State start,
 			ArrayList<String> stackSymbols, String initStack, String name) {
@@ -60,18 +61,34 @@ public class PushdownAutomaton extends Automaton {
 		return m_StackSymbols;
 	}
 
+	/**
+	 * »ñÈ¡¶ÑÕ»·ûºÅ±í
+	 * @return ¶ÑÕ»·ûºÅ±í
+	 */
 	public ArrayList<String> getM_StackSymbols() {
 		return m_StackSymbols;
 	}
 
+	/**
+	 * ÉèÖÃ¶ÑÕ»·ûºÅ±í
+	 * @param mStackSymbols ¶ÑÕ»·ûºÅ±í
+	 */
 	public void setM_StackSymbols(ArrayList<String> mStackSymbols) {
 		m_StackSymbols = mStackSymbols;
 	}
 
+	/**
+	 * »ñÈ¡¶ÑÕ»³õÊ¼·ûºÅ
+	 * @return ¶ÑÕ»³õÊ¼·ûºÅ
+	 */
 	public String getM_InitStackSymbol() {
 		return m_InitStackSymbol;
 	}
 
+	/**
+	 * ÉèÖÃ¶ÑÕ»³õÊ¼·ûºÅ
+	 * @param mInitStackSymbol ¶ÑÕ»³õÊ¼·ûºÅ
+	 */
 	public void setM_InitStackSymbol(String mInitStackSymbol) {
 		m_InitStackSymbol = mInitStackSymbol;
 	}
