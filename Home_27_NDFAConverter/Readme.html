@@ -3,16 +3,96 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>README</title>
+<style type="text/css">
+.content_en {font-family: "Verdana"; font-size: 14px; line-height: 150%}
+.content_ch {font-family: "微软雅黑"; font-size: 14px; line-height: 150%; letter-spacing: 1px}
+</style>
 </head>
 <body>
 <h3>[Home_27_NDFAConverter] README File</h3>
-
-Current version: 0.9<br/><br/>
+<p class="content_en">
+<b>Current version: <span style="color:red">0.9</span></b><br/><br/>
 
 1. Project is encoding by UTF-8. <br/>
 2. This program is distributed under <a href="http://www.eclipse.org/org/documents/epl-v10.html">EPL</a>.<br/>
 3. This java project is built under eclipse v3.5.<br/>
 4. The DTD file for NFA&DFA, named autoDS.dtd, is from Project 12AutomataModeling.<br/>
-5. Usage: java -jar NDFAConverter.jar<br/>
+5. Usage: <b>java -jar NDFAConverter.jar</b><br/>
+</p>
+<br/>
+<b style="font-size: 18px">Program Description</b><br/><br/>
+<p class="content_ch">
+1. 联系方式<br/>
+<table border="1" class="content_ch">
+<tr><td width="25%">学号</td><td width="25%">姓名</td><td width="50%">联系方式</td></tr>
+<tr><td width="25%">2008212572</td><td width="25%">祁梦月</td><td width="50%">qimengyue@gmail.com</v></tr>
+</table><br/>
+</p>
+<p class="content_ch">
+2. 算法简述<br/>
+程序的算法比较简单：<br/>
+* 对于NFA到DFA的转换，按照教材给出的方法，首先得到每个状态的E-closure备查，将开始状态的E-closure作为DFA的开始状态，遍历所有的输入字符，得到相应的变迁关系，并将新出现的状态加入到DFA的状态集中；对DFA状态集中的所有状态重复上一动作。在过程中遇到包含有NFA结束状态的状态时，将其添加至DFA的结束状态集中。<br/>
+* 对于语言为空的判断，在DFA的基础上，判断初始状态是否可以达到结束状态，如果可以，则不为空；不可以则为空。<br/>
+* 对于语言为无穷的判断，在DFA的基础上，判断是否有环，如果有，则为无穷；没有则有穷。<br/>
+* 对于字符串是否被接受，在DFA的基础上，按照字符串给出的字符顺序，从开始状态开始迁移，如果能达到结束状态，则可以接受；不能则不被接受。<br/>
+<br/>
+</p>
+<p class="content_ch">
+3. 代码介绍<br/>
+程序的代码按照功能分为四个包，结构如下图：<br/>
+<img src="./img/readme/package.PNG"/><br/>
+* 其中，core包中是程序的核心，FA、State、Transition三个类分别定义了自动机及其状态、变迁的结构，FAFunction则定义了自动机的相关操作。<br/>
+* ui包包含了程序有关用户操作的相关功能，目前只实现了从控制台操作的部分。<br/>
+* util包则包含程序的辅助功能，目前包括从xml文件解析FA结构的FAParser类和一些全局常量。<br/>
+* test包则是使用JUnit对程序进行测试的一些类。
+<br/>
+</p>
+<p class="content_ch">
+4. 相关度量值<br/>
+利用源代码统计工具(SourceCounter)V2.5.5.9统计代码行，在编程中利用Hourglass V0.7.3.alpha统计工作时间：<br/>
+<table border="1" class="content_ch">
+<tr><td width="25%">代码行数(行)</td><td width="25%">PSP0文档(个)</td><td width="25%">工作时间(小时)</td><td width="25%">配置文件(个)</td></tr>
+<tr><td width="25%">747</td><td width="25%">4</td><td width="25%">14.07</td><td width="25%">1</td></tr>
+</table><br/>
+说明：<br/>
+* 代码行统计包括src目录下的所有java文件，统计不包括空行和注释行；<br/>
+* PSP0文档指doc目录下的文档；<br/>
+* 统计时间按照PSP0的过程，包括了计划、设计实现、总结的所有工作的时间；<br/>
+* 配置文件指autoDS.dtd，该文件为第12组设计，这里仅用作规范自动机描述文件。<br/>
+<br/>
+</p>
+<p class="content_ch">
+5. 完成情况对比<br/>
+程序主菜单截图如下：<br/>
+<img src="./img/readme/screenshot1.PNG"/><br/>
+<br/>
+作业要求与完成情况对比如下：<br/>
+<table border="1" class="content_ch">
+<tr><td width="50%">要求</td><td width="50%">完成</td></tr>
+<tr><td width="50%">用Java编写，保证可扩展性。</td><td width="50%">Java编写</td></tr>
+<tr><td width="50%">检查某个字符串是否被指定的自动机接受。</td><td width="50%">实现，对应程序菜单第3项</td></tr>
+<tr><td width="50%">判断语言是否为空，是否为无穷。</td><td width="50%">实现，对应程序菜单第2项</td></tr>
+<tr><td width="50%">实现NFA到DFA的相互转换。</td><td width="50%">实现，对应程序菜单第1项</td></tr>
+</table>
+<br/>
+</p>
+<p class="content_ch">
+6. 测试用例说明<br/>
+程序采用控制台交互菜单的方式操作，输入描述自动机的xml文件的绝对路径，解析成功后即可按照菜单提示进行相应操作；解析失败也有相应提示：<br/>
+<img src="./img/readme/case01.PNG"/><br/>
+* 对教材第80页习题2.5.2的测试，对应xml文件为Example.xml，下图为NFA到DFA的转换：<br/>
+<img src="./img/readme/case11.PNG"/><br/>
+* 下图示例仍为习题2.5.2，对指定字符串是否可以被接受的测试：<br/>
+<img src="./img/readme/case12.PNG"/><br/>
+* 仍对习题2.5.2测试，判断其是否为空，是否为无穷：<br/>
+<img src="./img/readme/case13.PNG"/><br/>
+* 对语言是否为空、是否无穷的判断，有两个最简单的例子Finite.xml和InFinite.xml：<br/>
+<img src="./img/readme/case21.PNG"/><br/>
+<br/>
+</p>
+<p class="content_ch">
+7. 自我评价<br/>
+90 -- 中规中矩的完成
+</p>
 </body>
 </html>

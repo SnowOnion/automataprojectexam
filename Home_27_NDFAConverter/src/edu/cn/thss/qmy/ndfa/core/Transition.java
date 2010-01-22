@@ -28,10 +28,4 @@ public class Transition {
 	public void setNextState(Integer nextState) {
 		this.nextState = nextState;
 	}
-	
-//	public int compareTo(Object o2) {
-////		Transition t1 = (Transition)o1;
-//		Transition t2 = (Transition)o2;
-//		return this.getPreState().compareTo(t2.getPreState());
-//	}
 }

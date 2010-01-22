@@ -155,9 +155,6 @@ public class FAFunctions {
 					}
 				}
 				dfa.addTransition(transition);
-//				System.out.println(dfa.getStateByKey(transition.getPreState()).getName()
-//						+ " --" + dfa.getSymbolByKey(transition.getSymbol())
-//						+ "--> " + dfa.getStateByKey(transition.getNextState()).getName());
 			}
 		}
 		return dfa;

@@ -66,17 +66,7 @@ public class FA {
 		}
 		return nextStateKeys;
 	}
-//	public String getNextStateKey(Integer preStateKey, Integer symbolKey, boolean isSingle){
-////		Set<Integer> nextStateKeys = new HashSet<Integer>();
-//		Iterator<Transition> it = this.transitions.iterator();
-//		while(it.hasNext()){
-//			Transition transition = it.next();
-//			if(transition.getPreState().equals(preStateKey) && transition.getSymbol().equals(symbolKey)){
-//				return this.getStateByKey(transition.getNextState()).getName();
-//			}
-//		}
-//		return null;
-//	}
+
 	public String getStateNameBySubState(State state){
 		Iterator<Integer> it = this.states.keySet().iterator();
 		while(it.hasNext()){
@@ -167,44 +157,6 @@ public class FA {
 		}
 		this.isDFA = true;
 	}
-	
-//	public HashMap<Integer, State> getEClosure(){
-//		HashMap<Integer, State> newStates = new HashMap<Integer, State>();
-//		Iterator<Integer> it = this.states.keySet().iterator();
-//		int i = 0;
-//		while(it.hasNext()){
-//			Integer key = it.next();
-//			newStates.put(i, this.getEClosure(key));
-//			i++;
-//		}
-//		return newStates;
-//	}
-//	
-//	public State getEClosure(Integer start){
-//		State startState = this.getStateByKey(start);
-//		State state = new State();
-//		state.setName("from" + startState.getName());
-//		
-//		Set<State> calced = new HashSet<State>();
-//		calced.add(startState);
-//		
-//		Iterator<State> it = calced.iterator();
-//		while(it.hasNext()){
-//			State preState = it.next();
-//			Iterator<Transition> transitionIt = this.transitions.iterator();
-//			while(transitionIt.hasNext()){
-//				Transition transition = transitionIt.next();
-//				State nextState = this.getStateByKey(transition.getNextState());
-//				if(preState.equals(this.getStateByKey(transition.getPreState()))
-//						&& !calced.contains(nextState) || nextState.equals(startState)){
-//					state.addSubStates(nextState);
-//					calced.add(nextState);
-//				}
-//			}
-//		}
-//
-//		return state;
-//	}
 	
 	public HashMap<Integer, State> getEClose(){
 		HashMap<Integer, State> newStates = new HashMap<Integer, State>();
