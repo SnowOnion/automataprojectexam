@@ -54,7 +54,7 @@ public class DFAOperation {
 			byte newType = value.getStateType() == AutomatonConstant.STATETYPE_NORMAL?AutomatonConstant.STATETYPE_ACCEPTED:AutomatonConstant.STATETYPE_NORMAL;
 			State st = new State(value.getStateId(), newType, new Nail(value.getStateNail().getNailX(),value.getStateNail().getNailY()));
 			
-			newStates.put(key, value);
+			newStates.put(key, st);
 		} 
 		
 		//Éî¿½±´transition
@@ -66,6 +66,7 @@ public class DFAOperation {
 			}
 			
 			Transition tempTran = new TransitionDFA(newStates.get(oldTran.getFromState().getStateId()),condition , newStates.get(oldTran.getToState().getStateId()));
+			newTransitions.add(tempTran);
 		}
 		
 		notAutomaton.setAutomatonName(s.getAutomatonName());
