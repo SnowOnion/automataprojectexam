@@ -170,7 +170,7 @@ public class DFAminAlg {
 			Coordinate coo = coor.poll();
 			String oneState = sortedStates[coo.x].getStateId();
 			String anotherState = sortedStates[coo.y].getStateId();
-			System.out.println("dis:"+oneState+"  another:"+anotherState);
+//			System.out.println("dis:"+oneState+"  another:"+anotherState);
 			HashMap<String,ArrayList<State>> oneStateMap = toFromTrans.get(oneState);
 			HashMap<String,ArrayList<State>> anotherStateMap = toFromTrans.get(anotherState);
 			for(int i = 0 ; i < inputSymbolSet.size(); i++){
