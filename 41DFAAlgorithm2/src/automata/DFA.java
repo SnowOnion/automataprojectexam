@@ -88,7 +88,7 @@ public class DFA extends Automaton {
 
 //------DFA algorithms----------------------------------------------------------
 	/**
-	 * 化简DFA。
+	 * 化简DFA。使用填表算法。
 	 */
 	public void minimize() {
 		if (!modified)
@@ -159,6 +159,8 @@ public class DFA extends Automaton {
 					if (map1[s1] != s2)
 						return false;
 				} else {
+					if (finalStates.contains(s1) && !t.finalStates.contains(s2))
+						return false;
 					map1[s1] = s2;
 					queue.add(new Pair<Integer, Integer>(s1, s2));
 				}
