@@ -62,21 +62,7 @@ public class DFA extends Automaton {
 		}
 		return s;
 	}
-	/*
-	@Override
-	public Object clone() {
-		DFA t = new DFA();
-		t.alphabet = (TreeSet<Character>) alphabet.clone();
-		t.label2num = (HashMap<String, Integer>) label2num.clone();
-		t.num2state = (ArrayList<String>) num2state.clone();
-		t.transitions = (HashMap<Integer, Edges>) transitions.clone();
-		t.reverseTransitions = (HashMap<Integer, Edges>) reverseTransitions.clone();
-		t.size = size;
-		t.startState = startState;
-		t.finalStates = (HashSet<Integer>) finalStates.clone();
-		return t;
-	}
-	*/
+
 //------DFA algorithms----------------------------------------------------------
 	public void minimize() {
 		if (!modified)
@@ -118,16 +104,13 @@ public class DFA extends Automaton {
 	public boolean includedIn(DFA t) {
 		minimize();
 		t.minimize();
-		if (size > t.size)
-			return false;
 		
 		markDeadStates();
 		int[] map1 = new int[size];
-		int[] map2 = new int[t.size];
-		int count = 0;
-		map1[numOfState(startState)] = map2[numOfState(t.startState)] = count++;
-		
-		queue.add(new Pair<Integer, Integer>(numOfState(startState), numOfState(t.startState)));
+		for (int i = 0; i < size; ++i)
+			map1[i] = -1;
+		map1[numOfState(startState)] = t.numOfState(t.startState);
+		queue.add(new Pair<Integer, Integer>(numOfState(startState), t.numOfState(t.startState)));
 		while (!queue.isEmpty()) {
 			Pair<Integer, Integer> p = queue.remove();
 			Iterator<Character> letterIter = lettersAcceptedByState(p.key()).iterator();
@@ -138,12 +121,12 @@ public class DFA extends Automaton {
 				s1 = nextStateOf(p.key(), letter);
 				if (map[s1] == -1)	// dead state
 					continue;
-				s2 = nextStateOf(p.value(), letter);
-				if (map1[s1] != 0) {	// already visited
-					if (map1[s1] != map2[s2])
+				s2 = t.nextStateOf(p.value(), letter);
+				if (map1[s1] != -1) {	// already visited
+					if (map1[s1] != s2)
 						return false;
 				} else {
-					map1[s1] = map2[s2] = count++;
+					map1[s1] = s2;
 					queue.add(new Pair<Integer, Integer>(s1, s2));
 				}
 			}
