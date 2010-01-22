@@ -157,11 +157,24 @@ public class Polyline_Trans implements IPaint {
 		}
 	}
 	
+	/**
+	 * 向折线中添加点
+	 * @param p 添加的点坐标
+	 */
 	public void addPntToPolyline(Point p){
 		this.getPolyLine().add(p);
 		this.Oranal_PolyLine.add(new Point(p.x, p.y));
 	}
 
+	/**
+	 * 绘制箭头
+	 * @param g GC对象
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @param drawline 是否绘制直线
+	 */
 	private void paintk(GC g, int x1, int y1, int x2, int y2, boolean drawline) {
 		double H = 8; // 箭头高度
 		double L = 4; // 底边的一半
@@ -247,6 +260,7 @@ public class Polyline_Trans implements IPaint {
 		return false;
 	}
 	
+	@Override
 	public void updateOriginalLocation(){
 		if (polyLine == null || polyLine.size() == 0){
 			return;
@@ -257,6 +271,11 @@ public class Polyline_Trans implements IPaint {
 		}
 	}
 	
+	/**
+	 * 检查某点是否在折线的某个折点上
+	 * @param p 要检查的点坐标
+	 * @return 所在折点，为null表示不在此折线的折点上
+	 */
 	public Point isOnKneePoint(Point p){
 		if (polyLine == null || polyLine.size() == 0){
 			return null;
@@ -300,6 +319,11 @@ public class Polyline_Trans implements IPaint {
 		}
 	}
 	
+	/**
+	 * 移动整条折线
+	 * @param XDist x方向上移动的距离
+	 * @param YDist y方向上移动的距离
+	 */
 	public void movePolyline(int XDist, int YDist){
 		if (polyLine == null || polyLine.size() == 0){
 			return;
@@ -311,6 +335,11 @@ public class Polyline_Trans implements IPaint {
 		//updateLableAnchor();
 	}
 	
+	/**
+	 * 移动折线上选中的某些折点
+	 * @param XDist x方向上移动的距离
+	 * @param YDist y方向上移动的距离
+	 */
 	public void moveSelectedPnts(int XDist, int YDist){
 		if (selectedPointIdx == null || selectedPointIdx.size() == 0){
 			return;
@@ -322,11 +351,20 @@ public class Polyline_Trans implements IPaint {
 		//updateLableAnchor();
 	}
 	
+	/**
+	 * 某个点是否已经被选中
+	 * @param p 要检查的点坐标
+	 * @return 是否已经选中
+	 */
 	public boolean isSelected(Point p){
 		int idx = polyLine.indexOf(p);
 		return selectedPointIdx.contains(idx);
 	}
 	
+	/**
+	 * 在矩形框内的所有点标记为选中
+	 * @param rect 矩形框
+	 */
 	public void recordPntsInRect(Rectangle rect){
 		if (polyLine == null || polyLine.size() == 0){
 			return;
@@ -339,6 +377,10 @@ public class Polyline_Trans implements IPaint {
 		}
 	}
 	
+	/**
+	 * 移除某个折点
+	 * @param p 待移除的折点
+	 */
 	public void removePnt(Point p){
 		int idx = polyLine.indexOf(p);
 		polyLine.remove(idx);
@@ -378,10 +420,18 @@ public class Polyline_Trans implements IPaint {
 		this.endCircle = endCircle;
 	}
 
+	/**
+	 * 获取与本组件相关的转移函数对象
+	 * @return 转移函数对象
+	 */
 	public TransFunction getTransFunc() {
 		return transFunc;
 	}
-
+	
+	/**
+	 * 设置与本组件相关的转移函数对象
+	 * @param transFunc 转移函数对象
+	 */
 	public void setTransFunc(TransFunction transFunc) {
 		this.transFunc = transFunc;
 	}
@@ -395,6 +445,10 @@ public class Polyline_Trans implements IPaint {
 		this.Oranal_PolyLine = CommonTool.PointsClone(polyLine);
 	}
 
+	/**
+	 * 删除所有的选中点
+	 * @return 是否成功
+	 */
 	public boolean removeSelectedPtn() {
 		if (selectedPointIdx == null || selectedPointIdx.size() == 0)
 			return false;

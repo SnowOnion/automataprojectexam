@@ -136,7 +136,14 @@ public class Dialog_PDATransConManager extends Dialog {
 					MessageDialog.openWarning(shell, "警告", "请先选择或者输入一个堆栈符号！");
 					return;
 				}
+				if (combo_Stack2.getText().indexOf(",") != -1) {
+					MessageDialog.openWarning(shell, "警告", "堆栈符号不能包含逗号！");
+					return;
+				}
 				addStackSymbtoPDA(combo_Stack2.getText());
+				if (!text.getText().equals("")){
+					text.setText(text.getText() + ",");
+				}
 				text.setText(text.getText() + combo_Stack2.getText());
 				tempNewStacksTop.add(combo_Stack2.getText());
 			}
@@ -250,6 +257,9 @@ public class Dialog_PDATransConManager extends Dialog {
 		tempNewStacksTop.clear();
 		text.setText("");
 		for (String s : pdatc.getM_NewStackSymbol()) {
+			if (!text.getText().equals("")){
+				text.setText(text.getText() + ",");
+			}
 			text.setText(text.getText() + s);
 			tempNewStacksTop.add(s);
 		}

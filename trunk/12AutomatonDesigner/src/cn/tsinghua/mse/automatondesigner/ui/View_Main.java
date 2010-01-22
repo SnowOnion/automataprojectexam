@@ -215,4 +215,16 @@ public class View_Main extends ViewPart implements ICanvasContainer {
 	public Canvas_Automaton getCanvas() {
 		return canvas;
 	}
+
+	@Override
+	public void doRedo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doUndo() {
+		// TODO Auto-generated method stub
+		
+	}
 }

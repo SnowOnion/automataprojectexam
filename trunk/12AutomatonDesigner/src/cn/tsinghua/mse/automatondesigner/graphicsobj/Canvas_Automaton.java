@@ -81,9 +81,8 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 	}
 
 	/**
-	 * @wbp.parser.constructor
-	 * @param parent
-	 * @param style
+	 * @param parent 父组件
+	 * @param style 类型
 	 */
 	public Canvas_Automaton(Composite parent, int style,
 			ICanvasContainer mainView) {
@@ -500,6 +499,7 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 					if (m_SelectedLable != null) {
 						m_SelectedLable.updateOriginalLocation();
 					}
+					m_mainView.setDirty(true);
 				}
 				selectRectangle = null;
 			} else if (e.button == 3) { // 鼠标右键菜单弹出
@@ -606,7 +606,10 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 		}
 	}
 
-	private void clearAllSelectedItems() {
+	/**
+	 * 清理画布上所有选中的组件
+	 */
+	public void clearAllSelectedItems() {
 		m_SelectedCircles.clear();
 		m_SelectedPolylines.clear();
 		for (Polyline_Trans trans : m_Polylines) {
@@ -710,7 +713,7 @@ public class Canvas_Automaton extends Canvas implements MouseListener,
 					for (Polyline_Trans trans : m_Polylines) {
 						trans.moveSelectedPnts(differX, differY);
 					}
-					m_mainView.setDirty(true);
+					//m_mainView.setDirty(true);
 				}
 			}
 			redraw();

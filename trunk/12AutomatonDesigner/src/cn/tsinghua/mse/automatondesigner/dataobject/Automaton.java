@@ -123,6 +123,11 @@ public class Automaton {
 		return true;
 	}
 
+	/**
+	 * 检查新的状态名称是否可以使用
+	 * @param newname 要检查的状态名称
+	 * @return 如果可以使用则为true，已被使用则会false
+	 */
 	public boolean checkStateNameUnique(String newname) {
 		for (State s : m_States) {
 			if (s.getM_Name().equals(newname)) {
@@ -132,6 +137,11 @@ public class Automaton {
 		return true;
 	}
 
+	/**
+	 * 通过状态的名称获取状态
+	 * @param name 要获取的状态名称
+	 * @return 与名称相关的状态对象
+	 */
 	public State getStateByName(String name){
 		for (State s : m_States) {
 			if (s.getM_Name().equals(name)) {
@@ -141,6 +151,11 @@ public class Automaton {
 		return null;
 	}
 	
+	/**
+	 * 获取下一个序号的状态名称
+	 * @param prefix 前缀
+	 * @return  状态名称
+	 */
 	public String getNextNameIdx(String prefix) {
 		int result = 0;
 		for (State s : m_States) {
@@ -160,6 +175,9 @@ public class Automaton {
 		return prefix + result;
 	}
 	
+	/**
+	 * 使开始状态放置在状态集合的第一个位置
+	 */
 	public void setInitStateFirst(){
 		if (m_StartState != null){
 			m_States.remove(m_StartState);
@@ -301,10 +319,18 @@ public class Automaton {
 		return m_transFunctions.remove(transFunction);
 	}
 
+	/**
+	 * 获取字符串形式的自动机类型
+	 * @return 字符串形式的自动机类型
+	 */
 	public String getStrType(){
 		return SystemConstant.AUTOMATONTYPES[getM_Type()];
 	}
 	
+	/**
+	 * 根据字符串形式的类型设置自动机类型
+	 * @param type 类型名称
+	 */
 	public void setTypeByStr(String type){
 		for (byte i = 0; i < SystemConstant.AUTOMATONTYPES.length; i++){
 			if (SystemConstant.AUTOMATONTYPES[i].equals(type)){
@@ -313,54 +339,106 @@ public class Automaton {
 		}
 	}
 	
+	/**
+	 * 获取状态集合
+	 * @return 自动机的状态集合
+	 */
 	public ArrayList<State> getM_States() {
 		return m_States;
 	}
 
+	/**
+	 * 设置状态集合
+	 * @param mStates 自动机的状态集合
+	 */
 	public void setM_States(ArrayList<State> mStates) {
 		m_States = mStates;
 	}
 
+	/**
+	 * 获取自动机的输入符号表
+	 * @return 输入符号表
+	 */
 	public ArrayList<String> getM_InputSymbols() {
 		return m_InputSymbols;
 	}
 
+	/**
+	 * 设置自动机的输入符号表
+	 * @param mInputSymbols 输入符号表
+	 */
 	public void setM_InputSymbols(ArrayList<String> mInputSymbols) {
 		m_InputSymbols = mInputSymbols;
 	}
 
+	/**
+	 * 获取自动机的转移函数列表
+	 * @return 自动机的转移函数列表
+	 */
 	public ArrayList<TransFunction> getM_transFunctions() {
 		return m_transFunctions;
 	}
 
+	/**
+	 * 设置自动机的转移函数列表
+	 * @param mTransFunctions 自动机的转移函数列表
+	 */
 	public void setM_transFunctions(ArrayList<TransFunction> mTransFunctions) {
 		m_transFunctions = mTransFunctions;
 	}
 
+	/**
+	 * 获得自动机的开始状态
+	 * @return 自动机的开始状态
+	 */
 	public State getM_StartState() {
 		return m_StartState;
 	}
 
+	/**
+	 * 设置自动机的开始状态
+	 * @param mStartState 自动机的开始状态
+	 */
 	public void setM_StartState(State mStartState) {
 		m_StartState = mStartState;
 	}
 
+	/**
+	 * 获取自动机的类型
+	 * @return 自动机的类型
+	 */
 	public byte getM_Type() {
 		return m_Type;
 	}
 
+	/**
+	 * 设置自动机的类型
+	 * @param mType 自动机的类型
+	 */
 	public void setM_Type(byte mType) {
 		m_Type = mType;
 	}
 
+	/**
+	 * 获取自动机名称
+	 * @return 自动机名称
+	 */
 	public String getM_Name() {
 		return m_Name;
 	}
 
+	/**
+	 * 设置自动机名称
+	 * @param mName 自动机名称
+	 */
 	public void setM_Name(String mName) {
 		m_Name = mName;
 	}
 	
+	/**
+	 * 获取开始状态名称，没有开始状态则为空
+	 * @return 开始状态名称
+	 */
 	public String getStartStateName(){
 		if (m_StartState != null)
 			return m_StartState.getM_Name();

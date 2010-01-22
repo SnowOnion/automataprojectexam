@@ -19,19 +19,17 @@ public class NewAutomatonWizardPage extends WizardPage {
 	private Combo ATypeCmb;
 
 	/**
-	 * @wbp.parser.constructor
+	 * @param pageName ±à¼­Ò³µÄÃû³Æ
 	 */
 	public NewAutomatonWizardPage(String pageName) {
 		super(pageName);
 		setTitle("New Automaton");
 		setDescription("This wizard creats an automaton model which you could add state and transform to.");
-		// TODO Auto-generated constructor stub
 	}
 
 	public NewAutomatonWizardPage(String pageName, String title,
 			ImageDescriptor titleImage) {
 		super(pageName, title, titleImage);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
