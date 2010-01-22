@@ -3,6 +3,12 @@
 
 <product name="Automaton Designer" id="AutomatonDesigner.product" application="AutomatonDesigner.application" useFeatures="false" includeLaunchers="true">
 
+   <aboutInfo>
+      <image path="/AutomatonDesigner/icons/aasa64.png"/>
+      <text>
+         欢迎使用Automaton Designer自动机建模工具！本建模工具由贾伟昊、赵小卓、娄剑共同开发。
+      </text>
+   </aboutInfo>
 
    <configIni use="default">
    </configIni>
@@ -11,15 +17,15 @@
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
-   <windowImages i16="/AutomatonDesigner/icons/new16.gif" i32="/AutomatonDesigner/icons/views.gif"/>
+   <windowImages i16="/AutomatonDesigner/icons/aasa.png" i32="/AutomatonDesigner/icons/aasa32.png"/>
 
-   <launcher>
+   <launcher name="Autonamton Designer">
       <solaris/>
-      <win useIco="false">
+      <win useIco="true">
+         <ico path="/AutomatonDesigner/icons/Trillian.ico"/>
          <bmp/>
       </win>
    </launcher>
-
 
    <vm>
       <windows>org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/OSGi%Minimum-1.0</windows>
