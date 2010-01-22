@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NFA>
+	<AutomatonName>NFA DATA 1</AutomatonName>
+	<AutomatonStates>
+		<State>
+			<StateId>P1</StateId>
+			<StateType>normal</StateType>
+		</State>
+		<State>
+			<StateId>P2</StateId>
+			<StateType>normal</StateType>
+		</State>
+		<State>
+			<StateId>P3</StateId>
+			<StateType>accepted</StateType></State>
+	</AutomatonStates>
+	<InitialState>P1</InitialState>
+	<AutomatonInputSymbols>
+		<InputSymbol>0</InputSymbol>
+		<InputSymbol>1</InputSymbol>
+		<InputSymbol>2</InputSymbol>
+	</AutomatonInputSymbols>
+	<NFATransitions>
+		<NFATransition>
+		<FromState>P1</FromState>
+		<NFAConditions>
+			<NFACondition>0</NFACondition>
+			<NFACondition>1</NFACondition>
+		</NFAConditions>
+		<ToState>P2</ToState>
+		</NFATransition>
+		<NFATransition>
+			<FromState>P2</FromState>
+			<NFAConditions>
+				<NFACondition>2</NFACondition>
+			</NFAConditions>
+			<ToState>P3</ToState>
+		</NFATransition>
+	</NFATransitions>
+</NFA>
+	
