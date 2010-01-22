@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Automatas SYSTEM "autoDS.dtd" >
+<Automatas><DFA>
+		<States>
+			<state>p</state>
+		</States>
+		<InputSymbols>
+			<symbol>a</symbol>
+		</InputSymbols>
+		<TranFuncs>
+			<Tranfunc>
+				<state>p</state>
+				<symbol>a</symbol>
+				<state>p</state>
+			</Tranfunc></TranFuncs>
+		<StartQ>
+			<state>p</state>
+		</StartQ>
+		<FinalStates>
+			<state>p</state>
+		</FinalStates>
+	</DFA>
+</Automatas>

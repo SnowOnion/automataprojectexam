@@ -23,7 +23,6 @@ public class FAParser {
 			DocumentBuilder bulider = factory.newDocumentBuilder();
 			doc = bulider.parse(filePath);
 		} catch (Exception e) {
-//			e.printStackTrace();
 			return null;
 		}
 		

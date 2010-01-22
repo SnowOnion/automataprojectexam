@@ -30,14 +30,6 @@ public class State {
 		this.subStates.add(state);
 	}
 	
-//	public boolean equals(Object state){
-//		if(this.getName().equals(((State)state).getName())){
-//			return true;
-//		}else{
-//			return false;
-//		}
-//	}
-	
 	public boolean subStatesEquals(State state){
 		Iterator<State> it = state.getSubStates().iterator();
 		Integer size = subStates.size();

@@ -63,18 +63,7 @@ public class ConsoleMain {
 			}
 		}
 	}
-	
-	/**
-	 * The output format:
-	 * States: {name of all states}
-  	 * Symbols: {symbols}
-  	 * Start State: start state
-  	 * Final States: {final states}
-  	 * Transitions: 
-  	 * pre_state --'symbol'--> next_state
-  	 * 
-	 * @param fa
-	 */
+
 	public static void printFA(FA fa, PrintWriter pw){
 		pw.append("====================== \n");
 		pw.append("Your FA is as below: \n");
