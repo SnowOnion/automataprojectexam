@@ -7,14 +7,33 @@ import java.util.Set;
 
 import util.Pair;
 
+/**
+ * DFA类
+ * @see automata.Automaton
+ * @author Leaf
+ *
+ */
 public class DFA extends Automaton {
 //------Implement of superclass interface---------------------------------------
 	
+	/**
+	 * 为DFA添加迁移。
+	 * @param from 源状态名
+	 * @param cond 迁移条件
+	 * @param to 目的状态名
+	 * @throws Exception 状态不存在
+	 */
 	public void addTransition(String from, HashSet<Character> cond, String to) throws Exception {
 		if (label2num.get(from) == null || label2num.get(to) == null)
 			throw new Exception("State not exist");
 		addTransition(stateOfLabel(from), cond, stateOfLabel(to));
 	}
+	/**
+	 * 为DFA添加迁移。
+	 * @param from 源状态对象
+	 * @param cond 迁移条件
+	 * @param to 目的状态对象
+	 */
 	@Override
 	public void addTransition(State from, HashSet<Character> cond, State to) {
 		Iterator<Character> cit = cond.iterator();
@@ -35,6 +54,10 @@ public class DFA extends Automaton {
 		modified = true;
 	}
 	
+	/** 
+	 * 生成字符形式的 DFA 的迁移表格
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		String s = new String();
@@ -64,6 +87,9 @@ public class DFA extends Automaton {
 	}
 
 //------DFA algorithms----------------------------------------------------------
+	/**
+	 * 化简DFA。
+	 */
 	public void minimize() {
 		if (!modified)
 			return;
@@ -101,6 +127,13 @@ public class DFA extends Automaton {
 		modified = false;
 	}
 	
+	/**
+	 * 判断本DFA所表达的语言是否被另一个DFA所包含。<br>
+	 * 主要思想：判断是否所有能够使本DFA接受的串都能被另一个DFA所接受。<br>
+	 * 使用BFS算法。
+	 * @param t 另一个DFA
+	 * @return true：本DFA的语言包含于t； false：本DFA的语言不包含于t。
+	 */
 	public boolean includedIn(DFA t) {
 		minimize();
 		t.minimize();
@@ -134,11 +167,20 @@ public class DFA extends Automaton {
 		return true;
 	}
 	
+	/**
+	 * 判断本DFA是否与另一DFA等价。
+	 * @param t 另一个DFA
+	 * @return true：两个DFA等价；false：两个DFA不等价。
+	 */
 	public boolean equivalentTo(DFA t) {
 		return includedIn(t) && t.includedIn(this);
 	}
 	
 //------Utilities used by algorithms--------------------------------------------
+	/**
+	 * 合并所有与状态 i 等价的状态。
+	 * @param i 状态标号
+	 */
 	private void mergeAll(int i) {
 		if (i == size - 1)
 			return;
@@ -152,6 +194,12 @@ public class DFA extends Automaton {
 		}
 	}
 	
+	/**
+	 * 将两个状态 state1 state2 合并为 state1。
+	 * @param state1
+	 * @param state2
+	 * 
+	 */
 	private void merge(int state1, int state2) {
 		Iterator<State> sit = stateOfNum(state2).fromStates().iterator();
 		while (sit.hasNext())
@@ -161,6 +209,10 @@ public class DFA extends Automaton {
 	}
 
 	// Second part of table-filling algorithm, O(n^2)
+	/**
+	 * 为等价类表填入值。
+	 * 这是填表算法的第二部分。（第一部分在minimize()函数中）
+	 */
 	private void fillTableBFS() {
 		while (!queue.isEmpty()) {
 			Pair<Integer, Integer> statePair = queue.remove();
@@ -193,10 +245,19 @@ public class DFA extends Automaton {
 		}
 	}
 
+	/**
+	 * 标记无效状态。<br>
+	 * 调用此函数的递归版本。
+	 */
 	private void markDeadStates() {
 		map = new int[size];
 		markDeadStates(startState);
 	}
+	/**
+	 * 递归标记从 state 能到达的所有无效状态。使用DFS算法。<br>
+	 * 被此函数的非递归版本所调用，不单独使用。
+	 * @param state
+	 */
 	private void markDeadStates(State state) {
 		int mark;
 		int currNum = numOfState(state);
@@ -216,6 +277,12 @@ public class DFA extends Automaton {
 			map[currNum] = -2;
 	}
 	
+	/**
+	 * 返回从状态 state 通过迁移条件 letter 能够到达的下一状态。
+	 * @param state 当前状态名
+	 * @param letter 迁移条件
+	 * @return 下一状态
+	 */
 	private State nextStateOf(State state, char letter) {
 		OutTransitions e = state.outTransitions();
 		HashSet<State> s = e.toStatesByCond(letter);
@@ -224,6 +291,12 @@ public class DFA extends Automaton {
 		else
 			return s.iterator().next();
 	}
+	/**
+	 * 返回从状态 state 通过迁移条件 letter 能够到达的下一状态。
+	 * @param state 当前状态标号
+	 * @param letter 迁移条件
+	 * @return 下一状态
+	 */
 	private int nextStateOf(int state, char letter) {
 		OutTransitions e = stateOfNum(state).outTransitions();
 		HashSet<State> s = e.toStatesByCond(letter);
@@ -233,13 +306,27 @@ public class DFA extends Automaton {
 			return numOfState(s.iterator().next());
 	}
 	
+	/**
+	 * 返回所有被某状态接受的迁移条件（字符）。
+	 * @param stateNum 状态标号
+	 * @return 迁移条件集合
+	 */
 	private Set<Character> lettersAcceptedByState(int stateNum) {
 		return stateOfNum(stateNum).outTransitions().conditions();
 	}
 	
 //------Data member-------------------------------------------------------------
+	/**
+	 * DFA化简表
+	 */
 	private char[][] table = null;
+	/**
+	 * 语言包含判断算法所用队列
+	 */
 	private LinkedList<Pair<Integer, Integer>> queue = null;
+	/**
+	 * 无效状态标记数组
+	 */
 	private int[] map = null;
 }
 
