@@ -15,13 +15,25 @@ public class Frontend {
 			System.out.println("Input 2 XML files that represent DFA.");
 			return;
 		}
-		File file = new File(args[0]);
-		DFA a = AutomatonFactory.getDFAFromXML(file);
+		File file;
+		DFA a, b;
+		try {
+			file = new File(args[0]);
+			a = AutomatonFactory.getDFAFromXML(file);
+		} catch(java.io.FileNotFoundException e) {
+			System.out.println(e.toString());
+			return;
+		}
 		System.out.println("DFA1:");
 		System.out.println(a.toString());
 		
-		file = new File(args[1]);
-		DFA b = AutomatonFactory.getDFAFromXML(file);
+		try {
+			file = new File(args[1]);
+			b = AutomatonFactory.getDFAFromXML(file);
+		} catch(java.io.FileNotFoundException e) {
+			System.out.println(e.toString());
+			return;
+		}
 		System.out.println("DFA2:");
 		System.out.println(b.toString());
 		
@@ -32,6 +44,7 @@ public class Frontend {
 		System.out.println(a.toString());
 		System.out.println("Minimized DFA2:");
 		System.out.println(b.toString());
+		
 	}
 
 }
