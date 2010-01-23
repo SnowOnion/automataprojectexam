@@ -14,7 +14,11 @@ public class Transition {
 		this.from = from;
 		this.to = to;
 	}
-	
+	@Override
+	public Object clone() {
+		Transition c = new Transition(this.from, this.to, this.conditions);
+		return c;
+	}
 	// Claim that this transition is no longer in use, perhaps for that 
 	// the state associated to this transition has been deleted.
 	public void dispose() {
