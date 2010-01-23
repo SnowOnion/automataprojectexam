@@ -2,6 +2,7 @@ package automata;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 public class OutTransitions extends Transitions {
 	// Remove an exist transition
@@ -27,11 +28,25 @@ public class OutTransitions extends Transitions {
 	// Alter transitions to 'src', making them connect to 'dest'.
 	public void alterToState(State src, State dest) {
 		Transition t;
+		LinkedList<Transition> temp = new LinkedList<Transition>();
 		Iterator<Transition> it = trans.iterator();
 		while (it.hasNext()) {
 			t = it.next();
-			if (t.toState() == src)
-				t.setToState(dest);
+			if (t.toState() == src) {
+				temp.add(t);
+			}
+		}
+		// The following part is necessary, since removeTransiton()
+		// would mark the transition as invalid. 
+		// Avoiding concurrent modification exceptions is also in concern.
+		it = temp.iterator();
+		while (it.hasNext()) {
+			t = it.next();
+			removeTransition(t);
+			t = (Transition)t.clone();
+			t.setToState(dest);
+			addTransition(t);
+			dest.addInTransition(t);
 		}
 	}
 	
