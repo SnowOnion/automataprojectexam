@@ -11,52 +11,27 @@ public class Frontend {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		/*
-		DFA d = new DFA();
-		d.addState("p");
-		d.addFinalState("q");
-		d.addFinalState("r");
-		try {
-			d.addTransition("p", 'a', "q");
-			d.addTransition("p", 'b', "r");
-			d.addTransition("q", 'a', "r");
-			d.addTransition("q", 'b', "q");
-			d.addTransition("r", 'a', "r");
-			d.addTransition("r", 'b', "q");
-		} catch (Exception e) {
-			System.out.println(e.toString());
+		if (args.length != 2) {
+			System.out.println("Input 2 XML files that represent DFA.");
+			return;
 		}
-		
-		DFA t = new DFA();
-		t.setStartState("p");
-		t.addFinalState("q");
-		t.addFinalState("r");
-		try {
-			t.addTransition("p", 'a', "q");
-			t.addTransition("p", 'b', "r");
-			t.addTransition("q", 'a', "r");
-			t.addTransition("q", 'b', "q");
-			t.addTransition("r", 'a', "q");
-			t.addTransition("r", 'b', "q");
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-		
-		System.out.println(d.toString());
-		System.out.println(t.toString());
-		d.minimize();
-		System.out.println(d.toString());
-
-		System.out.println(d.equivalentTo(t));
-		*/
-		File file = new File("src\\case1-1.xml");
+		File file = new File(args[0]);
 		DFA a = AutomatonFactory.getDFAFromXML(file);
+		System.out.println("DFA1:");
 		System.out.println(a.toString());
-		file = new File("src\\case1-2.xml");
+		
+		file = new File(args[1]);
 		DFA b = AutomatonFactory.getDFAFromXML(file);
+		System.out.println("DFA2:");
 		System.out.println(b.toString());
-		System.out.println("a is equivalent to b? " + a.equivalentTo(b));
-		System.out.println("a is included in b? " + a.includedIn(b));
+		
+		System.out.println("DFA1 is equivalent to DFA2? " + a.equivalentTo(b));
+		System.out.println("DFA1 is included in DFA2? " + a.includedIn(b));
+		
+		System.out.println("\nMinimized DFA1:");
+		System.out.println(a.toString());
+		System.out.println("Minimized DFA2:");
+		System.out.println(b.toString());
 	}
 
 }
