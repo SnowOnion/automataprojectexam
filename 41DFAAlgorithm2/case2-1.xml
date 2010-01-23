@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DFA>
+	<StartState>p</StartState>
+	<FinalStates>
+		<State>q</State>
+		<State>r</State></FinalStates>
+	<Transitions>
+		<Transition>
+			<From>p</From>
+			<To>q</To>
+			<Conditions>
+				<Condition>a</Condition></Conditions></Transition><Transition>
+			<From>p</From>
+			<To>r</To>
+			<Conditions>
+				<Condition>b</Condition></Conditions></Transition><Transition>
+			<From>q</From>
+			<To>q</To>
+			<Conditions>
+				<Condition>b</Condition></Conditions></Transition><Transition>
+			<From>q</From>
+			<To>r</To>
+			<Conditions>
+				<Condition>a</Condition></Conditions></Transition><Transition>
+			<From>r</From>
+			<To>r</To>
+			<Conditions>
+				<Condition>a</Condition></Conditions></Transition><Transition>
+			<From>r</From>
+			<To>q</To>
+			<Conditions>
+				<Condition>b</Condition></Conditions></Transition></Transitions></DFA>

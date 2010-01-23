@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+ <DFA>
+
+                 <StartState>P1</StartState>
+                 <CommonStates>
+                 	<State>P2</State><State>P3</State><State>P5</State></CommonStates>
+                 <FinalStates>
+                 	<State>P4</State></FinalStates>
+                 <Transitions>
+                 	<Transition>
+                 		<From>P1</From>
+                 		<To>P2</To>
+                 		<Conditions>
+                 			<Condition>a</Condition><Condition>b</Condition></Conditions></Transition><Transition>
+                 		<From>P2</From>
+                 		<To>P3</To>
+                 		<Conditions>
+                 			<Condition>a</Condition><Condition>b</Condition></Conditions></Transition><Transition>
+                 		<From>P3</From>
+                 		<To>P4</To>
+                 		<Conditions>
+                 			<Condition>a</Condition><Condition>b</Condition></Conditions></Transition><Transition>
+                 		<From>P4</From>
+                 		<To>P4</To>
+                 		<Conditions>
+                 			<Condition>a</Condition><Condition>b</Condition></Conditions></Transition><Transition>
+                 		<From>P5</From>
+                 		<To>P4</To>
+                 		<Conditions>
+                 			<Condition>a</Condition><Condition>b</Condition></Conditions></Transition></Transitions></DFA>
+
+
