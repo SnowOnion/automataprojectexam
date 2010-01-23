@@ -13,7 +13,7 @@ public class OutTransitions extends Transitions {
 	}
 	
 	// Remove transitions that can reach 'to' by accepting 'c'.
-	public void removeTransitionTo(char c, State to) {
+	public void removeTransitionTo(String c, State to) {
 		Transition t;
 		Iterator<Transition> it = trans.iterator();
 		while (it.hasNext()) {
@@ -63,7 +63,7 @@ public class OutTransitions extends Transitions {
 	}
 	
 	// Return all states reached by accepting 'c'
-	public HashSet<State> toStatesByCond(char c) {
+	public HashSet<State> toStatesByCond(String c) {
 		HashSet<State> s = new HashSet<State>();
 		Transition t;
 		Iterator<Transition> it = trans.iterator();

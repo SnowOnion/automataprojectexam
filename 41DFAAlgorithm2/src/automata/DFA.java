@@ -23,7 +23,7 @@ public class DFA extends Automaton {
 	 * @param to 目的状态名
 	 * @throws Exception 状态不存在
 	 */
-	public void addTransition(String from, HashSet<Character> cond, String to) throws Exception {
+	public void addTransition(String from, HashSet<String> cond, String to) throws Exception {
 		if (label2num.get(from) == null || label2num.get(to) == null)
 			throw new Exception("State not exist");
 		addTransition(stateOfLabel(from), cond, stateOfLabel(to));
@@ -35,8 +35,8 @@ public class DFA extends Automaton {
 	 * @param to 目的状态对象
 	 */
 	@Override
-	public void addTransition(State from, HashSet<Character> cond, State to) {
-		Iterator<Character> cit = cond.iterator();
+	public void addTransition(State from, HashSet<String> cond, State to) {
+		Iterator<String> cit = cond.iterator();
 		while (cit.hasNext()) {
 			if (from.acceptsCond(cit.next()))
 				return;
@@ -62,7 +62,7 @@ public class DFA extends Automaton {
 	public String toString() {
 		String s = new String();
 		s += "\t\t";
-		Iterator<Character> cit = alphabet.iterator();
+		Iterator<String> cit = alphabet.iterator();
 		while (cit.hasNext())
 			s += cit.next() + "\t";
 		s += "\n";
@@ -155,9 +155,9 @@ public class DFA extends Automaton {
 		queue.add(new Pair<Integer, Integer>(numOfState(startState), t.numOfState(t.startState)));
 		while (!queue.isEmpty()) {
 			Pair<Integer, Integer> p = queue.remove();
-			Iterator<Character> letterIter = lettersAcceptedByState(p.key()).iterator();
+			Iterator<String> letterIter = lettersAcceptedByState(p.key()).iterator();
 			int s1, s2;
-			char letter;
+			String letter;
 			while (letterIter.hasNext()) {
 				letter = letterIter.next();
 				s1 = nextStateOf(p.key(), letter);
@@ -228,9 +228,9 @@ public class DFA extends Automaton {
 			Pair<Integer, Integer> statePair = queue.remove();
 			InTransitions trans1 = stateOfNum(statePair.key()).inTransitions();
 			InTransitions trans2 = stateOfNum(statePair.value()).inTransitions();
-			Iterator<Character> letterIter = trans1.conditions().iterator();
+			Iterator<String> letterIter = trans1.conditions().iterator();
 			while (letterIter.hasNext()) {
-				Character letter = letterIter.next();
+				String letter = letterIter.next();
 				Iterator<State> stateIter1 = trans1.fromStatesByCond(letter).iterator();
 				if (trans2.fromStatesByCond(letter).isEmpty())
 					continue;
@@ -295,7 +295,7 @@ public class DFA extends Automaton {
 	 * @param letter 迁移条件
 	 * @return 下一状态
 	 */
-	private State nextStateOf(State state, char letter) {
+	private State nextStateOf(State state, String letter) {
 		OutTransitions e = state.outTransitions();
 		HashSet<State> s = e.toStatesByCond(letter);
 		if (s.isEmpty())
@@ -309,7 +309,7 @@ public class DFA extends Automaton {
 	 * @param letter 迁移条件
 	 * @return 下一状态
 	 */
-	private int nextStateOf(int state, char letter) {
+	private int nextStateOf(int state, String letter) {
 		OutTransitions e = stateOfNum(state).outTransitions();
 		HashSet<State> s = e.toStatesByCond(letter);
 		if (s.isEmpty())
@@ -323,7 +323,7 @@ public class DFA extends Automaton {
 	 * @param stateNum 状态标号
 	 * @return 迁移条件集合
 	 */
-	private Set<Character> lettersAcceptedByState(int stateNum) {
+	private Set<String> lettersAcceptedByState(int stateNum) {
 		return stateOfNum(stateNum).outTransitions().conditions();
 	}
 	
