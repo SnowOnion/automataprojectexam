@@ -67,7 +67,7 @@ public class PDADomParserTwo extends DomParserParentTwo{
 			throw new NoStateFoundException("fromState was not found in state list of the PDA");
 		}
 		ArrayList <TransitionPDACondition> conditions = new ArrayList<TransitionPDACondition>();
-		NodeList conditionNodes = newTransition.getElementsByTagName("PDAConditions");
+		NodeList conditionNodes = ((Element)newTransition.getElementsByTagName("PDAConditions").item(0)).getElementsByTagName("PDACondition");
 		for(int i = 0;i<conditionNodes.getLength();i++){
 			Node pdaCondition = conditionNodes.item(i);
 			conditions.add(getTransitionPDAConditionFromNode(pdaCondition));

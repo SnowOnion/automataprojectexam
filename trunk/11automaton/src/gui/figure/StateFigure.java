@@ -16,6 +16,7 @@ public class StateFigure extends Ellipse {
 		this.label = new Label();
 		this.add(label);
 		this.setSize(50, 50);
+		this.setBackgroundColor(ColorConstants.white);
 	}
 
 	public String getText() {
