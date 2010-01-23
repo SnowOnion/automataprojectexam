@@ -47,7 +47,7 @@ public abstract class Automaton {
 	 * @param cond 迁移条件
 	 * @param to 目的状态对象
 	 */
-	public abstract void addTransition(State from, HashSet<Character> cond, State to);
+	public abstract void addTransition(State from, HashSet<String> cond, State to);
 	
 //------Utilities, internal-----------------------------------------------------
 	/**
@@ -150,7 +150,7 @@ public abstract class Automaton {
 	/**
 	 * 字母表
 	 */
-	protected HashSet<Character> alphabet = new HashSet<Character>();
+	protected HashSet<String> alphabet = new HashSet<String>();
 	/**
 	 * 自动机是否在上次化简后被修改
 	 */

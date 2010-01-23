@@ -5,7 +5,7 @@ import java.util.HashSet;
 public class Transition {
 //------------------------------------------------------------------------------
 	// Constructors
-	public Transition(State from, State to, HashSet<Character> cond) {
+	public Transition(State from, State to, HashSet<String> cond) {
 		this.from = from;
 		this.to = to;
 		this.conditions = cond;
@@ -30,7 +30,7 @@ public class Transition {
 		return valid;
 	}
 	
-	public boolean containsCond(char c) {
+	public boolean containsCond(String c) {
 		return conditions.contains(c);
 	}
 	// Getters & Setters
@@ -47,12 +47,12 @@ public class Transition {
 		to = s;
 	}
 	
-	public HashSet<Character> conditions() {
+	public HashSet<String> conditions() {
 		return conditions;
 	}
 //------------------------------------------------------------------------------
 	protected State from;
 	protected State to;
-	protected HashSet<Character> conditions = new HashSet<Character>();
+	protected HashSet<String> conditions = new HashSet<String>();
 	protected boolean valid = true;
 }

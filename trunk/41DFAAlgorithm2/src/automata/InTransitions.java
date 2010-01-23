@@ -15,7 +15,7 @@ public class InTransitions extends Transitions {
 	}
 	
 	// Remove transitions go from 'from' to current state by accepting 'c'.
-	public void removeTransitionFrom(char c, State from) {
+	public void removeTransitionFrom(String c, State from) {
 		Transition t;
 		Iterator<Transition> it = trans.iterator();
 		while (it.hasNext()) {
@@ -52,7 +52,7 @@ public class InTransitions extends Transitions {
 	
 	// Return all states which can reach current state
 	// (which this instance belongs to) by accepting 'c'
-	public HashSet<State> fromStatesByCond(char c) {
+	public HashSet<State> fromStatesByCond(String c) {
 		HashSet<State> s = new HashSet<State>();
 		Transition t;
 		Iterator<Transition> it = trans.iterator();

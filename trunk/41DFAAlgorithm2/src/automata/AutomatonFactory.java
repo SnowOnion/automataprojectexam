@@ -66,9 +66,9 @@ public class AutomatonFactory {
 			String from = getTransitionSource(transition);
 			String to = getTransitionDestination(transition);
 			NodeList conditions = getConditionList(transition);
-			HashSet<Character> cond = new HashSet<Character>();
+			HashSet<String> cond = new HashSet<String>();
 			for (int j = 0; j < conditions.getLength(); ++j) {
-				char c = getConditionCharacter(conditions.item(j));
+				String c = getCondition(conditions.item(j));
 				cond.add(c);
 			}
 			try {
@@ -111,8 +111,8 @@ public class AutomatonFactory {
 		Element e = (Element) transition.getElementsByTagName("Conditions").item(0);
 		return e.getElementsByTagName("Condition");
 	}
-	private static char getConditionCharacter(Node node) {
+	private static String getCondition(Node node) {
 		Element e = (Element) node;
-		return e.getTextContent().charAt(0);
+		return e.getTextContent();
 	}
 }

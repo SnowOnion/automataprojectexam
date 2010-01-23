@@ -43,13 +43,13 @@ public class State {
 	public Set<State> fromStates() {
 		return in.fromStates();
 	}
-	public boolean acceptsCond(char c) {
+	public boolean acceptsCond(String c) {
 		return out.containsCond(c);
 	}
-	public HashSet<State> toStatesByCond(char c) {
+	public HashSet<State> toStatesByCond(String c) {
 		return out.toStatesByCond(c);
 	}
-	public HashSet<State> fromStatesByCond(char c) {
+	public HashSet<State> fromStatesByCond(String c) {
 		return in.fromStatesByCond(c);
 	}
 	public void cleanUpInTransitions() {

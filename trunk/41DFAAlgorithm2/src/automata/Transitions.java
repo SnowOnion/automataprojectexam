@@ -44,7 +44,7 @@ public class Transitions {
 	 * @param c 迁移条件（字符）
 	 * @return true：存在；false：不存在。
 	 */
-	public boolean containsCond(char c) {
+	public boolean containsCond(String c) {
 		return conditions.contains(c);
 	}
 	
@@ -52,7 +52,7 @@ public class Transitions {
 	 * 返回所有的迁移条件。
 	 * @return 迁移条件集合
 	 */
-	public HashSet<Character> conditions() {
+	public HashSet<String> conditions() {
 		return conditions;
 	}
 	
@@ -109,5 +109,5 @@ public class Transitions {
 	}
 //------------------------------------------------------------------------------	
 	protected LinkedList<Transition> trans = new LinkedList<Transition>();
-	protected HashSet<Character> conditions = new HashSet<Character>();
+	protected HashSet<String> conditions = new HashSet<String>();
 }
