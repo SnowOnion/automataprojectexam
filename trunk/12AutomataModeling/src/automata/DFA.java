@@ -47,7 +47,7 @@ public class DFA extends Automata {
 	@Override
 	public boolean acceptString(String symbols) {
 		init();
-		if (acceptSymbols(symbols) && curState.getStyle() == State.FINAL_S)
+		if (acceptSymbols(symbols) && ((curState.getStyle() == State.FINAL_S)||(curState.getStyle() == State.START_FINAL_S)))
 			return true;
 		else
 			return false;

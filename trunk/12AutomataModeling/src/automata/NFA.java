@@ -52,7 +52,7 @@ public class NFA extends Automata {
 		init();
 		if (acceptSymbols(symbols)){
 			for(State iterator :curStates){
-				if(iterator.getStyle()==State.FINAL_S)
+				if((iterator.getStyle()==State.FINAL_S)||(iterator.getStyle() == State.START_FINAL_S))
 					return true;
 			}	
 		}		

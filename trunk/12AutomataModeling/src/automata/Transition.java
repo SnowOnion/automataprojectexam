@@ -23,6 +23,9 @@ public class Transition implements Comparable{
 		this.inputChar=inputChar;
 		this.endState=targetState;
 	}
+	public Transition(){
+		
+	}
 	
 	public State getBeginState() {
 		return beginState;

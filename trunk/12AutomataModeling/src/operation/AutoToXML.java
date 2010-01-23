@@ -81,7 +81,9 @@ public class AutoToXML {
 		}
 
 		Element state = document.createElement("state");
-		state.setTextContent(fa.getStartQ().getStateId());
+		State s=fa.getStartQ();
+		if(s!=null)
+			state.setTextContent(s.getStateId());
 		StartQ.appendChild(state);
 
 		for (State finalState : fa.getFinalStates()) {

@@ -3,5 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
+	<classpathentry kind="lib" path="G:/workspace-Program/12AutomataModeling/lib/jgraphx.jar" sourcepath="C:/Users/beyondboy/Desktop/temp2/jgraphx-1_2_/jgraphx/src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
