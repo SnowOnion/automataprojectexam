@@ -20,11 +20,13 @@ import org.w3c.dom.NodeList;
  */
 public class AutomatonFactory {
 
-	public static DFA getDFAFromXML(File file) {
+	public static DFA getDFAFromXML(File file) throws java.io.FileNotFoundException {
 		try {
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document doc = builder.parse(file);
 			return getDFAFromDocument(doc);
+		} catch (java.io.FileNotFoundException e) {
+			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
