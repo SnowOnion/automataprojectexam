@@ -28,13 +28,15 @@ public class StateEditPart extends EditPartWithListener implements NodeEditPart 
 
 	@Override
 	protected IFigure createFigure() {
-		StateModel hm =(StateModel) this.getModel();
+		StateModel hm = (StateModel) this.getModel();
 		StateFigure state = new StateFigure();
 		state.setText(hm.getText());
 		state.setPosition(hm.getPosition());
-		if (hm.isInitial()){
+		if (hm.isInitial()) {
 			state.changeType2Initial();
-			System.out.println(hm.getText()+" is initial");
+		}
+		if (hm.isAccept()) {
+			state.changeType2Accept();
 		}
 		return state;
 	}
@@ -71,7 +73,8 @@ public class StateEditPart extends EditPartWithListener implements NodeEditPart 
 			figure.setPosition((Point) event.getNewValue());
 			((StateModel) getModel()).getConstraint().setLocation(
 					(Point) event.getNewValue());
-			System.out.println("position:"+((StateModel)getModel()).getPosition().x);
+			System.out.println("position:"
+					+ ((StateModel) getModel()).getPosition().x);
 		} else if (event.getPropertyName().equals(
 				StateModel.P_SOURCE_CONNECTION)) {
 			refreshSourceConnections();
@@ -93,7 +96,7 @@ public class StateEditPart extends EditPartWithListener implements NodeEditPart 
 				figure.changeType2NotAccept();
 		} else if (event.getPropertyName().equals(StateModel.P_ERROR)) {
 			MessageDialog.openInformation(getViewer().getControl().getShell(),
-					"Error", (String)(event.getNewValue()));
+					"Error", (String) (event.getNewValue()));
 		}
 	}
 
