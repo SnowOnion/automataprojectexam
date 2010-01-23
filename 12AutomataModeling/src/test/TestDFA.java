@@ -45,17 +45,17 @@ public class TestDFA extends TestCase {
 		dfa.addTransfer("q5", 'b', "q6");
 		
 		Document document = AutoToXML.FAToXML(dfa);
-		Utils.StoreDOM(document,"NFA1.xml");
+		Utils.StoreDOM(document,"xml\\NFA1.auto");
 		
 		System.out.println("Finished!");
 	}
-	public void Parser(){
+	public void testParser(){
 		Document document = null;
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory
 					.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			document = builder.parse("NFA1.xml");
+			document = builder.parse("xml\\NFA1.auto");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -65,16 +65,16 @@ public class TestDFA extends TestCase {
 		int i=0;
 		for(Automata dfa:Automatas){
 			Document doc = AutoToXML.FAToXML(dfa);
-			Utils.StoreDOM(doc,"ttt"+(i++)+".xml");			
+			Utils.StoreDOM(doc,"ttt"+(i++)+".auto");			
 		}
 	}
-	public void testDFA(){
+	public void DFA(){
 		Document document = null;
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory
 					.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			document = builder.parse("NFA1.xml");
+			document = builder.parse("NFA1.auto");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

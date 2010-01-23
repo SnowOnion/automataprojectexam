@@ -10,6 +10,7 @@ public class State implements Comparable{
 	public static final int START_S=1;
 	public static final int FINAL_S=2;
 	public static final int OTHER_S=3;
+	public static final int START_FINAL_S=4;
 	
 	/**
 	 * 标识一个状态
@@ -22,12 +23,15 @@ public class State implements Comparable{
 	/**
 	 * 该状态上的所有转换
 	 */
-	private Map<Character, List<Transition>> trans = new HashMap<Character, List<Transition>>();
+	protected Map<Character, List<Transition>> trans = new HashMap<Character, List<Transition>>();
 
 	/**
 	 * @param state
 	 * 用其标识stateId来构造该状态
 	 */
+	public State(){
+		this("");
+	}
 	public State(String stateId){
 		this.stateId=stateId;
 	}
@@ -86,5 +90,9 @@ public class State implements Comparable{
 	@Override
 	public int compareTo(Object s) {
 		return this.stateId.compareTo(((State)s).stateId);
+	}
+	
+	public String toString(){
+		return "I'm State Id:"+stateId;
 	}
 }
