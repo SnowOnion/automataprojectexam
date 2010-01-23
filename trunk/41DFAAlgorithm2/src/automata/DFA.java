@@ -125,8 +125,13 @@ public class DFA extends Automaton {
 		// Fill the table
 		fillTableBFS();
 		// Merge equivalent states
+		statesMerged = new LinkedList<State>();
 		for (int i = 0; i < size-1; ++i) {
 			mergeAll(i);
+		}
+		Iterator<State> it = statesMerged.iterator();
+		while (it.hasNext()) {
+			removeState(it.next());
 		}
 		modified = false;
 	}
@@ -139,8 +144,8 @@ public class DFA extends Automaton {
 	 * @return true：本DFA的语言包含于t； false：本DFA的语言不包含于t。
 	 */
 	public boolean includedIn(DFA t) {
-//		minimize();
-//		t.minimize();
+		minimize();
+		t.minimize();
 		queue = new LinkedList<Pair<Integer, Integer>>();
 		markDeadStates();
 		int[] map1 = new int[size];
@@ -210,8 +215,7 @@ public class DFA extends Automaton {
 		Iterator<State> sit = stateOfNum(state2).fromStates().iterator();
 		while (sit.hasNext())
 			sit.next().outTransitions().alterToState(stateOfNum(state2), stateOfNum(state1));
-		
-		removeState(stateOfNum(state2));
+		statesMerged.add(stateOfNum(state2));
 	}
 
 	// Second part of table-filling algorithm, O(n^2)
@@ -336,5 +340,6 @@ public class DFA extends Automaton {
 	 * 无效状态标记数组
 	 */
 	private int[] map = null;
+	private LinkedList<State> statesMerged = null;
 }
 
