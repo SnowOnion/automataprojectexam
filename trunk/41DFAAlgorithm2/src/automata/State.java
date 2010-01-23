@@ -17,6 +17,13 @@ public class State {
 	public void addInTransition(Transition s) {
 		in.addTransition(s);
 	}
+	// Remove transitions
+	public void removeOutTransition(Transition s) {
+		out.removeTransition(s);
+	}
+	public void removeInTransition(Transition s) {
+		in.removeTransition(s);
+	}
 	
 	// Getters
 	public String label() {
