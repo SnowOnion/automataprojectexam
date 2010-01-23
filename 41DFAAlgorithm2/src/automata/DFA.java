@@ -71,6 +71,8 @@ public class DFA extends Automaton {
 			String label = sit.next();
 			if (stateOfLabel(label) == startState)
 				s += "->\t" + label + "\t";
+			else if (finalStates.contains(stateOfLabel(label)))
+				s += "*\t" + label + "\t";
 			else
 				s += "\t" + label + "\t";
 			cit = alphabet.iterator();
@@ -111,7 +113,7 @@ public class DFA extends Automaton {
 		while (finalsIter.hasNext()) {
 			int i = numOfState(finalsIter.next());
 			for (int j = 0; j < size; ++j) {
-				if (!finalStates.contains(j)) {
+				if (!finalStates.contains(stateOfNum(j))) {
 					if (i == j)
 						continue;
 					if (i < j)
