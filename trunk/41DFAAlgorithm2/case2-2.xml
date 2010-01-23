@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DFA>
+	<StartState>p</StartState>
+	<FinalStates>
+		<State>q</State></FinalStates>
+	<Transitions>
+		<Transition>
+			<From>p</From>
+			<To>q</To>
+			<Conditions>
+				<Condition>a</Condition><Condition>b</Condition></Conditions></Transition><Transition>
+			<From>q</From>
+			<To>q</To>
+			<Conditions>
+				<Condition>a</Condition><Condition>b</Condition></Conditions></Transition></Transitions></DFA>
