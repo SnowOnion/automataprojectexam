@@ -39,6 +39,7 @@ public class Frontend {
 		
 		System.out.println("DFA1 is equivalent to DFA2? " + a.equivalentTo(b));
 		System.out.println("DFA1 is included in DFA2? " + a.includedIn(b));
+		System.out.println("DFA2 is included in DFA1? " + b.includedIn(a));
 		
 		System.out.println("\nMinimized DFA1:");
 		System.out.println(a.toString());
