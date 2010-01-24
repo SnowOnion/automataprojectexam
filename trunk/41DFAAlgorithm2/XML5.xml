@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : XML4.xml
+    Created on : 2010年1月24日, 下午9:15
+    Author     : Administrator
+    Description:
+        Purpose of the document follows.
+-->
+
+<DFA>
+
+                 <StartState>P1</StartState>
+
+                 <FinalStates>
+                 	<State>P1</State></FinalStates>
+                 <Transitions>
+                 	<Transition>
+                 		<From>P1</From>
+                 		<To>P1</To>
+                 		<Conditions>
+                 			<Condition>a</Condition><Condition>b</Condition></Conditions></Transition></Transitions></DFA>
+
+
+
